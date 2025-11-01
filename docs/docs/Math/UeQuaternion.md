@@ -25,7 +25,7 @@ new UeQuaternion(x = 0, y = 0, z = 0)
 
 | Method                       | Returns        | Description                                                                              |
 | -------------------------    | -------------- | ---------------------------------------------------------------                          |
-| `set()`                      | `sekf`         | Sets the quaternion components.                                                          |
+| `set()`                      | `self`         | Sets the quaternion components.                                                          |
 | `clone()`                    | `UeQuaternion` | Returns a copy of this quaternion.                                                       |
 | `copy()`                     | `self`         | Copies values from another quaternion.                                                   |
 | `normalize()`                | `self`         | Normalizes the quaternion to unit length.                                                |
