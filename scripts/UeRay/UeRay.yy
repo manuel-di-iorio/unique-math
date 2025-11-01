@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"UeRay",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"UeRay",
+  "parent":{
+    "name":"UniqueMath",
+    "path":"folders/UniqueMath.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

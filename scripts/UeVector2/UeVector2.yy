@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"UeVector2",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"UeVector2",
+  "parent":{
+    "name":"UniqueMath",
+    "path":"folders/UniqueMath.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"UeQuaternion",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"UeQuaternion",
+  "parent":{
+    "name":"UniqueMath",
+    "path":"folders/UniqueMath.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

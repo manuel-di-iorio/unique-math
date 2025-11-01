@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"UePlane",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"UePlane",
+  "parent":{
+    "name":"UniqueMath",
+    "path":"folders/UniqueMath.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

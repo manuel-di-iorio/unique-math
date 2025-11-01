@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"UeTransform",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"UeTransform",
+  "parent":{
+    "name":"UniqueMath",
+    "path":"folders/UniqueMath.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

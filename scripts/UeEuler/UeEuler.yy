@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"UeEuler",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"UeEuler",
+  "parent":{
+    "name":"UniqueMath",
+    "path":"folders/UniqueMath.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

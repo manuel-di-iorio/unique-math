@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"__UniqueMathGlobals",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__UniqueMathGlobals",
+  "parent":{
+    "name":"UniqueMath",
+    "path":"folders/UniqueMath.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
