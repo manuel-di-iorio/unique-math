@@ -1,5 +1,5 @@
 /// @function UeEuler(x, y, z, order)
-/// @desc Costruttore Euler angles (in radianti).
+/// @desc Costruttore Euler angles
 function UeEuler(_x = 0, _y = 0, _z = 0, _order = "XYZ") constructor {
     self.isEuler = true;
     self.x = _x;
