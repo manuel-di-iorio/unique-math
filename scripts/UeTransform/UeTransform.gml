@@ -20,7 +20,7 @@ function UeTransform(_data = undefined) constructor {
     matrixWorldNeedsUpdate = false;      // Tells to update the world matrix for this frame
     
     // Internals
-    __intersectionSphere = undefined;
+    __intersectionSphere = new UeSphere();
     
     /// Rebuild local matrix from position/rotation/scale
     function updateMatrix() {
@@ -31,7 +31,7 @@ function UeTransform(_data = undefined) constructor {
     }
 
     // Update local matrix and matrix world, also on children
-    function updateMatrixWorld(force = false) {
+     function updateMatrixWorld(force = false) {
         gml_pragma("forceinline");
         if (matrixAutoUpdate) {
             updateMatrix();
@@ -41,19 +41,26 @@ function UeTransform(_data = undefined) constructor {
             if (parent == undefined) {
                 matrixWorld.copy(matrix);
             } else {
-                matrixWorld.multiplyMatrices(parent.matrixWorld, matrix);
+                var _parentMatrixWorld = parent[$ "matrixWorld"];
+                if (_parentMatrixWorld != undefined) {
+                    matrixWorld.multiplyMatrices(parent.matrixWorld, matrix);
+                }
             }
             
             matrixWorldNeedsUpdate = false; 
 			force = true;
-            
-            // Update the object's frustum bounding sphere
-            var boundingSphere = self[$ "geometry"] != undefined ? geometry.boundingSphere : undefined;
-            if (boundingSphere != undefined) {
-                if (__intersectionSphere == undefined) __intersectionSphere = new UeSphere();
-                __intersectionSphere.copy(boundingSphere).applyMatrix4(matrixWorld);
-            }
         } 
+        
+        // For frustum culling, update the intersection sphere (if available) to world space
+        if (self[$ "isMesh"]) {
+            var geometry = self[$ "geometry"];
+            if (geometry != undefined) {
+                var boundingSphere = geometry[$ "boundingSphere"];
+                if (boundingSphere != undefined) {
+                    __intersectionSphere.copy(boundingSphere).applyMatrix4(matrixWorld);
+                }
+            }
+        }
         
         for (var i = 0, len = array_length(children); i < len; i++) {
             children[i].updateMatrixWorld(force);
@@ -278,8 +285,9 @@ function UeTransform(_data = undefined) constructor {
     }
     
     // Returns a vector representing the direction of object's positive Y axis in world space.
-    function getWorldDirection(target = new UeVector3()) {
+    function getWorldDirection(target = undefined) {
         gml_pragma("forceinline");
+        if (target == undefined) target = new UeVector3();
         return target.copy(up.clone().transformDirection(matrixWorld));
     }
     
