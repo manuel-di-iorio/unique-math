@@ -16,7 +16,7 @@ new UeMatrix3(data = undefined)
 
 | Name   | Type       | Default         | Description                                        |
 | ------ | ---------- | --------------- | -------------------------------------------------- |
-| `data` | `number[]` | Identity matrix | Optional flat array of 9 numbers (row-major order) |
+| `data` | `number[]` | Identity matrix | Optional flat array of 9 numbers |
 
 ## Methods
 

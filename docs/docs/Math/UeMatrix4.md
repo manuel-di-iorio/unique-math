@@ -42,10 +42,10 @@ new UeMatrix4(data)
 | `makeRotationFromQuaternion(q)`      | `self`      | Builds rotation matrix from quaternion                        |
 | `makeScale(x, y, z)`                 | `self`      | Builds a scaling matrix                                       |
 | `makeTranslation(x, y, z)`           | `self`      | Builds a translation matrix                                   |
-| `makePerspective(left, right, top, bottom, near, far)`  | `self`      | Builds a perspective projection matrix                        |
+| `makePerspective(left, right, top, bottom, near, far)`  | `self`      | Builds a perspective projection matrix (uses internal helpers; computes FOV/aspect) |
 | `makeOrthographic(left, right, top, bottom, near, far)` | `self`      | Builds an orthographic projection matrix                      |
-| `fromArray(arr, offset)`             | `self`      | Loads data from an array                                      |
-| `toArray(arr, offset)`               | `number[]`  | Exports data to array                                         |
+| `fromArray(arr, offset)`             | `self`      | Loads 16 values from `arr` starting at `offset` (defaults to 0) |
+| `toArray(arr, offset)`               | `number[]`  | Writes 16 values into `arr` starting at `offset` and returns it |
 | `transpose()`                        | `self`      | Transposes the matrix                                         |
 | `getMaxScaleOnAxis()`                | `number`    | Returns the largest scale among all axes                      |
 | `applyToVector3(vec)`                | `UeVector3` | Applies matrix to a vector (as a position, w=1)               |
