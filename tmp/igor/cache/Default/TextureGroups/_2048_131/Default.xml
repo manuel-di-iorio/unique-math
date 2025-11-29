@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureGroup>
+  <texture scale="1" mipsToGenerate="0" texwidth="512" texheight="1024">default_0.bz2</texture>
+  <tpe x="0" y="2" tpage="default_0.bz2">fnt_gmtl_demo_UniqueMath_fnt_gmtl_demo.tpe</tpe>
+  <tpe x="2" y="518" tpage="default_0.bz2">s_gmtl_demo_clickable_UniqueMath_4a652a8e-4c48-43ff-a61f-80b68b011932.tpe</tpe>
+</TextureGroup>
