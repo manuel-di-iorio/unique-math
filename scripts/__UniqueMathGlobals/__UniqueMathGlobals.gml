@@ -1,4 +1,4 @@
-// UniqueMathVersion 0.1.0
+// UniqueMathVersion 0.1.1
 global.UE_OBJECT3D_DEFAULT_UP = new UeVector3(0, 0, -1);
 global.UE_OBJECT3D_DEFAULT_MATRIX_AUTO_UPDATE = true;
 global.UE_OBJECT3D_DEFAULT_MATRIX_WORLD_AUTO_UPDATE = true;
@@ -22,3 +22,5 @@ global.UE_DUMMY_MATRIX4 = new UeMatrix4();
 global.UE_DUMMY_MATRIX4_B = new UeMatrix4();
 global.UE_DUMMY_BOX = new UeBox3();
 global.UE_DUMMY_ARRAY3 = array_create(3);
+global.UE_DUMMY_ARRAY16 = array_create(16); // Used by matrix functions to reuse the array for temp calculations
+global.UE_MATRIX_IDENTITY = matrix_build_identity();

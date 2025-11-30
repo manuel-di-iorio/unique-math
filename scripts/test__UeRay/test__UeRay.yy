@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"test__UeRay",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"test__UeRay",
+  "parent":{
+    "name":"Tests",
+    "path":"folders/Tests.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

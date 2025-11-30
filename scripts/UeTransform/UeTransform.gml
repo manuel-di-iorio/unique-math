@@ -14,9 +14,12 @@ function UeTransform(_data = undefined) constructor {
     // Parent (optional)
     parent = data[$ "parent"] ?? undefined;
 
+    // Children array for hierarchy management
+    children = data[$ "children"] ?? [];
+
     // Matrix update flags
-    matrixAutoUpdate = global.UE_OBJECT3D_DEFAULT_MATRIX_AUTO_UPDATE; // Automatically update local matrix
-    matrixWorldAutoUpdate = global.UE_OBJECT3D_DEFAULT_MATRIX_WORLD_AUTO_UPDATE; // Automatically update world matrix
+    matrixAutoUpdate = data[$ "matrixAutoUpdate"] ?? global.UE_OBJECT3D_DEFAULT_MATRIX_AUTO_UPDATE; // Automatically update local matrix
+    matrixWorldAutoUpdate = data[$ "matrixWorldAutoUpdate"] ?? global.UE_OBJECT3D_DEFAULT_MATRIX_WORLD_AUTO_UPDATE; // Automatically update world matrix
     matrixWorldNeedsUpdate = false;      // Tells to update the world matrix for this frame
     
     // Internals
@@ -147,7 +150,7 @@ function UeTransform(_data = undefined) constructor {
     // --- Rotation methods ---
     function lookAtVec(target) {
         gml_pragma("forceinline");
-        var m = global.UE_DUMMY_MATRIX4;
+        var m = new UeMatrix4();
         m.lookAt(position, target, up);
         rotation.setFromRotationMatrix(m);
         return self;     
@@ -288,7 +291,10 @@ function UeTransform(_data = undefined) constructor {
     function getWorldDirection(target = undefined) {
         gml_pragma("forceinline");
         if (target == undefined) target = new UeVector3();
-        return target.copy(up.clone().transformDirection(matrixWorld));
+        var dir = up.clone();
+        dir.transformDirection(matrixWorld);
+        target.copy(dir);
+        return target;
     }
     
     // Converts the vector from this object's local space to world space.
