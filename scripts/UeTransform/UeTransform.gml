@@ -23,7 +23,7 @@ function UeTransform(_data = undefined) constructor {
     matrixWorldNeedsUpdate = false;      // Tells to update the world matrix for this frame
     
     // Internals
-    __intersectionSphere = new UeSphere();
+    __intersectionSphere = undefined;
     
     /// Rebuild local matrix from position/rotation/scale
     function updateMatrix() {
@@ -33,7 +33,7 @@ function UeTransform(_data = undefined) constructor {
         return self;
     }
 
-    // Update local matrix and matrix world, also on children
+     // Update local matrix and matrix world, also on children
      function updateMatrixWorld(force = false) {
         gml_pragma("forceinline");
         if (matrixAutoUpdate) {
@@ -46,24 +46,23 @@ function UeTransform(_data = undefined) constructor {
             } else {
                 var _parentMatrixWorld = parent[$ "matrixWorld"];
                 if (_parentMatrixWorld != undefined) {
-                    matrixWorld.multiplyMatrices(parent.matrixWorld, matrix);
+                    matrix_multiply(matrix.data, parent.matrixWorld.data, matrixWorld.data);
                 }
             }
             
             matrixWorldNeedsUpdate = false; 
-			force = true;
-        } 
-        
-        // For frustum culling, update the intersection sphere (if available) to world space
-        if (self[$ "isMesh"]) {
+			      force = true;
+            
+            // For frustum culling, update the intersection sphere (if available) to world space
             var geometry = self[$ "geometry"];
             if (geometry != undefined) {
                 var boundingSphere = geometry[$ "boundingSphere"];
                 if (boundingSphere != undefined) {
+                    if (__intersectionSphere == undefined) __intersectionSphere = new UeSphere();
                     __intersectionSphere.copy(boundingSphere).applyMatrix4(matrixWorld);
                 }
             }
-        }
+        } 
         
         for (var i = 0, len = array_length(children); i < len; i++) {
             children[i].updateMatrixWorld(force);
@@ -94,14 +93,13 @@ function UeTransform(_data = undefined) constructor {
             if (parent == undefined) {
                 matrixWorld.copy(matrix);
             } else {
-                matrixWorld.multiplyMatrices(parent.matrixWorld, matrix);
+                matrix_multiply(matrix.data, parent.matrixWorld.data, matrixWorld.data);
             } 
         }
 
         if (updateChildren) {
             for (var i = 0, len = array_length(children); i < len; i++) {
-                var child = children[i];
-                child.updateWorldMatrix(false, true);
+                children[i].updateWorldMatrix(false, true);
             }
         }
     
