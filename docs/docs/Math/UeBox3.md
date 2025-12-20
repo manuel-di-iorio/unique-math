@@ -52,3 +52,5 @@ new UeBox3(min = new UeVector3(infinity, infinity, infinity), max = new UeVector
 | `distanceToPoint(point)`             | `number`    | Returns distance from point to the box (0 if point is inside)        |
 | `getBoundingSphere(target)`          | `Object`    | Calculates the bounding sphere that encloses the box                 |
 | `union(box)`                         | `self`      | Merges this box with another, expanding the bounds                   |
+| `toJSON()`                          | `Object`    | Returns a JSON representation of the box                             |
+| `fromJSON(data)`                    | `self`      | Loads the box from JSON                                              |

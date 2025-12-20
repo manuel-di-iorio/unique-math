@@ -42,3 +42,5 @@ new UeSphere(center = new UeVector3(0, 0, 0), radius = -1)
 | `intersectsPlane(plane)`                 | `boolean`   | Returns `true` if the sphere intersects a given plane             |
 | `intersectsSphere(sphere)`               | `boolean`   | Returns `true` if this sphere intersects another sphere           |
 | `union(sphere)`                          | `self`      | Expands this sphere to include another sphere                     |
+| `toJSON()`                               | `Object`    | Returns a JSON representation of the sphere                       |
+| `fromJSON(data)`                         | `self`      | Loads sphere from JSON                                            |

@@ -39,3 +39,7 @@ new UeVector2(x = 0, y = 0)
 | `distanceTo(vec)` | `number`    | Euclidean distance to another vector               |
 | `perp()`          | `UeVector2` | Returns a perpendicular vector (`-y, x`)           |
 | `rotate(angle)`   | `self`      | Rotates the vector counterclockwise by angle       |
+| `fromArray(arr, offset = 0)` | `self` | Sets components from an array |
+| `toArray(arr, offset = 0)` | `Array` | Converts vector to array |
+| `toJSON()` | `Object` | Returns a JSON representation of the vector |
+| `fromJSON(data)` | `self` | Loads vector components from JSON |

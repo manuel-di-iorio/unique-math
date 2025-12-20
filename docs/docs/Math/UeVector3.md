@@ -91,3 +91,5 @@ new UeVector3(x = 0, y = 0, z = 0)
 | `setFromCylindricalCoords(r, θ, y)` | `self`      | Sets vector components from cylindrical coordinates (`radius`, `theta`, `y`).          |
 | `applyQuaternion(q)`                | `self`      | Rotates this vector by a quaternion.                                                   |
 | `applyAxisAngle(axis, angle)`       | `self`      | Rotates this vector around an arbitrary axis using Rodrigues' formula.                 |
+| `toJSON()`                         | `Object`    | Returns a JSON representation of the vector.                                           |
+| `fromJSON(data)`                   | `self`      | Loads vector components from JSON.                                                     |
