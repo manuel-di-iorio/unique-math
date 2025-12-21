@@ -29,18 +29,19 @@ new UeSphere(center = new UeVector3(0, 0, 0), radius = -1)
 | `clone()`                                | `UeSphere`  | Returns a new copy of this sphere                                 |
 | `isEmpty()`                              | `boolean`   | Returns `true` if radius is less than 0 (sphere is empty)         |
 | `makeEmpty()`                            | `self`      | Makes the sphere empty                                            |
-| `containsPoint(point)`                   | `boolean`   | Returns `true` if the point is inside or on the surface           |
-| `distanceToPoint(point)`                 | `number`    | Returns distance from the surface to a point (negative if inside) |
-| `clampPoint(point, target)`             | `UeVector3` | Clamps a point inside the sphere boundary                         |
+| `containsPoint(point)`                   | `boolean`   | Returns `true` if the point is inside or on the surface (point: UeVector3) |
+| `distanceToPoint(point)`                 | `number`    | Returns distance from the surface to a point (negative if inside) (point: UeVector3) |
+| `clampPoint(point, target)`             | `UeVector3` | Clamps a point inside the sphere boundary (point: UeVector3)     |
 | `applyMatrix4(matrix)`                   | `self`      | Applies a 4x4 transformation matrix to the sphere                 |
-| `expandByPoint(point)`                   | `self`      | Expands the sphere to include the given point                     |
-| `setFromPoints(points, optionalCenter)` | `self`      | Sets the sphere from an array of points, optionally with a center |
+| `expandByPoint(point)`                   | `self`      | Expands the sphere to include the given point (point: UeVector3). If sphere is empty, sets center to point and radius to 0. |
+| `setFromPoints(points, optionalCenter)` | `self`      | Sets the sphere from an array of points (array of UeVector3 or flat array [x0,y0,z0,x1,y1,z1,...]), optionally with a center |
+| `setFromBufferAttribute(buffer, offset)` | `self`      | Sets the sphere from a flat array of positions (like BufferAttribute) with optional offset |
 | `translate(offset)`                      | `self`      | Moves the sphere by an offset vector                              |
 | `equals(sphere)`                         | `boolean`   | Checks if this sphere equals another (same center and radius)     |
 | `getBoundingBox(target)`                | `UeBox3`    | Returns the minimal bounding box enclosing this sphere            |
 | `intersectsBox(box)`                     | `boolean`   | Returns `true` if the sphere intersects a given box               |
 | `intersectsPlane(plane)`                 | `boolean`   | Returns `true` if the sphere intersects a given plane             |
 | `intersectsSphere(sphere)`               | `boolean`   | Returns `true` if this sphere intersects another sphere           |
-| `union(sphere)`                          | `self`      | Expands this sphere to include another sphere                     |
+| `union(sphere)`                          | `self`      | Expands this sphere to be the smallest sphere that contains both this and the given sphere |
 | `toJSON()`                               | `Object`    | Returns a JSON representation of the sphere                       |
 | `fromJSON(data)`                         | `self`      | Loads sphere from JSON                                            |

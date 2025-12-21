@@ -28,8 +28,31 @@ function UeBox3(_min = undefined, _max = undefined) constructor {
     var n = array_length(points);
     if (n == 0) return self;
 
-    for (var i = 0; i < n; i += 3) {
-      var px = points[i], py = points[i + 1], pz = points[i + 2];
+    // Array of Vector3
+    for (var i = 0; i < n; i++) {
+      var p = points[i];
+      self.sizeMin.x = min(self.sizeMin.x, p.x);
+      self.sizeMin.y = min(self.sizeMin.y, p.y);
+      self.sizeMin.z = min(self.sizeMin.z, p.z);
+      self.sizeMax.x = max(self.sizeMax.x, p.x);
+      self.sizeMax.y = max(self.sizeMax.y, p.y);
+      self.sizeMax.z = max(self.sizeMax.z, p.z);
+    }
+
+    return self;
+  }
+
+    /// Sets the box from a flat array of positions (like BufferAttribute).
+    /// Supports a flat array of numbers [x0,y0,z0,x1,y1,z1, ...] with optional offset.
+    static setFromBufferAttribute = function (buffer, offset = 0) {
+    gml_pragma("forceinline");
+    makeEmpty();
+    var n = array_length(buffer);
+    if (n == 0 || offset >= n) return self;
+
+    for (var i = offset; i < n; i += 3) {
+      if (i + 2 >= n) break;
+      var px = buffer[i], py = buffer[i + 1], pz = buffer[i + 2];
       self.sizeMin.x = min(self.sizeMin.x, px);
       self.sizeMin.y = min(self.sizeMin.y, py);
       self.sizeMin.z = min(self.sizeMin.z, pz);
@@ -53,11 +76,9 @@ function UeBox3(_min = undefined, _max = undefined) constructor {
           var pos = geometry.position;
           var n = array_length(pos);
           var tempPoint = new UeVector3();
-          var tempArr = [0, 0, 0];
           for (var i = 0; i < n; i += 3) {
             tempPoint.set(pos[i], pos[i + 1], pos[i + 2]).applyMatrix4(matrix);
-            tempArr[0] = tempPoint.x; tempArr[1] = tempPoint.y; tempArr[2] = tempPoint.z;
-            expandByPoint(tempArr);
+            expandByPoint(tempPoint);
           }
         }
       } else {
@@ -126,15 +147,15 @@ function UeBox3(_min = undefined, _max = undefined) constructor {
   }
 
     /// Expands the box bounds to include the given point.
-    /// Point can be an array [x,y,z].
+    /// Point must be a UeVector3.
     static expandByPoint = function (point) {
     gml_pragma("forceinline");
-    self.sizeMin.x = min(self.sizeMin.x, point[0]);
-    self.sizeMin.y = min(self.sizeMin.y, point[1]);
-    self.sizeMin.z = min(self.sizeMin.z, point[2]);
-    self.sizeMax.x = max(self.sizeMax.x, point[0]);
-    self.sizeMax.y = max(self.sizeMax.y, point[1]);
-    self.sizeMax.z = max(self.sizeMax.z, point[2]);
+    self.sizeMin.x = min(self.sizeMin.x, point.x);
+    self.sizeMin.y = min(self.sizeMin.y, point.y);
+    self.sizeMin.z = min(self.sizeMin.z, point.z);
+    self.sizeMax.x = max(self.sizeMax.x, point.x);
+    self.sizeMax.y = max(self.sizeMax.y, point.y);
+    self.sizeMax.z = max(self.sizeMax.z, point.z);
     return self;
   }
 
@@ -155,12 +176,12 @@ function UeBox3(_min = undefined, _max = undefined) constructor {
   }
 
     /// Returns true if the box contains the given point.
-    /// Point can be an array [x,y,z].
+    /// Point must be a UeVector3.
     static containsPoint = function (point) {
     gml_pragma("forceinline");
-    return point[0] >= self.sizeMin.x && point[0] <= self.sizeMax.x &&
-      point[1] >= self.sizeMin.y && point[1] <= self.sizeMax.y &&
-      point[2] >= self.sizeMin.z && point[2] <= self.sizeMax.z;
+    return point.x >= self.sizeMin.x && point.x <= self.sizeMax.x &&
+      point.y >= self.sizeMin.y && point.y <= self.sizeMax.y &&
+      point.z >= self.sizeMin.z && point.z <= self.sizeMax.z;
   }
 
     /// Returns true if the given box is fully contained within this box.
@@ -172,13 +193,13 @@ function UeBox3(_min = undefined, _max = undefined) constructor {
   }
 
     /// Returns a parameter representing where a point lies within the box (0-1).
-    /// Point can be an array [x,y,z].
+    /// Point must be a UeVector3.
     static getParameter = function (point, target = new UeVector3()) {
     gml_pragma("forceinline");
     target.set(
-      (point[0] - self.sizeMin.x) / (self.sizeMax.x - self.sizeMin.x),
-      (point[1] - self.sizeMin.y) / (self.sizeMax.y - self.sizeMin.y),
-      (point[2] - self.sizeMin.z) / (self.sizeMax.z - self.sizeMin.z)
+      (point.x - self.sizeMin.x) / (self.sizeMax.x - self.sizeMin.x),
+      (point.y - self.sizeMin.y) / (self.sizeMax.y - self.sizeMin.y),
+      (point.z - self.sizeMin.z) / (self.sizeMax.z - self.sizeMin.z)
     );
     return target;
   }
@@ -194,10 +215,10 @@ function UeBox3(_min = undefined, _max = undefined) constructor {
     /// Returns true if this box intersects a sphere.
     static intersectsSphere = function (sphere) {
     gml_pragma("forceinline");
-    var closestPoint = clampPoint(sphere.center.toArray());
-    var dx = closestPoint[0] - sphere.center.x;
-    var dy = closestPoint[1] - sphere.center.y;
-    var dz = closestPoint[2] - sphere.center.z;
+    var closestPoint = clampPoint(sphere.center);
+    var dx = closestPoint.x - sphere.center.x;
+    var dy = closestPoint.y - sphere.center.y;
+    var dz = closestPoint.z - sphere.center.z;
     return (dx * dx + dy * dy + dz * dz) <= (sphere.radius * sphere.radius);
   }
 
@@ -233,21 +254,21 @@ function UeBox3(_min = undefined, _max = undefined) constructor {
   }
 
     /// Clamps a point to the inside of the box.
-    /// Point can be an array [x,y,z]. Returns an array [x,y,z].
-    static clampPoint = function (point, target = array_create(3)) {
+    /// Point must be a UeVector3. Returns a UeVector3.
+    static clampPoint = function (point, target = new UeVector3()) {
     gml_pragma("forceinline");
-    target[0] = clamp(point[0], self.sizeMin.x, self.sizeMax.x);
-    target[1] = clamp(point[1], self.sizeMin.y, self.sizeMax.y);
-    target[2] = clamp(point[2], self.sizeMin.z, self.sizeMax.z);
+    target.x = clamp(point.x, self.sizeMin.x, self.sizeMax.x);
+    target.y = clamp(point.y, self.sizeMin.y, self.sizeMax.y);
+    target.z = clamp(point.z, self.sizeMin.z, self.sizeMax.z);
     return target;
   }
 
     /// Returns the distance to a given point (0 if point is inside).
-    /// Point can be an array [x,y,z].
+    /// Point must be a UeVector3.
     static distanceToPoint = function (point) {
     gml_pragma("forceinline");
     var cp = clampPoint(point);
-    var dx = point[0] - cp[0], dy = point[1] - cp[1], dz = point[2] - cp[2];
+    var dx = point.x - cp.x, dy = point.y - cp.y, dz = point.z - cp.z;
     return sqrt(dx * dx + dy * dy + dz * dz);
   }
 
