@@ -189,12 +189,98 @@ suite(function() {
 			expect(box.sizeMax.equals(new UeVector3(10, 10, 8))).toBeTruthy();
 		});
 
+		test("setFromBufferAttribute() creates box from flat array", function() {
+			var buffer = [0, 0, 0, 10, 5, 8, 5, 10, 3];
+			var box = new UeBox3();
+			box.setFromBufferAttribute(buffer);
+			expect(box.sizeMin.equals(new UeVector3(0, 0, 0))).toBeTruthy();
+			expect(box.sizeMax.equals(new UeVector3(10, 10, 8))).toBeTruthy();
+		});
+
+		test("setFromBufferAttribute() works with offset", function() {
+			var buffer = [99, 99, 99, 0, 0, 0, 10, 5, 8, 5, 10, 3];
+			var box = new UeBox3();
+			box.setFromBufferAttribute(buffer, 3);
+			expect(box.sizeMin.equals(new UeVector3(0, 0, 0))).toBeTruthy();
+			expect(box.sizeMax.equals(new UeVector3(10, 10, 8))).toBeTruthy();
+		});
+
 		// SetFromCenterAndSize
 		test("setFromCenterAndSize() creates box from center and size", function() {
 			var box = new UeBox3();
 			box.setFromCenterAndSize(new UeVector3(5, 5, 5), new UeVector3(10, 10, 10));
 			expect(box.sizeMin.equals(new UeVector3(0, 0, 0))).toBeTruthy();
 			expect(box.sizeMax.equals(new UeVector3(10, 10, 10))).toBeTruthy();
+		});
+
+		// ExpandByObject
+		test("expandByObject() expands box from object geometry (non-precise)", function() {
+			var box = new UeBox3();
+			var boundingBox = new UeBox3(new UeVector3(0, 0, 0), new UeVector3(10, 10, 10));
+			var geometry = {
+        position: [0,0,0, 10,10,10],
+				boundingBox: boundingBox,
+				computeBoundingBox: function() {
+					boundingBox ??= new UeBox3();
+          if (position != undefined) boundingBox.setFromBufferAttribute(position);
+				}
+			};
+			var object = {
+				geometry: geometry,
+				matrixWorld: new UeMatrix4().identity(),
+				children: []
+			};
+			box.expandByObject(object, false);
+			expect(box.sizeMin.equals(new UeVector3(0, 0, 0))).toBeTruthy();
+			expect(box.sizeMax.equals(new UeVector3(10, 10, 10))).toBeTruthy();
+		});
+
+		test("expandByObject() expands box from object geometry (precise)", function() {
+			var box = new UeBox3();
+			// Flat array of positions: [x0,y0,z0, x1,y1,z1, ...]
+			var positions = [0, 0, 0, 10, 5, 8, 5, 10, 3];
+			var geometry = {
+				position: positions
+			};
+			var object = {
+				geometry: geometry,
+				matrixWorld: new UeMatrix4().identity(),
+				children: []
+			};
+			box.expandByObject(object, true);
+			expect(box.sizeMin.equals(new UeVector3(0, 0, 0))).toBeTruthy();
+			expect(box.sizeMax.equals(new UeVector3(10, 10, 8))).toBeTruthy();
+		});
+
+		test("expandByObject() expands box from object with children", function() {
+			var box = new UeBox3();
+			var childBoundingBox = new UeBox3(new UeVector3(5, 5, 5), new UeVector3(15, 15, 15));
+			var childGeometry = {
+				boundingBox: childBoundingBox,
+				computeBoundingBox: function() {
+					self.boundingBox = childBoundingBox;
+				}
+			};
+			var child = {
+				geometry: childGeometry,
+				matrixWorld: new UeMatrix4().identity(),
+				children: []
+			};
+			var parentBoundingBox = new UeBox3(new UeVector3(0, 0, 0), new UeVector3(10, 10, 10));
+			var parentGeometry = {
+				boundingBox: parentBoundingBox,
+				computeBoundingBox: function() {
+					self.boundingBox = parentBoundingBox;
+				}
+			};
+			var object = {
+				geometry: parentGeometry,
+				matrixWorld: new UeMatrix4().identity(),
+				children: [child]
+			};
+			box.expandByObject(object, false);
+			expect(box.sizeMin.equals(new UeVector3(0, 0, 0))).toBeTruthy();
+			expect(box.sizeMax.equals(new UeVector3(15, 15, 15))).toBeTruthy();
 		});
 
 		// Bounding sphere

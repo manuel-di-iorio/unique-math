@@ -64,6 +64,25 @@ function UeBox2(_min = undefined, _max = undefined) constructor {
         return self;
     }
     
+    /// Sets the box from a flat array of positions (like BufferAttribute).
+    /// Supports a flat array of numbers [x0,y0,x1,y1,...] with optional offset.
+    static setFromBufferAttribute = function(buffer, offset = 0) {
+        gml_pragma("forceinline");
+        makeEmpty();
+        var n = array_length(buffer);
+        if (n == 0 || offset >= n) return self;
+
+        for (var i = offset; i < n; i += 2) {
+            if (i + 1 >= n) break;
+            var px = buffer[i], py = buffer[i + 1];
+            self.sizeMin.x = min(self.sizeMin.x, px);
+            self.sizeMin.y = min(self.sizeMin.y, py);
+            self.sizeMax.x = max(self.sizeMax.x, px);
+            self.sizeMax.y = max(self.sizeMax.y, py);
+        }
+        return self;
+    }
+    
     /// Sets the box using a center point and size.
     static setFromCenterAndSize = function(center, size) {
         gml_pragma("forceinline");

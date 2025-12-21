@@ -189,6 +189,22 @@ suite(function() {
 			expect(box.sizeMax.equals(new UeVector2(10, 10))).toBeTruthy();
 		});
 
+		test("setFromBufferAttribute() creates box from flat array", function() {
+			var buffer = [0, 0, 10, 5, 5, 10];
+			var box = new UeBox2();
+			box.setFromBufferAttribute(buffer);
+			expect(box.sizeMin.equals(new UeVector2(0, 0))).toBeTruthy();
+			expect(box.sizeMax.equals(new UeVector2(10, 10))).toBeTruthy();
+		});
+
+		test("setFromBufferAttribute() works with offset", function() {
+			var buffer = [99, 99, 0, 0, 10, 5, 5, 10];
+			var box = new UeBox2();
+			box.setFromBufferAttribute(buffer, 2);
+			expect(box.sizeMin.equals(new UeVector2(0, 0))).toBeTruthy();
+			expect(box.sizeMax.equals(new UeVector2(10, 10))).toBeTruthy();
+		});
+
 		// SetFromCenterAndSize
 		test("setFromCenterAndSize() creates box from center and size", function() {
 			var box = new UeBox2();

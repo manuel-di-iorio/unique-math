@@ -29,6 +29,7 @@ new UeBox2(min = new UeVector2(infinity, infinity), max = new UeVector2(-infinit
 | `makeEmpty()`                        | `self`      | Empties the box so it contains no points                             |
 | `isEmpty()`                          | `boolean`   | Returns `true` if the box is empty (max < min)                       |
 | `setFromPoints(points)`              | `self`      | Expands the box to fit a set of 2D points (array of UeVector2 or flat array [x0,y0,x1,y1,...]) |
+| `setFromBufferAttribute(buffer, offset)` | `self`      | Sets the box from a flat array of positions (like BufferAttribute) with optional offset |
 | `setFromCenterAndSize(center, size)` | `self`      | Builds the box using a center point and size                         |
 | `copy(box)`                          | `self`      | Copies the bounds from another box                                   |
 | `expandByPoint(point)`               | `self`      | Expands the box to include a given point (UeVector2)                 |

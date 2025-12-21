@@ -122,6 +122,24 @@ suite(function() {
 			expect(sphere.containsPoint(points[2])).toBeTruthy();
 		});
 
+		test("setFromBufferAttribute() creates sphere from flat array", function() {
+			var buffer = [0, 0, 0, 10, 0, 0, 0, 10, 0];
+			var sphere = new UeSphere();
+			sphere.setFromBufferAttribute(buffer);
+			expect(sphere.containsPoint(new UeVector3(0, 0, 0))).toBeTruthy();
+			expect(sphere.containsPoint(new UeVector3(10, 0, 0))).toBeTruthy();
+			expect(sphere.containsPoint(new UeVector3(0, 10, 0))).toBeTruthy();
+		});
+
+		test("setFromBufferAttribute() works with offset", function() {
+			var buffer = [99, 99, 99, 0, 0, 0, 10, 0, 0, 0, 10, 0];
+			var sphere = new UeSphere();
+			sphere.setFromBufferAttribute(buffer, 3);
+			expect(sphere.containsPoint(new UeVector3(0, 0, 0))).toBeTruthy();
+			expect(sphere.containsPoint(new UeVector3(10, 0, 0))).toBeTruthy();
+			expect(sphere.containsPoint(new UeVector3(0, 10, 0))).toBeTruthy();
+		});
+
 		// Intersection tests
 		test("intersectsSphere() returns true for overlapping spheres", function() {
 			var sphere1 = new UeSphere(new UeVector3(0, 0, 0), 10);

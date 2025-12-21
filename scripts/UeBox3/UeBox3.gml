@@ -21,14 +21,12 @@ function UeBox3(_min = undefined, _max = undefined) constructor {
   }
 
     /// Sets the box to enclose an array of points.
-    /// Supports a flat array of numbers [x0,y0,z0, ...].
+    /// Supports an array of UeVector3
     static setFromPoints = function (points) {
     gml_pragma("forceinline");
     makeEmpty();
     var n = array_length(points);
-    if (n == 0) return self;
 
-    // Array of Vector3
     for (var i = 0; i < n; i++) {
       var p = points[i];
       self.sizeMin.x = min(self.sizeMin.x, p.x);
@@ -75,17 +73,19 @@ function UeBox3(_min = undefined, _max = undefined) constructor {
           var matrix = object.matrixWorld;
           var pos = geometry.position;
           var n = array_length(pos);
-          var tempPoint = new UeVector3();
+          var tempPoint = global.UE_DUMMY_VECTOR3;
           for (var i = 0; i < n; i += 3) {
             tempPoint.set(pos[i], pos[i + 1], pos[i + 2]).applyMatrix4(matrix);
             expandByPoint(tempPoint);
           }
         }
       } else {
-        geometry.computeBoundingBox();
-        var box = geometry.boundingBox.clone();
-        box.applyMatrix4(object.matrixWorld);
-        union(box);
+        //geometry.computeBoundingBox();
+        if (geometry[$ "boundingBox"] != undefined) {
+          var box = geometry.boundingBox.clone();
+          box.applyMatrix4(object.matrixWorld);
+          union(box);
+        }
       }
     }
 
@@ -302,29 +302,21 @@ function UeBox3(_min = undefined, _max = undefined) constructor {
     gml_pragma("forceinline");
     if (isEmpty()) return self;
 
-        static points = array_create(24);
     var minX = self.sizeMin.x, minY = self.sizeMin.y, minZ = self.sizeMin.z;
     var maxX = self.sizeMax.x, maxY = self.sizeMax.y, maxZ = self.sizeMax.z;
 
-    var e = matrix.data;
-    var transform = function (_points, _idx, _x, _y, _z, _m) {
-      var w = _m[3] * _x + _m[7] * _y + _m[11] * _z + _m[15];
-      w = (w != 0) ? 1 / w : 1;
-      _points[_idx] = (_m[0] * _x + _m[4] * _y + _m[8] * _z + _m[12]) * w;
-      _points[_idx + 1] = (_m[1] * _x + _m[5] * _y + _m[9] * _z + _m[13]) * w;
-      _points[_idx + 2] = (_m[2] * _x + _m[6] * _y + _m[10] * _z + _m[14]) * w;
-    };
+    makeEmpty();
+    var v = global.UE_DUMMY_VECTOR3;
+    v.set(minX, minY, minZ).applyMatrix4(matrix); expandByPoint(v);
+    v.set(minX, minY, maxZ).applyMatrix4(matrix); expandByPoint(v);
+    v.set(minX, maxY, minZ).applyMatrix4(matrix); expandByPoint(v);
+    v.set(minX, maxY, maxZ).applyMatrix4(matrix); expandByPoint(v);
+    v.set(maxX, minY, minZ).applyMatrix4(matrix); expandByPoint(v);
+    v.set(maxX, minY, maxZ).applyMatrix4(matrix); expandByPoint(v);
+    v.set(maxX, maxY, minZ).applyMatrix4(matrix); expandByPoint(v);
+    v.set(maxX, maxY, maxZ).applyMatrix4(matrix); expandByPoint(v);
 
-    transform(points, 0, minX, minY, minZ, e);
-    transform(points, 3, minX, minY, maxZ, e);
-    transform(points, 6, minX, maxY, minZ, e);
-    transform(points, 9, minX, maxY, maxZ, e);
-    transform(points, 12, maxX, minY, minZ, e);
-    transform(points, 15, maxX, minY, maxZ, e);
-    transform(points, 18, maxX, maxY, minZ, e);
-    transform(points, 21, maxX, maxY, maxZ, e);
-
-    return setFromPoints(points);
+    return self;
   }
 
     /// Translates the box by a given offset vector.
