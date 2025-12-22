@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"test__UeBox3",
   "parent":{
-    "name":"Tests",
-    "path":"folders/Tests.yy",
+    "name":"Tests (Struct)",
+    "path":"folders/Tests (Struct).yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

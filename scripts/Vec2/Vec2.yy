@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"test__UeRay",
+  "%Name":"Vec2",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"test__UeRay",
+  "name":"Vec2",
   "parent":{
-    "name":"Tests (Struct)",
-    "path":"folders/Tests (Struct).yy",
+    "name":"Unique Math (Functions)",
+    "path":"folders/Unique Math (Functions).yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
