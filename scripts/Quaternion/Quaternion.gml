@@ -393,3 +393,60 @@ function quat_to_array(q, array = undefined, offset = 0) {
     array[@offset + 3] = q[3];
     return array;
 }
+
+function quat_angle_to(q, q2) {
+    gml_pragma("forceinline");
+    var d = quat_dot(q, q2);
+    if (d > 1) d = 1; else if (d < -1) d = -1;
+    return 2 * arccos(abs(d));
+}
+
+function quat_multiply_quaternions(dest, a, b) {
+    gml_pragma("forceinline");
+    var ax = a[0], ay = a[1], az = a[2], aw = a[3];
+    var bx = b[0], by = b[1], bz = b[2], bw = b[3];
+    dest[@0] = ax * bw + aw * bx + ay * bz - az * by;
+    dest[@1] = ay * bw + aw * by + az * bx - ax * bz;
+    dest[@2] = az * bw + aw * bz + ax * by - ay * bx;
+    dest[@3] = aw * bw - ax * bx - ay * by - az * bz;
+    return dest;
+}
+
+function quat_random(q) {
+    gml_pragma("forceinline");
+    var u1 = random_range(0, 1);
+    var u2 = random_range(0, 1);
+    var u3 = random_range(0, 1);
+    var s1 = sqrt(1 - u1);
+    var s2 = sqrt(u1);
+    var t1 = 360 * u2;
+    var t2 = 360 * u3;
+    q[@0] = s1 * dsin(t1);
+    q[@1] = s1 * dcos(t1);
+    q[@2] = s2 * dsin(t2);
+    q[@3] = s2 * dcos(t2);
+    return q;
+}
+
+function quat_rotate_towards(q, qb, step) {
+    gml_pragma("forceinline");
+    var angle = quat_angle_to(q, qb);
+    if (angle <= 0) return q;
+    var t = min(1, step / angle);
+    quat_slerp(q, qb, t);
+    return q;
+}
+
+function quat_slerp_quaternions(dest, qa, qb, t) {
+    gml_pragma("forceinline");
+    quat_copy(dest, qa);
+    quat_slerp(dest, qb, t);
+    return dest;
+}
+
+function quat_from_buffer_attribute(q, attr, index) {
+    gml_pragma("forceinline");
+    var offset = index * 4;
+    quat_from_array(q, attr, offset);
+    return q;
+}

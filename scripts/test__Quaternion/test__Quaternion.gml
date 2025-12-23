@@ -170,5 +170,55 @@ suite(function() {
             var arr2 = quat_to_array(q);
             expect(arr2[0]).toBe(10);
         });
+        
+        test("quat_angle_to() identity to 90deg X equals pi/2", function() {
+            var q1 = quat_create(0, 0, 0, 1);
+            var q2 = quat_create();
+            quat_set_from_axis_angle(q2, [1, 0, 0], 90);
+            var angle = quat_angle_to(q1, q2);
+            expect(abs(angle - (pi / 2)) < 0.001).toBeTruthy();
+        });
+        
+        test("quat_random() yields unit quaternion", function() {
+            var q = quat_create();
+            quat_random(q);
+            expect(abs(quat_length(q) - 1) < 0.0001).toBeTruthy();
+        });
+        
+        test("quat_rotate_towards() steps towards target", function() {
+            var q1 = quat_create(0, 0, 0, 1);
+            var q2 = quat_create();
+            quat_set_from_axis_angle(q2, [0, 0, 1], 90);
+            quat_rotate_towards(q1, q2, pi / 4);
+            var remaining = quat_angle_to(q1, q2);
+            expect(abs(remaining - (pi / 4)) < 0.05).toBeTruthy();
+        });
+        
+        test("quat_multiply_quaternions() sets dest = a * b", function() {
+            var a = quat_create(); quat_set_from_axis_angle(a, [0, 0, 1], 45);
+            var b = quat_create(); quat_set_from_axis_angle(b, [0, 0, 1], 45);
+            var dest = quat_create();
+            quat_multiply_quaternions(dest, a, b);
+            expect(abs(dest[2] - 0.7071) < 0.01).toBeTruthy();
+            expect(abs(dest[3] - 0.7071) < 0.01).toBeTruthy();
+        });
+        
+        test("quat_slerp_quaternions() writes interpolated result", function() {
+            var qa = quat_create(0, 0, 0, 1);
+            var qb = quat_create(); quat_set_from_axis_angle(qb, [1, 0, 0], 90);
+            var dest = quat_create();
+            quat_slerp_quaternions(dest, qa, qb, 0.5);
+            expect(abs(dest[0] - 0.3826) < 0.01).toBeTruthy();
+        });
+        
+        test("quat_from_buffer_attribute() loads by index", function() {
+            var buf = [1, 2, 3, 4, 5, 6, 7, 8];
+            var q = quat_create();
+            quat_from_buffer_attribute(q, buf, 1);
+            expect(q[0]).toBe(5);
+            expect(q[1]).toBe(6);
+            expect(q[2]).toBe(7);
+            expect(q[3]).toBe(8);
+        });
     });
 });

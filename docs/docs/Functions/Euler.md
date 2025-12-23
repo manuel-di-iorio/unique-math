@@ -1,29 +1,36 @@
+---
+sidebar_position: 13
+---
+
 # Euler
 
-Euler angles describe a rotation transformation by rotating about each axis in a specified order.
-Stored as arrays `[x, y, z, order]`.
-Angles are in **DEGREES**.
+Euler angles describe rotation by applying three axis rotations in a specified order.
+Stored as `[x, y, z, order]`. Angles are in degrees.
 
-**Order**: String "XYZ", "YXZ", "ZXY", "ZYX", "YZX", "XZY". Default "XYZ".
+Order: `"XYZ" | "YXZ" | "ZXY" | "ZYX" | "YZX" | "XZY"` (default `"XYZ"`).
 
-## 🛠 Creation & Setters
+---
 
-| Function | Description |
-| :--- | :--- |
-| `euler_create(x, y, z, order)` | Creates a new Euler array. |
-| `euler_set(e, x, y, z, order)` | Sets the components. |
-| `euler_copy(e, src)` | Copies. |
-| `euler_clone(e)` | Clones. |
+## Functions Reference
 
-## 🔄 Conversions
+### Creation & Setters
 
-| Function | Description |
-| :--- | :--- |
-| `euler_set_from_rotation_matrix(e, m, order)` | Sets Euler angles from a rotation matrix. |
-| `euler_set_from_quaternion(e, q, order)` | Sets Euler angles from a quaternion. |
+| Function | Returns | Description |
+| -------- | ------- | ----------- |
+| `euler_create(x?, y?, z?, order?)` | `Array` | Creates a new Euler array. |
+| `euler_set(e, x, y, z, order?)` | - | Sets components and order. |
+| `euler_copy(e, src)` | - | Copies values from `src`. |
+| `euler_clone(e)` | `Array` | Returns a new copy. |
 
-## 📦 Utilities
+### Conversions
 
-| Function | Description |
-| :--- | :--- |
-| `euler_equals(e1, e2)` | Checks equality (including order). |
+| Function | Returns | Description |
+| -------- | ------- | ----------- |
+| `euler_set_from_rotation_matrix(e, m, order?)` | - | Sets angles from a rotation matrix. |
+| `euler_set_from_quaternion(e, q, order?)` | - | Sets angles from a quaternion. |
+
+### Utilities
+
+| Function | Returns | Description |
+| -------- | ------- | ----------- |
+| `euler_equals(a, b)` | `boolean` | True if angles and order are equal. |

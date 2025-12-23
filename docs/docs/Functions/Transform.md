@@ -1,26 +1,34 @@
+---
+sidebar_position: 17
+---
+
 # Transform
 
-High-level container for Position, Rotation, and Scale.
-Stored as an array of 3 sub-arrays: `[[x,y,z], [x,y,z,w], [x,y,z]]`.
+High-level container for position, rotation (quaternion), and scale.
+Stored as `[[x,y,z], [x,y,z,w], [x,y,z]]`. Functions modify the first argument in-place unless noted.
 
-## 🛠 Creation
+---
 
-| Function | Description |
-| :--- | :--- |
-| `transform_create([pos, rot, scl])` | Creates a new transform. |
-| `transform_set(t, pos, rot, scl)` | Sets components (copying values). |
-| `transform_copy(t, src)` | Copies. |
-| `transform_clone(t)` | Clones. |
+## Functions Reference
 
-## 🧮 Matrix Operations
+### Creation
 
-| Function | Description |
-| :--- | :--- |
-| `transform_compose_matrix(t, m)` | Updates a 4x4 matrix from this transform. |
-| `transform_decompose_matrix(t, m)` | Updates this transform from a 4x4 matrix. |
+| Function | Returns | Description |
+| -------- | ------- | ----------- |
+| `transform_create([pos?, rot?, scl?])` | `Array` | Creates a new transform. |
+| `transform_set(t, pos, rot, scl)` | - | Sets components (copies values). |
+| `transform_copy(t, src)` | - | Copies from `src`. |
+| `transform_clone(t)` | `Array` | Returns a copy. |
 
-## 👁 Orientation
+### Matrix Operations
 
-| Function | Description |
-| :--- | :--- |
-| `transform_look_at(t, target, up)` | Orients the transform to look at target. |
+| Function | Returns | Description |
+| -------- | ------- | ----------- |
+| `transform_compose_matrix(t, m)` | - | Builds a 4×4 matrix from this transform. |
+| `transform_decompose_matrix(t, m)` | - | Updates transform from a 4×4 matrix. |
+
+### Orientation
+
+| Function | Returns | Description |
+| -------- | ------- | ----------- |
+| `transform_look_at(t, target, up)` | - | Orients rotation to look at target (world up). |

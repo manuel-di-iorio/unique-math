@@ -1,47 +1,59 @@
+---
+sidebar_position: 12
+---
+
 # Quaternion
 
-Quaternions are used in GameMaker to represent rotations. They are stored as arrays of 4 elements `[x, y, z, w]`.
+Rotation stored as `[x, y, z, w]`. Angles for conversions use degrees.
+Functions modify the first argument in-place unless noted.
 
-**Order**: `[x, y, z, w]`
-**Angles**: All angles are in **DEGREES**.
+---
 
-## 🛠 Creation & Setters
+## Functions Reference
 
-| Function | Description |
-| :--- | :--- |
-| `quat_create([x, y, z, w])` | Creates a new quaternion, defaults to identity `[0, 0, 0, 1]`. |
-| `quat_set(q, x, y, z, w)` | Sets the components of the quaternion. |
-| `quat_identity(q)` | Resets the quaternion to the identity `[0, 0, 0, 1]`. |
-| `quat_clone(q)` | Returns a new independent copy of the quaternion. |
-| `quat_copy(q, src)` | Copies the values from `src` to `q`. |
+### Creation & Setters
 
-## 🔄 Conversions
+| Function | Returns | Description |
+| -------- | ------- | ----------- |
+| `quat_create(x?, y?, z?, w?)` | `Array` | Creates a quaternion (default identity `[0,0,0,1]`). |
+| `quat_set(q, x, y, z, w)` | - | Sets components. |
+| `quat_identity(q)` | - | Resets to identity. |
+| `quat_clone(q)` | `Array` | Returns a copy. |
+| `quat_copy(q, src)` | - | Copies values from `src`. |
 
-| Function | Description |
-| :--- | :--- |
-| `quat_set_from_euler(q, x, y, z, [order])` | Sets the quaternion from Euler angles (degrees). Order defaults to "XYZ". |
-| `quat_set_from_axis_angle(q, axis, angle)` | Sets the quaternion from an axis vector and an angle (degrees). |
-| `quat_set_from_rotation_matrix(q, m)` | Sets the quaternion from the rotation component of a 4x4 matrix. |
-| `quat_set_from_unit_vectors(q, vFrom, vTo)` | Sets rotation required to rotate `vFrom` to `vTo`. Vectors must be normalized. |
+### Conversions
 
-## 🧮 Operations
+| Function | Returns | Description |
+| -------- | ------- | ----------- |
+| `quat_set_from_euler(q, x, y, z, order?)` | - | Sets from Euler angles (degrees, default `"XYZ"`). |
+| `quat_set_from_axis_angle(q, axis, angle)` | - | Sets from axis-angle (degrees). |
+| `quat_set_from_rotation_matrix(q, m)` | - | Sets from rotation part of 4×4 matrix. |
+| `quat_set_from_unit_vectors(q, vFrom, vTo)` | - | Sets rotation from `vFrom` to `vTo` (normalized). |
 
-| Function | Description |
-| :--- | :--- |
-| `quat_invert(q)` | Inverts the quaternion (conjugate). |
-| `quat_conjugate(q)` | Conjugates the quaternion in place. |
-| `quat_normalize(q)` | Normalizes the quaternion. |
-| `quat_multiply(q, q2)` | Multiply `q` by `q2`. Corresponds to a rotation of `q` then `q2` if pre-multiplied logic, or `q2` then `q`? (Three.js: `q = q * q2` usually means `q` rotate then `q2`). |
-| `quat_premultiply(q, q2)` | Sets `q = q2 * q`. |
-| `quat_slerp(q, qb, t)` | Spherical linear interpolation between `q` and `qb`. |
-| `quat_dot(q, q2)` | Calculates the dot product. |
-| `quat_length(q)` | Returns the length of the quaternion. |
-| `quat_length_sq(q)` | Returns the squared length. |
+### Operations
 
-## 📦 Utilities
+| Function | Returns | Description |
+| -------- | ------- | ----------- |
+| `quat_invert(q)` | - | Inverts quaternion (conjugate for unit quaternions). |
+| `quat_conjugate(q)` | - | Conjugates in place. |
+| `quat_normalize(q)` | - | Normalizes to unit length. |
+| `quat_multiply(q, q2)` | - | Sets `q = q * q2`. |
+| `quat_premultiply(q, q2)` | - | Sets `q = q2 * q`. |
+| `quat_slerp(q, qb, t)` | - | Spherical linear interpolation. |
+| `quat_rotate_towards(q, qb, step)` | - | Rotates towards `qb` by angular `step` (radians). |
+| `quat_dot(q, q2)` | `number` | Dot product. |
+| `quat_length(q)` | `number` | Length (magnitude). |
+| `quat_length_sq(q)` | `number` | Squared length. |
+| `quat_angle_to(q, q2)` | `number` | Angle to `q2` in radians. |
 
-| Function | Description |
-| :--- | :--- |
-| `quat_equals(q, q2)` | Returns `true` if the quaternions are identical. |
-| `quat_from_array(q, array, offset)` | Loads values from an array. |
-| `quat_to_array(q, array, offset)` | Saves values to an array. |
+### Utilities
+
+| Function | Returns | Description |
+| -------- | ------- | ----------- |
+| `quat_equals(a, b)` | `boolean` | True if components are equal. |
+| `quat_from_array(q, array, offset?)` | - | Loads from array. |
+| `quat_to_array(q, array?, offset?)` | `Array` | Writes to array. |
+| `quat_from_buffer_attribute(q, attr, index)` | - | Loads from flat buffer at `index`. |
+| `quat_random(q)` | - | Sets to a random unit quaternion. |
+| `quat_multiply_quaternions(dest, a, b)` | - | Sets `dest = a * b`. |
+| `quat_slerp_quaternions(dest, qa, qb, t)` | - | Sets `dest = slerp(qa, qb, t)`. |
