@@ -2,13 +2,9 @@
 sidebar_position: 2
 ---
 
-# vec3
+# Vec3
 
 High-performance 3D vector functions using arrays `[x, y, z]`. All angles are in **degrees**. Functions modify the first vector in-place for zero allocations.
-
-:::tip Performance
-The functional API using arrays is **significantly faster** than the struct-based `UeVector3` class due to reduced memory allocations and faster array access. Use this API for performance-critical code like physics, particles, or large-scale simulations.
-:::
 
 ---
 

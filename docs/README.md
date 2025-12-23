@@ -26,9 +26,8 @@ vec2_normalize(a);     // a = unit vector
 var dot = vec2_dot(a, b);
 ```
 
-:::tip Why Functional?
-Array-based operations are **significantly faster** than structs in GameMaker. Use this API for physics, particles, pathfinding, or any performance-critical code.
-:::
+> Why Functional?
+> Array-based operations are **significantly faster** than structs in GameMaker. Use this API for physics, particles, pathfinding, or any performance-critical code.
 
 ### 2. Struct API (Readable & Chainable)
 
@@ -41,9 +40,8 @@ var b = new UeVector3(4, 5, 6);
 var result = a.clone().add(b).normalize();
 ```
 
-:::note When to use Structs?
-Use structs when readability and method chaining are more important than raw performance, such as in initialization code, tools, or prototyping.
-:::
+> When to use Structs?
+> Use structs when readability and method chaining are more important than raw performance, such as in initialization code, tools, or prototyping.
 
 ---
 
@@ -106,7 +104,8 @@ q.setFromAxisAngle(new UeVector3(0, 1, 0), 90);
 
 | Module | Description |
 | ------ | ----------- |
-| [`vec2`](./Functions/vec2) | 2D vector functions |
+| [`Vec2`](./Functions/Vec2) | 2D vector functions |
+| [`Vec3`](./Functions/Vec3) | 3D vector functions |
 
 ### Structs (Class-based)
 
@@ -125,7 +124,3 @@ q.setFromAxisAngle(new UeVector3(0, 1, 0), 90);
 | [`UeRay`](./Struct/UeRay) | Ray for raycasting |
 | [`UeFrustum`](./Struct/UeFrustum) | View frustum |
 | [`UeTransform`](./Struct/UeTransform) | Transform (position, rotation, scale) |
-
----
-
-Explore the documentation sidebar for detailed information on each module!
