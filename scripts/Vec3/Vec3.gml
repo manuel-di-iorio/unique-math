@@ -784,6 +784,7 @@ function vec3_apply_matrix3(vec, m) {
 function vec3_apply_matrix4(vec, m) {
     gml_pragma("forceinline");
     var _x = vec[0], _y = vec[1], _z = vec[2];
+
     var w = m[3] * _x + m[7] * _y + m[11] * _z + m[15];
     w = (w != 0) ? (1 / w) : 1;
     vec[@0] = (m[0] * _x + m[4] * _y + m[8] * _z + m[12]) * w;

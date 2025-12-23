@@ -34,6 +34,16 @@ function frustum_copy(f, src) {
     plane_copy(f[5], src[5]);
 }
 
+function frustum_set(f, p0, p1, p2, p3, p4, p5) {
+    gml_pragma("forceinline");
+    plane_copy(f[0], p0);
+    plane_copy(f[1], p1);
+    plane_copy(f[2], p2);
+    plane_copy(f[3], p3);
+    plane_copy(f[4], p4);
+    plane_copy(f[5], p5);
+}
+
 /// @func frustum_set_from_matrix(f, m)
 /// @desc Sets frustum planes from a projection (or view-projection) matrix.
 function frustum_set_from_matrix(f, m) {
@@ -72,6 +82,16 @@ function frustum_set_from_matrix(f, m) {
     plane_normalize(p5);
 }
 
+function frustum_set_from_projection_matrix(f, m, reversedDepth = false) {
+    gml_pragma("forceinline");
+    frustum_set_from_matrix(f, m);
+    if (reversedDepth) {
+        var tmp = plane_clone(f[4]);
+        plane_copy(f[4], f[5]);
+        plane_copy(f[5], tmp);
+    }
+}
+
 /// @func frustum_intersects_sphere(f, s)
 /// @desc Returns true if sphere intersects the frustum.
 function frustum_intersects_sphere(f, s) {
@@ -98,6 +118,11 @@ function frustum_contains_point(f, _x, _y, _z) {
     return true;
 }
 
+function frustum_contains_point_vec(f, v) {
+    gml_pragma("forceinline");
+    return frustum_contains_point(f, v[0], v[1], v[2]);
+}
+
 /// @func frustum_intersects_box(f, b)
 /// @desc Returns true if box intersects frustum.
 function frustum_intersects_box(f, b) {
@@ -116,7 +141,6 @@ function frustum_intersects_box(f, b) {
         var pz = (nz > 0) ? maxZ : minZ;
         
         if (nx * px + ny * py + nz * pz + d < 0) {
-            // Need detailed check? Or is this sufficient?
             // This checks if the "positive" corner is behind the plane.
             // If the corner furthest in the normal direction is behind, then the whole box is behind (outside).
             return false;
@@ -124,3 +148,18 @@ function frustum_intersects_box(f, b) {
     }
     return true;
 }
+
+// Methods specific to Unique Engine
+// function frustum_intersects_object(f, object) {
+//     gml_pragma("forceinline");
+//     var s = object.__intersectionSphere;
+//     if (s == undefined) return true;
+//     return frustum_intersects_sphere(f, s);
+// }
+
+// function frustum_intersects_sprite(f, sprite) {
+//     gml_pragma("forceinline");
+//     var s = sprite.__intersectionSphere;
+//     if (s != undefined) return frustum_intersects_sphere(f, s);
+//     return true;
+// }

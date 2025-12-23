@@ -6,6 +6,21 @@ suite(function() {
             var r = ray_create(0, 0, 0, 0, 0, 1);
             expect(r[5]).toBe(1);
         });
+        
+        test("ray_set() assigns values", function() {
+            var r = ray_create();
+            ray_set(r, 1, 2, 3, 4, 5, 6);
+            expect(r[0]).toBe(1);
+            expect(r[3]).toBe(4);
+            expect(r[5]).toBe(6);
+        });
+        
+        test("ray_copy() duplicates source", function() {
+            var src = ray_create(1, 2, 3, 4, 5, 6);
+            var r = ray_create();
+            ray_copy(r, src);
+            expect(ray_equals(r, src)).toBeTruthy();
+        });
 
         test("ray_at()", function() {
             var r = ray_create(0, 0, 0, 1, 0, 0);
@@ -55,12 +70,28 @@ suite(function() {
             expect(r[2]).toBe(0);
         });
         
+        test("ray_recenter() moves origin", function() {
+            var r = ray_create(0, 0, 0, 1, 0, 0);
+            ray_recenter(r, 3, 4, 5);
+            expect(r[0]).toBe(3);
+            expect(r[1]).toBe(4);
+            expect(r[2]).toBe(5);
+        });
+        
+        test("ray_look_at() normalizes direction to target", function() {
+            var r = ray_create(0, 0, 0, 0, 0, -1);
+            ray_look_at(r, 0, 0, 5);
+            expect(abs(r[3]) < 0.001).toBeTruthy();
+            expect(abs(r[4]) < 0.001).toBeTruthy();
+            expect(abs(r[5] - 1) < 0.001).toBeTruthy();
+        });
+        
         test("ray_intersect_plane_and_distance()", function() {
             var r = ray_create(0, -5, 0, 0, 1, 0);
             var p = plane_create(0, 1, 0, 0);
             var hit = ray_intersect_plane(r, p);
             expect(hit != undefined).toBeTruthy();
-            if (hit) {
+            if (hit != undefined) {
                 expect(abs(hit[0]) < 0.001).toBeTruthy();
                 expect(abs(hit[1]) < 0.001).toBeTruthy();
                 expect(abs(hit[2]) < 0.001).toBeTruthy();
@@ -112,7 +143,7 @@ suite(function() {
             var s = sphere_create(10, 0, 0, 2);
             var hit = ray_intersect_sphere_point(r, s);
             expect(hit != undefined).toBeTruthy();
-            if (hit) {
+            if (hit != undefined) {
                 expect(abs(hit[0] - 8) < 0.001).toBeTruthy();
                 expect(abs(hit[1]) < 0.001).toBeTruthy();
                 expect(abs(hit[2]) < 0.001).toBeTruthy();
@@ -126,7 +157,7 @@ suite(function() {
             var c = [5, -1, -1];
             var hit = ray_intersect_triangle(r, a, b, c, false);
             expect(hit != undefined).toBeTruthy();
-            if (hit) {
+            if (hit != undefined) {
                 expect(abs(hit[0] - 5) < 0.001).toBeTruthy();
                 expect(abs(hit[1]) < 0.001).toBeTruthy();
                 expect(abs(hit[2]) < 0.001).toBeTruthy();

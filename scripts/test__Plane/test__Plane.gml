@@ -8,6 +8,15 @@ suite(function() {
             expect(abs(p[1] - 1) < 0.001).toBeTruthy();
             expect(abs(p[3] - 5) < 0.001).toBeTruthy();
         });
+        
+        test("plane_set() assigns values", function() {
+            var p = plane_create();
+            plane_set(p, 1, 2, 3, 4);
+            expect(p[0]).toBe(1);
+            expect(p[1]).toBe(2);
+            expect(p[2]).toBe(3);
+            expect(p[3]).toBe(4);
+        });
 
         test("plane_distance_to_point()", function() {
             var p = plane_create(0, 1, 0, -5);
@@ -53,6 +62,13 @@ suite(function() {
             plane_negate(q);
             expect(plane_equals(p, q)).toBeTruthy();
         });
+        
+        test("plane_copy() duplicates source", function() {
+            var src = plane_create(1, 2, 3, 4);
+            var p = plane_create();
+            plane_copy(p, src);
+            expect(plane_equals(p, src)).toBeTruthy();
+        });
 
         test("plane_intersects_sphere() and distance_to_sphere()", function() {
             var p = plane_create(0, 1, 0, -5);
@@ -68,7 +84,7 @@ suite(function() {
             expect(plane_intersects_line(p, line)).toBeTruthy();
             var hit = plane_intersect_line(p, line);
             expect(hit != undefined).toBeTruthy();
-            if (hit) {
+            if (hit != undefined) {
                 expect(abs(hit[0] - 5) < 0.001).toBeTruthy();
                 expect(abs(hit[1]) < 0.001).toBeTruthy();
                 expect(abs(hit[2]) < 0.001).toBeTruthy();

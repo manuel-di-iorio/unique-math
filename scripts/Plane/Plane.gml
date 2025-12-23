@@ -58,9 +58,9 @@ function plane_set_from_normal_and_coplanar_point(p, nx, ny, nz, px, py, pz) {
     p[@3] = -(nx * px + ny * py + nz * pz);
 }
 
-function plane_equals(p, other) {
+function plane_equals(p, p2) {
     gml_pragma("forceinline");
-    return p[0]==other[0] && p[1]==other[1] && p[2]==other[2] && p[3]==other[3];
+    return p[0]==p2[0] && p[1]==p2[1] && p[2]==p2[2] && p[3]==p2[3];
 }
 
 function plane_negate(p) {
@@ -112,13 +112,13 @@ function plane_intersect_line(p, line, out = undefined) {
     var ex = line[3], ey = line[4], ez = line[5];
     var sd = p[0]*sx + p[1]*sy + p[2]*sz + p[3];
     var ed = p[0]*ex + p[1]*ey + p[2]*ez + p[3];
-    if (abs(sd) < 1e-8 && abs(ed) < 1e-8) {
+    if (abs(sd) < 0.00000001 && abs(ed) < 0.00000001) {
         out ??= array_create(3);
         out[@0] = sx; out[@1] = sy; out[@2] = sz;
         return out;
     }
     var denom = sd - ed;
-    if (abs(denom) < 1e-8) return undefined;
+    if (abs(denom) < 0.00000001) return undefined;
     var t = sd / denom;
     if (t < 0 || t > 1) return undefined;
     out ??= array_create(3);

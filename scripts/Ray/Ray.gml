@@ -133,7 +133,7 @@ function ray_intersects_sphere(r, sphere) {
 function ray_intersect_plane(r, plane, out = undefined) {
     gml_pragma("forceinline");
     var denom = plane[0]*r[3] + plane[1]*r[4] + plane[2]*r[5];
-    if (abs(denom) < 1e-8) return undefined;
+    if (abs(denom) < 0.00000001) return undefined;
     var t = -(plane[0]*r[0] + plane[1]*r[1] + plane[2]*r[2] + plane[3]) / denom;
     if (t < 0) return undefined;
     return ray_at(r, t, out);
@@ -144,9 +144,14 @@ function ray_intersect_plane(r, plane, out = undefined) {
 function ray_distance_to_plane(r, plane) {
     gml_pragma("forceinline");
     var denom = plane[0]*r[3] + plane[1]*r[4] + plane[2]*r[5];
-    if (abs(denom) < 1e-8) return undefined;
+    if (abs(denom) < 0.00000001) return undefined;
     var t = -(plane[0]*r[0] + plane[1]*r[1] + plane[2]*r[2] + plane[3]) / denom;
     return (t >= 0) ? t : undefined;
+}
+
+function ray_intersects_plane(r, plane) {
+    gml_pragma("forceinline");
+    return ray_distance_to_plane(r, plane) != undefined;
 }
 
 function ray_intersect_box(r, box) {
@@ -251,7 +256,7 @@ function ray_distance_sq_to_segment(r, v0, v1, outRay = undefined, outSeg = unde
     var D = a*c - b*b;
     var sc, sN, sD = D;
     var tc, tN, tD = D;
-    if (D < 1e-8) {
+    if (D < 0.00000001) {
         sN = 0; sD = 1; tN = e; tD = c;
     } else {
         sN = (b*e - c*d);
@@ -267,15 +272,15 @@ function ray_distance_sq_to_segment(r, v0, v1, outRay = undefined, outSeg = unde
         sN = b - d;
         sD = a;
     }
-    sc = (abs(sN) < 1e-8) ? 0 : (sN / sD);
-    tc = (abs(tN) < 1e-8) ? 0 : (tN / tD);
+    sc = (abs(sN) < 0.00000001) ? 0 : (sN / sD);
+    tc = (abs(tN) < 0.00000001) ? 0 : (tN / tD);
     if (sc < 0) sc = 0; // ray only forward
     var pcx = rx + sc*ux, pcy = ry + sc*uy, pcz = rz + sc*uz;
     var qcx = sx + tc*vx, qcy = sy + tc*vy, qcz = sz + tc*vz;
     if (outRay != undefined) { outRay[@0]=pcx; outRay[@1]=pcy; outRay[@2]=pcz; }
     if (outSeg != undefined) { outSeg[@0]=qcx; outSeg[@1]=qcy; outSeg[@2]=qcz; }
-    var dxq = pcx - qcx, dyq = pcy - qcy, dzq = pcz - qcz;
-    return dxq*dxq + dyq*dyq + dzq*dzq;
+    var dxo = rx - qcx, dyo = ry - qcy, dzo = rz - qcz;
+    return dxo*dxo + dyo*dyo + dzo*dzo;
 }
 
 /// @func ray_intersect_sphere_point(r, sphere, out)
@@ -297,8 +302,8 @@ function ray_intersect_triangle(r, a, b, c, backfaceCulling = false, out = undef
     var py = r[5]*edge2x - r[3]*edge2z;
     var pz = r[3]*edge2y - r[4]*edge2x;
     var det = edge1x*px + edge1y*py + edge1z*pz;
-    if (backfaceCulling) { if (det < 1e-8) return undefined; }
-    else { if (abs(det) < 1e-8) return undefined; }
+    if (backfaceCulling) { if (det < 0.00000001) return undefined; }
+    else { if (abs(det) < 0.00000001) return undefined; }
     var invDet = 1 / det;
     var tx = r[0] - a[0], ty = r[1] - a[1], tz = r[2] - a[2];
     var u = (tx*px + ty*py + tz*pz) * invDet;

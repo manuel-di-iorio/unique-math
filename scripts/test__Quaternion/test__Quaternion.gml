@@ -211,6 +211,35 @@ suite(function() {
             expect(abs(dest[0] - 0.3826) < 0.01).toBeTruthy();
         });
         
+        test("multiplyQuaternionsFlat() multiplies with offsets", function() {
+            var a = quat_create(); quat_set_from_axis_angle(a, [0, 0, 1], 45);
+            var b = quat_create(); quat_set_from_axis_angle(b, [0, 0, 1], 45);
+            var src0 = [0,0,0,0, 0,0,0,0];
+            var src1 = [0,0,0,0];
+            quat_to_array(a, src0, 4);
+            quat_to_array(b, src1, 0);
+            var dst = [0,0,0,0, 0,0,0,0];
+            multiplyQuaternionsFlat(dst, 2, src0, 4, src1, 0);
+            var d = quat_create();
+            quat_from_array(d, dst, 2);
+            expect(abs(d[2] - 0.7071) < 0.01).toBeTruthy();
+            expect(abs(d[3] - 0.7071) < 0.01).toBeTruthy();
+        });
+        
+        test("slerpFlat() interpolates with offsets", function() {
+            var qa = quat_create(0,0,0,1);
+            var qb = quat_create(); quat_set_from_axis_angle(qb, [1,0,0], 90);
+            var src0 = [0,0,0,0, 10,20,30,40];
+            var src1 = [5,6,7,8, 0,0,0,0];
+            quat_to_array(qa, src0, 0);
+            quat_to_array(qb, src1, 4);
+            var dst = [0,0,0,0, 0,0,0,0];
+            slerpFlat(dst, 4, src0, 0, src1, 4, 0.5);
+            var d = quat_create();
+            quat_from_array(d, dst, 4);
+            expect(abs(d[0] - 0.3826) < 0.02).toBeTruthy();
+        });
+        
         test("quat_from_buffer_attribute() loads by index", function() {
             var buf = [1, 2, 3, 4, 5, 6, 7, 8];
             var q = quat_create();

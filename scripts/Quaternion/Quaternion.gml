@@ -450,3 +450,65 @@ function quat_from_buffer_attribute(q, attr, index) {
     quat_from_array(q, attr, offset);
     return q;
 }
+
+function multiplyQuaternionsFlat(dst, dstOffset, src0, srcOffset0, src1, srcOffset1) {
+    gml_pragma("forceinline");
+    var ax = src0[srcOffset0], ay = src0[srcOffset0 + 1], az = src0[srcOffset0 + 2], aw = src0[srcOffset0 + 3];
+    var bx = src1[srcOffset1], by = src1[srcOffset1 + 1], bz = src1[srcOffset1 + 2], bw = src1[srcOffset1 + 3];
+    dst[@dstOffset]     = ax * bw + aw * bx + ay * bz - az * by;
+    dst[@dstOffset + 1] = ay * bw + aw * by + az * bx - ax * bz;
+    dst[@dstOffset + 2] = az * bw + aw * bz + ax * by - ay * bx;
+    dst[@dstOffset + 3] = aw * bw - ax * bx - ay * by - az * bz;
+    return dst;
+}
+
+function slerpFlat(dst, dstOffset, src0, srcOffset0, src1, srcOffset1, t) {
+    gml_pragma("forceinline");
+    var x0 = src0[srcOffset0], y0 = src0[srcOffset0 + 1], z0 = src0[srcOffset0 + 2], w0 = src0[srcOffset0 + 3];
+    var x1 = src1[srcOffset1], y1 = src1[srcOffset1 + 1], z1 = src1[srcOffset1 + 2], w1 = src1[srcOffset1 + 3];
+    
+    if (t <= 0) {
+        dst[@dstOffset] = x0; dst[@dstOffset + 1] = y0; dst[@dstOffset + 2] = z0; dst[@dstOffset + 3] = w0;
+        return dst;
+    }
+    if (t >= 1) {
+        dst[@dstOffset] = x1; dst[@dstOffset + 1] = y1; dst[@dstOffset + 2] = z1; dst[@dstOffset + 3] = w1;
+        return dst;
+    }
+    
+    var cosHalfTheta = w0 * w1 + x0 * x1 + y0 * y1 + z0 * z1;
+    if (cosHalfTheta < 0) {
+        x1 = -x1; y1 = -y1; z1 = -z1; w1 = -w1;
+        cosHalfTheta = -cosHalfTheta;
+    }
+    if (cosHalfTheta >= 1.0) {
+        dst[@dstOffset] = x0; dst[@dstOffset + 1] = y0; dst[@dstOffset + 2] = z0; dst[@dstOffset + 3] = w0;
+        return dst;
+    }
+    var sqrSinHalfTheta = 1.0 - cosHalfTheta * cosHalfTheta;
+    if (sqrSinHalfTheta <= 0.000001) {
+        var s = 1 - t;
+        var rx = s * x0 + t * x1;
+        var ry = s * y0 + t * y1;
+        var rz = s * z0 + t * z1;
+        var rw = s * w0 + t * w1;
+        var l = rx*rx + ry*ry + rz*rz + rw*rw;
+        if (l != 0) {
+            l = 1 / sqrt(l);
+            rx *= l; ry *= l; rz *= l; rw *= l;
+        } else {
+            rx = 0; ry = 0; rz = 0; rw = 1;
+        }
+        dst[@dstOffset] = rx; dst[@dstOffset + 1] = ry; dst[@dstOffset + 2] = rz; dst[@dstOffset + 3] = rw;
+        return dst;
+    }
+    var sinHalfTheta = sqrt(sqrSinHalfTheta);
+    var halfTheta = arccos(cosHalfTheta);
+    var ratioA = sin((1 - t) * halfTheta) / sinHalfTheta;
+    var ratioB = sin(t * halfTheta) / sinHalfTheta;
+    dst[@dstOffset]     = x0 * ratioA + x1 * ratioB;
+    dst[@dstOffset + 1] = y0 * ratioA + y1 * ratioB;
+    dst[@dstOffset + 2] = z0 * ratioA + z1 * ratioB;
+    dst[@dstOffset + 3] = w0 * ratioA + w1 * ratioB;
+    return dst;
+}

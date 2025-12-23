@@ -1,18 +1,16 @@
-/// @desc Euler functions using arrays [x, y, z, order]
-/// Angles are in DEGREES.
-/// Order is a string: "XYZ", "YXZ", "ZXY", "ZYX", "YZX", "XZY". Default is "XYZ".
+/// @desc Euler functions using arrays [x, y, z]
+/// Angles are in DEGREES. Rotation order: "YXZ".
 
-function euler_create(x = 0, y = 0, z = 0, order = "XYZ") {
+function euler_create(x = 0, y = 0, z = 0) {
     gml_pragma("forceinline");
-    return [x, y, z, order];
+    return [x, y, z];
 }
 
-function euler_set(e, x, y, z, order = "XYZ") {
+function euler_set(e, x, y, z) {
     gml_pragma("forceinline");
     e[@0] = x;
     e[@1] = y;
     e[@2] = z;
-    e[@3] = order;
 }
 
 function euler_copy(e, src) {
@@ -20,22 +18,41 @@ function euler_copy(e, src) {
     e[@0] = src[0];
     e[@1] = src[1];
     e[@2] = src[2];
-    e[@3] = src[3];
 }
 
 function euler_clone(e) {
     gml_pragma("forceinline");
-    return [e[0], e[1], e[2], e[3]];
+    return [e[0], e[1], e[2]];
 }
 
-/// @func euler_set_from_rotation_matrix(e, m, order)
-/// @desc Sets euler angles from rotation matrix.
-function euler_set_from_rotation_matrix(e, m, order = undefined) {
+function euler_from_array(e, array, offset = 0) {
     gml_pragma("forceinline");
-    
-    // Default order if not provided
-    if (order == undefined) order = e[3];
-    else e[@3] = order; // Update order
+    e[@0] = array[offset];
+    e[@1] = array[offset + 1];
+    e[@2] = array[offset + 2];
+    var idx = offset + 3;
+}
+
+function euler_to_array(e, array = undefined, offset = 0) {
+    gml_pragma("forceinline");
+    array ??= array_create(3);
+    array[@offset] = e[0];
+    array[@offset + 1] = e[1];
+    array[@offset + 2] = e[2];
+    return array;
+}
+
+function euler_set_from_vector3(e, v) {
+    gml_pragma("forceinline");
+    e[@0] = v[0];
+    e[@1] = v[1];
+    e[@2] = v[2];
+}
+
+/// @func euler_set_from_rotation_matrix(e, m)
+/// @desc Sets euler angles from rotation matrix.
+function euler_set_from_rotation_matrix(e, m) {
+    gml_pragma("forceinline");
     
     // Clamp matrix elements to [-1, 1] to avoid NaNs from asin/acos?
     // GML's darcsin/darccos handle inputs naturally but clamping is safer for floats
@@ -45,83 +62,13 @@ function euler_set_from_rotation_matrix(e, m, order = undefined) {
     var m31 = m[2], m32 = m[6], m33 = m[10];
     
     var _x, _y, _z;
-    
-    switch (order) {
-        case "XYZ":
-            _y = darcsin(clamp(m13, -1, 1));
-            if (abs(m13) < 0.9999999) {
-                _x = darctan2(-m23, m33);
-                _z = darctan2(-m12, m11);
-            } else {
-                _x = darctan2(m32, m22);
-                _z = 0;
-            }
-            break;
-            
-        case "YXZ":
-            _x = darcsin(-clamp(m23, -1, 1));
-            if (abs(m23) < 0.9999999) {
-                _y = darctan2(m13, m33);
-                _z = darctan2(m21, m22);
-            } else {
-                _y = darctan2(-m31, m11);
-                _z = 0;
-            }
-            break;
-            
-        case "ZXY":
-            _x = darcsin(clamp(m32, -1, 1));
-            if (abs(m32) < 0.9999999) {
-                _y = darctan2(-m31, m33);
-                _z = darctan2(-m12, m22);
-            } else {
-                _y = 0;
-                _z = darctan2(m21, m11);
-            }
-            break;
-            
-        case "ZYX":
-            _y = darcsin(-clamp(m31, -1, 1));
-            if (abs(m31) < 0.9999999) {
-                _x = darctan2(m32, m33);
-                _z = darctan2(m21, m11);
-            } else {
-                _x = 0;
-                _z = darctan2(-m12, m22);
-            }
-            break;
-            
-        case "YZX":
-            _z = darcsin(clamp(m21, -1, 1));
-            if (abs(m21) < 0.9999999) {
-                _x = darctan2(-m23, m22);
-                _y = darctan2(-m31, m11);
-            } else {
-                _x = 0;
-                _y = darctan2(m13, m33);
-            }
-            break;
-            
-        case "XZY":
-            _z = darcsin(-clamp(m12, -1, 1));
-            if (abs(m12) < 0.9999999) {
-                _x = darctan2(m32, m22);
-                _y = darctan2(m13, m11);
-            } else {
-                _x = darctan2(-m23, m33);
-                _y = 0;
-            }
-            break;
-            
-        default: // XYZ
-             _y = darcsin(clamp(m13, -1, 1));
-            if (abs(m13) < 0.9999999) {
-                _x = darctan2(-m23, m33);
-                _z = darctan2(-m12, m11);
-            } else {
-                _x = darctan2(m32, m22);
-                _z = 0;
-            }
+    _x = darcsin(-clamp(m23, -1, 1));
+    if (abs(m23) < 0.9999999) {
+        _y = darctan2(m13, m33);
+        _z = darctan2(m21, m22);
+    } else {
+        _y = darctan2(-m31, m11);
+        _z = 0;
     }
     
     e[@0] = _x;
@@ -129,17 +76,13 @@ function euler_set_from_rotation_matrix(e, m, order = undefined) {
     e[@2] = _z;
 }
 
-/// @func euler_set_from_quaternion(e, q, order)
+/// @func euler_set_from_quaternion(e, q)
 /// @desc Sets euler angles from quaternion.
-function euler_set_from_quaternion(e, q, order = undefined) {
+function euler_set_from_quaternion(e, q) {
     gml_pragma("forceinline");
     // Matrix conversion is often easier/robust
     // We can build a rotation matrix from quaternion then extract euler
     
-    // OR direct math (Three.js impl)
-    if (order == undefined) order = e[3];
-    else e[@3] = order;
-
     var _x = q[0], _y = q[1], _z = q[2], _w = q[3];
     var x2 = _x + _x, y2 = _y + _y, z2 = _z + _z;
     var xx = _x * x2, xy = _x * y2, xz = _x * z2;
@@ -160,79 +103,15 @@ function euler_set_from_quaternion(e, q, order = undefined) {
     var m33 = 1 - (xx + yy);
 
     // Reuse matrix extraction logic (duplicated for performance/independence or could wrap)
-    // For now I'll duplicate the logic to avoid creating a temp matrix array
     
     var rx, ry, rz;
-     switch (order) {
-        case "XYZ":
-            ry = darcsin(clamp(m13, -1, 1));
-            if (abs(m13) < 0.9999999) {
-                rx = darctan2(-m23, m33);
-                rz = darctan2(-m12, m11);
-            } else {
-                rx = darctan2(m32, m22);
-                rz = 0;
-            }
-            break;
-        case "YXZ":
-            rx = darcsin(-clamp(m23, -1, 1));
-            if (abs(m23) < 0.9999999) {
-                ry = darctan2(m13, m33);
-                rz = darctan2(m21, m22);
-            } else {
-                ry = darctan2(-m31, m11);
-                rz = 0;
-            }
-            break;
-        case "ZXY":
-            rx = darcsin(clamp(m32, -1, 1));
-            if (abs(m32) < 0.9999999) {
-                ry = darctan2(-m31, m33);
-                rz = darctan2(-m12, m22);
-            } else {
-                ry = 0;
-                rz = darctan2(m21, m11);
-            }
-            break;
-        case "ZYX":
-            ry = darcsin(-clamp(m31, -1, 1));
-            if (abs(m31) < 0.9999999) {
-                rx = darctan2(m32, m33);
-                rz = darctan2(m21, m11);
-            } else {
-                rx = 0;
-                rz = darctan2(-m12, m22);
-            }
-            break;
-        case "YZX":
-            rz = darcsin(clamp(m21, -1, 1));
-            if (abs(m21) < 0.9999999) {
-                rx = darctan2(-m23, m22);
-                ry = darctan2(-m31, m11);
-            } else {
-                rx = 0;
-                ry = darctan2(m13, m33);
-            }
-            break;
-        case "XZY":
-            rz = darcsin(-clamp(m12, -1, 1));
-            if (abs(m12) < 0.9999999) {
-                rx = darctan2(m32, m22);
-                ry = darctan2(m13, m11);
-            } else {
-                rx = darctan2(-m23, m33);
-                ry = 0;
-            }
-            break;
-        default: // XYZ
-             ry = darcsin(clamp(m13, -1, 1));
-            if (abs(m13) < 0.9999999) {
-                rx = darctan2(-m23, m33);
-                rz = darctan2(-m12, m11);
-            } else {
-                rx = darctan2(m32, m22);
-                rz = 0;
-            }
+    rx = darcsin(-clamp(m23, -1, 1));
+    if (abs(m23) < 0.9999999) {
+        ry = darctan2(m13, m33);
+        rz = darctan2(m21, m22);
+    } else {
+        ry = darctan2(-m31, m11);
+        rz = 0;
     }
     
     e[@0] = rx;

@@ -29,6 +29,26 @@ Functions modify the first argument in-place unless noted.
 | `box3_intersects_box(b, other)` | `boolean` | True if boxes intersect. |
 | `box3_get_center(b, [out])` | `Array` | Writes/returns center vector. |
 | `box3_get_size(b, [out])` | `Array` | Writes/returns size vector. |
+| `box3_equals(b, other)` | `boolean` | True if all bounds equal. |
+| `box3_contains_box(b, other)` | `boolean` | True if `b` fully contains `other`. |
+| `box3_clamp_point(b, x, y, z, out?)` | `Vector3` | Clamps point to box boundaries. |
+| `box3_distance_to_point(b, x, y, z)` | `number` | Euclidean distance to the box (0 if inside). |
+| `box3_expand_by_scalar(b, s)` | - | Expands bounds by scalar in all directions. |
+| `box3_expand_by_vector(b, v)` | - | Expands bounds by vector `[x,y,z]` in both directions. |
+| `box3_is_empty(b)` | `boolean` | True if any `min > max`. |
+| `box3_make_empty(b)` | - | Sets to empty (`[inf,inf,inf,-inf,-inf,-inf]`). |
+| `box3_union(b, other)` | `Box3` | Sets `b` to union of both boxes. |
+| `box3_intersect(b, other)` | `Box3` | Sets `b` to overlap with `other` (or empty if none). |
+| `box3_translate(b, ox, oy, oz)` | - | Moves box by offset. |
+| `box3_set_from_center_and_size(b, center, size)` | `Box3` | Sets from center `[x,y,z]` and size `[w,h,d]`. |
+| `box3_set_from_points(b, points)` | `Box3` | Sets to enclose array of `[x,y,z]` points. |
+| `box3_apply_matrix4(b, m)` | `Box3` | Transforms the 8 corners by `m` and recomputes bounds. |
+| `box3_get_bounding_sphere(b)` | `Sphere` | Returns minimal sphere enclosing the box. |
+| `box3_get_parameter(b, p, out?)` | `Vector3` | Returns normalized coordinates within the box. |
+| `box3_intersects_plane(b, plane)` | `boolean` | True if plane intersects box. |
+| `box3_intersects_sphere(b, sphere)` | `boolean` | True if sphere intersects box. |
+| `box3_intersects_triangle(b, a, c, d)` | `boolean` | Approximates intersection via triangle AABB overlap. |
+| `box3_expand_by_object(b, object, precise?)` | `Box3` | Unions `b` with `object.__boundingBox` (transformed) or its bounding sphere; recurses into `children`. |
 
 ---
 
