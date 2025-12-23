@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# vec2
+# Vec2
 
 2D vector functions using arrays `[x, y]`. All angles are in **degrees**. Functions modify the first vector in-place for zero allocations and high performance.
 

@@ -1,4 +1,4 @@
-// UniqueMathVersion 2.0.0
+global.UE_MATH_VERSION = "2.1.0";
 global.UE_OBJECT3D_DEFAULT_UP = new UeVector3(0, 0, -1);
 global.UE_OBJECT3D_DEFAULT_MATRIX_AUTO_UPDATE = true;
 global.UE_OBJECT3D_DEFAULT_MATRIX_WORLD_AUTO_UPDATE = true;
