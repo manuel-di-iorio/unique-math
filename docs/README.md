@@ -106,6 +106,17 @@ q.setFromAxisAngle(new UeVector3(0, 1, 0), 90);
 | ------ | ----------- |
 | [`Vec2`](./Functions/Vec2) | 2D vector functions |
 | [`Vec3`](./Functions/Vec3) | 3D vector functions |
+| [`Matrix3`](./Functions/Matrix3) | 3x3 matrix functions |
+| [`Matrix4`](./Functions/Matrix4) | 4x4 matrix functions |
+| [`Quaternion`](./Functions/Quaternion) | Quaternion functions |
+| [`Plane`](./Functions/Plane) | 3D plane functions |
+| [`Ray`](./Functions/Ray) | Ray functions |
+| [`Box2`](./Functions/Box2) | 2D bounding box functions |
+| [`Box3`](./Functions/Box3) | 3D bounding box functions |
+| [`Sphere`](./Functions/Sphere) | Bounding sphere functions |
+| [`Frustum`](./Functions/Frustum) | View frustum functions |
+| [`Euler`](./Functions/Euler) | Euler angles functions |
+| [`Transform`](./Functions/Transform) | Transform functions |
 
 ### Structs (Class-based)
 

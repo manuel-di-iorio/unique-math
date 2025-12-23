@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Vec3
 
-High-performance 3D vector functions using arrays `[x, y, z]`. All angles are in **degrees**. Functions modify the first vector in-place for zero allocations.
+3D vector functions using arrays `[x, y, z]`. All angles are in **degrees**. Functions modify the first vector in-place for zero allocations.
 
 ---
 

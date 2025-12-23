@@ -594,7 +594,7 @@ function vec3_angle_to(vec, v) {
     var _len2 = sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
     var _denom = _len1 * _len2;
     if (_denom == 0) return 0;
-    
+
     var cos_theta = clamp(_dot / _denom, -1, 1);
     return darccos(cos_theta);
 }
@@ -612,11 +612,11 @@ function vec3_apply_axis_angle(vec, axis, angle) {
     gml_pragma("forceinline");
     var xx = vec[0], yy = vec[1], zz = vec[2];
     var ax = axis[0], ay = axis[1], az = axis[2];
-    
+
     var cosA = dcos(angle);
     var sinA = dsin(angle);
     var t = 1 - cosA;
-    
+
     // Rodrigues' rotation formula
     vec[@0] = (t * ax * ax + cosA) * xx + (t * ax * ay - sinA * az) * yy + (t * ax * az + sinA * ay) * zz;
     vec[@1] = (t * ax * ay + sinA * az) * xx + (t * ay * ay + cosA) * yy + (t * ay * az - sinA * ax) * zz;
@@ -632,9 +632,9 @@ function vec3_apply_quaternion(vec, q) {
     var xx = vec[0], yy = vec[1], zz = vec[2];
     var qx = q[0], qy = q[1], qz = q[2], qw = q[3];
 
-    var ix =  qw * xx + qy * zz - qz * yy;
-    var iy =  qw * yy + qz * xx - qx * zz;
-    var iz =  qw * zz + qx * yy - qy * xx;
+    var ix = qw * xx + qy * zz - qz * yy;
+    var iy = qw * yy + qz * xx - qx * zz;
+    var iz = qw * zz + qx * yy - qy * xx;
     var iw = -qx * xx - qy * yy - qz * zz;
 
     vec[@0] = ix * qw + iw * -qx + iy * -qz - iz * -qy;
@@ -951,9 +951,9 @@ function __vec3_euler_to_quaternion(x, y, z, order) {
     var c1 = dcos(x * 0.5), s1 = dsin(x * 0.5);
     var c2 = dcos(y * 0.5), s2 = dsin(y * 0.5);
     var c3 = dcos(z * 0.5), s3 = dsin(z * 0.5);
-    
+
     var qx, qy, qz, qw;
-    
+
     switch (order) {
         case "XYZ":
             qx = s1 * c2 * c3 + c1 * s2 * s3;
@@ -998,7 +998,7 @@ function __vec3_euler_to_quaternion(x, y, z, order) {
             qz = c1 * c2 * s3 + s1 * s2 * c3;
             qw = c1 * c2 * c3 - s1 * s2 * s3;
     }
-    
+
     return [qx, qy, qz, qw];
 }
 

@@ -536,7 +536,7 @@ function vec2_angle_to(vec, v) {
     var _len2 = sqrt(v[0] * v[0] + v[1] * v[1]);
     var _denom = _len1 * _len2;
     if (_denom == 0) return 0;
-    
+
     var cos_theta = clamp(_dot / _denom, -1, 1);
     return darccos(cos_theta);
 }
