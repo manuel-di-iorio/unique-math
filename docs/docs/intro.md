@@ -106,8 +106,8 @@ q.setFromAxisAngle(new UeVector3(0, 1, 0), 90);
 
 | Module | Description |
 | ------ | ----------- |
-| [`Vec2`](./Functions/Vec2) | 2D vector functions |
-| [`Vec3`](./Functions/Vec3) | 3D vector functions |
+| [`Vec2`](./Functions/Vector2) | 2D vector functions |
+| [`Vec3`](./Functions/Vector3) | 3D vector functions |
 | [`Matrix3`](./Functions/Matrix3) | 3x3 matrix functions |
 | [`Matrix4`](./Functions/Matrix4) | 4x4 matrix functions |
 
