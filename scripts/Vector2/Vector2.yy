@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"Vec2",
+  "%Name":"Vector2",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"Vec2",
+  "name":"Vector2",
   "parent":{
     "name":"Unique Math (Functions)",
     "path":"folders/Unique Math (Functions).yy",

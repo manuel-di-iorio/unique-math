@@ -279,11 +279,11 @@ function box3_set_from_object(b, object) {
 
     // Richiama la stessa funzione sui figli
     var children = object[$ "children"];
-    if (children != undefined) {
-        var n = array_length(children);
-        for (var i = 0; i < n; i++) {
-            box3_set_from_object(b, children[i]);
-        }
+    var n = array_length(children);
+    for (var i = 0; i < n; i++) {
+      var childBox = box3_create();
+      box3_set_from_object(childBox, children[i]);
+      box3_union(b, childBox);
     }
 
     return b;

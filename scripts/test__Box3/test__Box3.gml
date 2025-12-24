@@ -186,49 +186,48 @@ suite(function() {
         });
         
         test("box3_set_from_object() uses object's __boundingBox", function() {
-             var b = box3_create();
+          var b = box3_create();
 
-            // Oggetto principale con geometria
-            var obj = {};
-            var geom = {};
-            geom[$ "vertices"] = [0,0,0, 1,1,1]; // box 0..1
-            geom[$ "boundingBox"] = undefined;
-            obj[$ "geometry"] = geom;
-            obj[$ "matrixWorld"] = undefined; // nessuna trasformazione
-            obj[$ "children"] = [];
+          // Oggetto principale con geometria
+          var obj = {};
+          var geom = {};
+          geom[$ "vertices"] = [0,0,0, 1,1,1]; // box 0..1
+          geom[$ "boundingBox"] = undefined;
+          obj[$ "geometry"] = geom;
+          obj[$ "matrixWorld"] = undefined; // nessuna trasformazione
+          obj[$ "children"] = [];
 
-            // Calcola il box
-            box3_set_from_object(b, obj);
+          // Calcola il box
+          box3_set_from_object(b, obj);
 
-            // Verifica valori
-            var expected = [0,0,0,1,1,1];
-            var ok = box3_equals(b, expected);
+          // Verifica valori
+          var expected = [0,0,0,1,1,1];
+          var ok = box3_equals(b, expected);
+          expect(ok).toBeTruthy(); // fallisce se false
 
-            expect(ok).toBeTruthy(); // fallisce se false
+          // --- Aggiungiamo un figlio con traslazione ---
+          var child = {};
+          var geom2 = {};
+          geom2[$ "vertices"] = [0,0,0, 2,2,2]; // box 0..2
+          child[$ "geometry"] = geom2;
+          child[$ "matrixWorld"] = [
+              1,0,0,0,
+              0,1,0,0,
+              0,0,1,0,
+              1,1,1,1
+          ];
+          child[$ "children"] = [];
+          obj[$ "children"] = [child];
 
-            // --- Aggiungiamo un figlio con traslazione ---
-            var child = {};
-            var geom2 = {};
-            geom2[$ "vertices"] = [0,0,0, 2,2,2]; // box 0..2
-            child[$ "geometry"] = geom2;
-            child[$ "matrixWorld"] = [ // semplice traslazione +1 in ogni asse
-                [1,0,0,1],
-                [0,1,0,1],
-                [0,0,1,1],
-                [0,0,0,1]
-            ];
-            child[$ "children"] = [];
-            obj[$ "children"] = [child];
+          //// Calcola di nuovo il box
+          box3_make_empty(b);
+          box3_set_from_object(b, obj);
 
-            // Calcola di nuovo il box
-            box3_make_empty(b);
-            box3_set_from_object(b, obj);
+          // Il box finale dovrebbe essere l'unione del principale e del figlio traslato
+          var expected2 = [0,0,0,3,3,3]; // principale 0..1, figlio traslato 1..3
+          var ok2 = box3_equals(b, expected2);
 
-            // Il box finale dovrebbe essere l'unione del principale e del figlio traslato
-            var expected2 = [0,0,0,3,3,3]; // principale 0..1, figlio traslato 1..3
-            var ok2 = box3_equals(b, expected2);
-
-            expect(ok2).toBeTruthy();
+          expect(ok2).toBeTruthy();
         });
     });
 });
