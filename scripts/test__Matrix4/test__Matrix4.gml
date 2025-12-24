@@ -1,5 +1,5 @@
 // GMTL-style test suite for Matrix4 (array-based high-performance matrices)
-// API follows Three.js Matrix4. Rotation angles are in DEGREES.
+// Rotation angles are in DEGREES.
 suite(function() {
     describe("Matrix4", function() {
         
