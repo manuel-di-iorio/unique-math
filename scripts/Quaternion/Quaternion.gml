@@ -30,10 +30,10 @@ function quat_create(x = 0, y = 0, z = 0, w = 1) {
 /// @param {Real} w W component
 function quat_set(q, x, y, z, w) {
     gml_pragma("forceinline");
-    q[@0] = x;
-    q[@1] = y;
-    q[@2] = z;
-    q[@3] = w;
+    q[0] = x;
+    q[1] = y;
+    q[2] = z;
+    q[3] = w;
 }
 
 /// @func quat_identity(q)
@@ -41,10 +41,10 @@ function quat_set(q, x, y, z, w) {
 /// @param {Array<Real>} q The quaternion to modify
 function quat_identity(q) {
     gml_pragma("forceinline");
-    q[@0] = 0;
-    q[@1] = 0;
-    q[@2] = 0;
-    q[@3] = 1;
+    q[0] = 0;
+    q[1] = 0;
+    q[2] = 0;
+    q[3] = 1;
 }
 
 // ============================================================================
@@ -66,10 +66,10 @@ function quat_clone(q) {
 /// @param {Array<Real>} src The source quaternion
 function quat_copy(q, src) {
     gml_pragma("forceinline");
-    q[@0] = src[0];
-    q[@1] = src[1];
-    q[@2] = src[2];
-    q[@3] = src[3];
+    q[0] = src[0];
+    q[1] = src[1];
+    q[2] = src[2];
+    q[3] = src[3];
 }
 
 // ============================================================================
@@ -97,10 +97,10 @@ function quat_set_from_euler(q, x, y, z) {
     var s2 = dsin(y * 0.5);
     var s3 = dsin(z * 0.5);
     
-    q[@0] = s1 * c2 * c3 + c1 * s2 * s3;
-    q[@1] = c1 * s2 * c3 - s1 * c2 * s3;
-    q[@2] = c1 * c2 * s3 - s1 * s2 * c3;
-    q[@3] = c1 * c2 * c3 + s1 * s2 * s3;
+    q[0] = s1 * c2 * c3 + c1 * s2 * s3;
+    q[1] = c1 * s2 * c3 - s1 * c2 * s3;
+    q[2] = c1 * c2 * s3 - s1 * s2 * c3;
+    q[3] = c1 * c2 * c3 + s1 * s2 * s3;
 }
 
 /// @func quat_set_from_axis_angle(q, axis, angle)
@@ -116,10 +116,10 @@ function quat_set_from_axis_angle(q, axis, angle) {
     var halfAngle = angle * 0.5;
     var s = dsin(halfAngle);
     
-    q[@0] = axis[0] * s;
-    q[@1] = axis[1] * s;
-    q[@2] = axis[2] * s;
-    q[@3] = dcos(halfAngle);
+    q[0] = axis[0] * s;
+    q[1] = axis[1] * s;
+    q[2] = axis[2] * s;
+    q[3] = dcos(halfAngle);
 }
 
 /// @func quat_set_from_rotation_matrix(q, m)
@@ -139,28 +139,28 @@ function quat_set_from_rotation_matrix(q, m) {
 
     if (trace > 0) {
         var s = 0.5 / sqrt(trace + 1.0);
-        q[@3] = 0.25 / s;
-        q[@0] = (m32 - m23) * s;
-        q[@1] = (m13 - m31) * s;
-        q[@2] = (m21 - m12) * s;
+        q[3] = 0.25 / s;
+        q[0] = (m32 - m23) * s;
+        q[1] = (m13 - m31) * s;
+        q[2] = (m21 - m12) * s;
     } else if (m11 > m22 && m11 > m33) {
         var s = 2.0 * sqrt(1.0 + m11 - m22 - m33);
-        q[@3] = (m32 - m23) / s;
-        q[@0] = 0.25 * s;
-        q[@1] = (m12 + m21) / s;
-        q[@2] = (m13 + m31) / s;
+        q[3] = (m32 - m23) / s;
+        q[0] = 0.25 * s;
+        q[1] = (m12 + m21) / s;
+        q[2] = (m13 + m31) / s;
     } else if (m22 > m33) {
         var s = 2.0 * sqrt(1.0 + m22 - m11 - m33);
-        q[@3] = (m13 - m31) / s;
-        q[@0] = (m12 + m21) / s;
-        q[@1] = 0.25 * s;
-        q[@2] = (m23 + m32) / s;
+        q[3] = (m13 - m31) / s;
+        q[0] = (m12 + m21) / s;
+        q[1] = 0.25 * s;
+        q[2] = (m23 + m32) / s;
     } else {
         var s = 2.0 * sqrt(1.0 + m33 - m11 - m22);
-        q[@3] = (m21 - m12) / s;
-        q[@0] = (m13 + m31) / s;
-        q[@1] = (m23 + m32) / s;
-        q[@2] = 0.25 * s;
+        q[3] = (m21 - m12) / s;
+        q[0] = (m13 + m31) / s;
+        q[1] = (m23 + m32) / s;
+        q[2] = 0.25 * s;
     }
 }
 
@@ -182,16 +182,16 @@ function quat_set_from_unit_vectors(q, vFrom, vTo) {
         // Vectors are opposite
         r = 0;
         if (abs(v1x) > abs(v1z)) {
-            q[@0] = -v1y; q[@1] = v1x; q[@2] = 0; q[@3] = r;
+            q[0] = -v1y; q[1] = v1x; q[2] = 0; q[3] = r;
         } else {
-            q[@0] = 0; q[@1] = -v1z; q[@2] = v1y; q[@3] = r;
+            q[0] = 0; q[1] = -v1z; q[2] = v1y; q[3] = r;
         }
     } else {
         // Cross product
-        q[@0] = v1y * v2z - v1z * v2y;
-        q[@1] = v1z * v2x - v1x * v2z;
-        q[@2] = v1x * v2y - v1y * v2x;
-        q[@3] = r;
+        q[0] = v1y * v2z - v1z * v2y;
+        q[1] = v1z * v2x - v1x * v2z;
+        q[2] = v1x * v2y - v1y * v2x;
+        q[3] = r;
     }
     
     quat_normalize(q);
@@ -217,9 +217,9 @@ function quat_invert(q) {
 /// @param {Array<Real>} q The quaternion
 function quat_conjugate(q) {
     gml_pragma("forceinline");
-    q[@0] *= -1;
-    q[@1] *= -1;
-    q[@2] *= -1;
+    q[0] *= -1;
+    q[1] *= -1;
+    q[2] *= -1;
 }
 
 /// @func quat_dot(q, q2)
@@ -257,13 +257,13 @@ function quat_normalize(q) {
     gml_pragma("forceinline");
     var l = q[0]*q[0] + q[1]*q[1] + q[2]*q[2] + q[3]*q[3];
     if (l == 0) {
-        q[@0] = 0; q[@1] = 0; q[@2] = 0; q[@3] = 1;
+        q[0] = 0; q[1] = 0; q[2] = 0; q[3] = 1;
     } else {
         l = 1 / sqrt(l);
-        q[@0] *= l;
-        q[@1] *= l;
-        q[@2] *= l;
-        q[@3] *= l;
+        q[0] *= l;
+        q[1] *= l;
+        q[2] *= l;
+        q[3] *= l;
     }
 }
 
@@ -276,10 +276,10 @@ function quat_multiply(q, q2) {
     var qax = q[0], quay = q[1], qaz = q[2], qaw = q[3];
     var qbx = q2[0], qby = q2[1], qbz = q2[2], qbw = q2[3];
     
-    q[@0] = qax * qbw + qaw * qbx + quay * qbz - qaz * qby;
-    q[@1] = quay * qbw + qaw * qby + qaz * qbx - qax * qbz;
-    q[@2] = qaz * qbw + qaw * qbz + qax * qby - quay * qbx;
-    q[@3] = qaw * qbw - qax * qbx - quay * qby - qaz * qbz;
+    q[0] = qax * qbw + qaw * qbx + quay * qbz - qaz * qby;
+    q[1] = quay * qbw + qaw * qby + qaz * qbx - qax * qbz;
+    q[2] = qaz * qbw + qaw * qbz + qax * qby - quay * qbx;
+    q[3] = qaw * qbw - qax * qbx - quay * qby - qaz * qbz;
 }
 
 /// @func quat_premultiply(q, q2)
@@ -291,10 +291,10 @@ function quat_premultiply(q, q2) {
     var qax = q2[0], quay = q2[1], qaz = q2[2], qaw = q2[3];
     var qbx = q[0], qby = q[1], qbz = q[2], qbw = q[3];
     
-    q[@0] = qax * qbw + qaw * qbx + quay * qbz - qaz * qby;
-    q[@1] = quay * qbw + qaw * qby + qaz * qbx - qax * qbz;
-    q[@2] = qaz * qbw + qaw * qbz + qax * qby - quay * qbx;
-    q[@3] = qaw * qbw - qax * qbx - quay * qby - qaz * qbz;
+    q[0] = qax * qbw + qaw * qbx + quay * qbz - qaz * qby;
+    q[1] = quay * qbw + qaw * qby + qaz * qbx - qax * qbz;
+    q[2] = qaz * qbw + qaw * qbz + qax * qby - quay * qbx;
+    q[3] = qaw * qbw - qax * qbx - quay * qby - qaz * qbz;
 }
 
 /// @func quat_slerp(q, qb, t)
@@ -316,14 +316,14 @@ function quat_slerp(q, qb, t) {
     var cosHalfTheta = _w * bw + _x * bx + _y * by + _z * bz;
     
     if (cosHalfTheta < 0) {
-        q[@0] = -bx; q[@1] = -by; q[@2] = -bz; q[@3] = -bw;
+        q[0] = -bx; q[1] = -by; q[2] = -bz; q[3] = -bw;
         cosHalfTheta = -cosHalfTheta;
     } else {
         quat_copy(q, qb);
     }
     
     if (cosHalfTheta >= 1.0) {
-        q[@0] = _x; q[@1] = _y; q[@2] = _z; q[@3] = _w;
+        q[0] = _x; q[1] = _y; q[2] = _z; q[3] = _w;
         return;
     }
     
@@ -332,10 +332,10 @@ function quat_slerp(q, qb, t) {
     // If sinHalfTheta is too small, use linear interpolation
     if (sqrSinHalfTheta <= 0.000001) {
         var s = 1 - t;
-        q[@0] = s * _x + t * q[0];
-        q[@1] = s * _y + t * q[1];
-        q[@2] = s * _z + t * q[2];
-        q[@3] = s * _w + t * q[3];
+        q[0] = s * _x + t * q[0];
+        q[1] = s * _y + t * q[1];
+        q[2] = s * _z + t * q[2];
+        q[3] = s * _w + t * q[3];
         quat_normalize(q);
         return;
     }
@@ -345,10 +345,10 @@ function quat_slerp(q, qb, t) {
     var ratioA = sin((1 - t) * halfTheta) / sinHalfTheta;
     var ratioB = sin(t * halfTheta) / sinHalfTheta;
     
-    q[@0] = (_x * ratioA + q[0] * ratioB);
-    q[@1] = (_y * ratioA + q[1] * ratioB);
-    q[@2] = (_z * ratioA + q[2] * ratioB);
-    q[@3] = (_w * ratioA + q[3] * ratioB);
+    q[0] = (_x * ratioA + q[0] * ratioB);
+    q[1] = (_y * ratioA + q[1] * ratioB);
+    q[2] = (_z * ratioA + q[2] * ratioB);
+    q[3] = (_w * ratioA + q[3] * ratioB);
 }
 
 // ============================================================================
@@ -372,10 +372,10 @@ function quat_equals(q, q2) {
 /// @param {Real} [offset=0] Index offset
 function quat_from_array(q, array, offset = 0) {
     gml_pragma("forceinline");
-    q[@0] = array[offset];
-    q[@1] = array[offset + 1];
-    q[@2] = array[offset + 2];
-    q[@3] = array[offset + 3];
+    q[0] = array[offset];
+    q[1] = array[offset + 1];
+    q[2] = array[offset + 2];
+    q[3] = array[offset + 3];
 }
 
 /// @func quat_to_array(q, array, offset)
@@ -387,10 +387,10 @@ function quat_from_array(q, array, offset = 0) {
 function quat_to_array(q, array = undefined, offset = 0) {
     gml_pragma("forceinline");
     array ??= array_create(4);
-    array[@offset] = q[0];
-    array[@offset + 1] = q[1];
-    array[@offset + 2] = q[2];
-    array[@offset + 3] = q[3];
+    array[offset] = q[0];
+    array[offset + 1] = q[1];
+    array[offset + 2] = q[2];
+    array[offset + 3] = q[3];
     return array;
 }
 
@@ -405,10 +405,10 @@ function quat_multiply_quaternions(dest, a, b) {
     gml_pragma("forceinline");
     var ax = a[0], ay = a[1], az = a[2], aw = a[3];
     var bx = b[0], by = b[1], bz = b[2], bw = b[3];
-    dest[@0] = ax * bw + aw * bx + ay * bz - az * by;
-    dest[@1] = ay * bw + aw * by + az * bx - ax * bz;
-    dest[@2] = az * bw + aw * bz + ax * by - ay * bx;
-    dest[@3] = aw * bw - ax * bx - ay * by - az * bz;
+    dest[0] = ax * bw + aw * bx + ay * bz - az * by;
+    dest[1] = ay * bw + aw * by + az * bx - ax * bz;
+    dest[2] = az * bw + aw * bz + ax * by - ay * bx;
+    dest[3] = aw * bw - ax * bx - ay * by - az * bz;
     return dest;
 }
 
@@ -421,10 +421,10 @@ function quat_random(q) {
     var s2 = sqrt(u1);
     var t1 = 360 * u2;
     var t2 = 360 * u3;
-    q[@0] = s1 * dsin(t1);
-    q[@1] = s1 * dcos(t1);
-    q[@2] = s2 * dsin(t2);
-    q[@3] = s2 * dcos(t2);
+    q[0] = s1 * dsin(t1);
+    q[1] = s1 * dcos(t1);
+    q[2] = s2 * dsin(t2);
+    q[3] = s2 * dcos(t2);
     return q;
 }
 
@@ -455,10 +455,10 @@ function multiplyQuaternionsFlat(dst, dstOffset, src0, srcOffset0, src1, srcOffs
     gml_pragma("forceinline");
     var ax = src0[srcOffset0], ay = src0[srcOffset0 + 1], az = src0[srcOffset0 + 2], aw = src0[srcOffset0 + 3];
     var bx = src1[srcOffset1], by = src1[srcOffset1 + 1], bz = src1[srcOffset1 + 2], bw = src1[srcOffset1 + 3];
-    dst[@dstOffset]     = ax * bw + aw * bx + ay * bz - az * by;
-    dst[@dstOffset + 1] = ay * bw + aw * by + az * bx - ax * bz;
-    dst[@dstOffset + 2] = az * bw + aw * bz + ax * by - ay * bx;
-    dst[@dstOffset + 3] = aw * bw - ax * bx - ay * by - az * bz;
+    dst[dstOffset]     = ax * bw + aw * bx + ay * bz - az * by;
+    dst[dstOffset + 1] = ay * bw + aw * by + az * bx - ax * bz;
+    dst[dstOffset + 2] = az * bw + aw * bz + ax * by - ay * bx;
+    dst[dstOffset + 3] = aw * bw - ax * bx - ay * by - az * bz;
     return dst;
 }
 
@@ -468,11 +468,11 @@ function slerpFlat(dst, dstOffset, src0, srcOffset0, src1, srcOffset1, t) {
     var x1 = src1[srcOffset1], y1 = src1[srcOffset1 + 1], z1 = src1[srcOffset1 + 2], w1 = src1[srcOffset1 + 3];
     
     if (t <= 0) {
-        dst[@dstOffset] = x0; dst[@dstOffset + 1] = y0; dst[@dstOffset + 2] = z0; dst[@dstOffset + 3] = w0;
+        dst[dstOffset] = x0; dst[dstOffset + 1] = y0; dst[dstOffset + 2] = z0; dst[dstOffset + 3] = w0;
         return dst;
     }
     if (t >= 1) {
-        dst[@dstOffset] = x1; dst[@dstOffset + 1] = y1; dst[@dstOffset + 2] = z1; dst[@dstOffset + 3] = w1;
+        dst[dstOffset] = x1; dst[dstOffset + 1] = y1; dst[dstOffset + 2] = z1; dst[dstOffset + 3] = w1;
         return dst;
     }
     
@@ -482,7 +482,7 @@ function slerpFlat(dst, dstOffset, src0, srcOffset0, src1, srcOffset1, t) {
         cosHalfTheta = -cosHalfTheta;
     }
     if (cosHalfTheta >= 1.0) {
-        dst[@dstOffset] = x0; dst[@dstOffset + 1] = y0; dst[@dstOffset + 2] = z0; dst[@dstOffset + 3] = w0;
+        dst[dstOffset] = x0; dst[dstOffset + 1] = y0; dst[dstOffset + 2] = z0; dst[dstOffset + 3] = w0;
         return dst;
     }
     var sqrSinHalfTheta = 1.0 - cosHalfTheta * cosHalfTheta;
@@ -499,16 +499,16 @@ function slerpFlat(dst, dstOffset, src0, srcOffset0, src1, srcOffset1, t) {
         } else {
             rx = 0; ry = 0; rz = 0; rw = 1;
         }
-        dst[@dstOffset] = rx; dst[@dstOffset + 1] = ry; dst[@dstOffset + 2] = rz; dst[@dstOffset + 3] = rw;
+        dst[dstOffset] = rx; dst[dstOffset + 1] = ry; dst[dstOffset + 2] = rz; dst[dstOffset + 3] = rw;
         return dst;
     }
     var sinHalfTheta = sqrt(sqrSinHalfTheta);
     var halfTheta = arccos(cosHalfTheta);
     var ratioA = sin((1 - t) * halfTheta) / sinHalfTheta;
     var ratioB = sin(t * halfTheta) / sinHalfTheta;
-    dst[@dstOffset]     = x0 * ratioA + x1 * ratioB;
-    dst[@dstOffset + 1] = y0 * ratioA + y1 * ratioB;
-    dst[@dstOffset + 2] = z0 * ratioA + z1 * ratioB;
-    dst[@dstOffset + 3] = w0 * ratioA + w1 * ratioB;
+    dst[dstOffset]     = x0 * ratioA + x1 * ratioB;
+    dst[dstOffset + 1] = y0 * ratioA + y1 * ratioB;
+    dst[dstOffset + 2] = z0 * ratioA + z1 * ratioB;
+    dst[dstOffset + 3] = w0 * ratioA + w1 * ratioB;
     return dst;
 }

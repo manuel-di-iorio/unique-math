@@ -7,8 +7,8 @@ function ray_create(ox = 0, oy = 0, oz = 0, dx = 0, dy = 0, dz = -1) {
 
 function ray_set(r, ox, oy, oz, dx, dy, dz) {
     gml_pragma("forceinline");
-    r[@0] = ox; r[@1] = oy; r[@2] = oz;
-    r[@3] = dx; r[@4] = dy; r[@5] = dz;
+    r[0] = ox; r[1] = oy; r[2] = oz;
+    r[3] = dx; r[4] = dy; r[5] = dz;
 }
 
 function ray_copy(r, src) {
@@ -33,25 +33,25 @@ function ray_equals(r, other) {
 function ray_at(r, t, out = undefined) {
     gml_pragma("forceinline");
     out ??= array_create(3);
-    out[@0] = r[0] + r[3] * t;
-    out[@1] = r[1] + r[4] * t;
-    out[@2] = r[2] + r[5] * t;
+    out[0] = r[0] + r[3] * t;
+    out[1] = r[1] + r[4] * t;
+    out[2] = r[2] + r[5] * t;
     return out;
 }
 
 /// @func ray_recenter(r, ox, oy, oz)
 function ray_recenter(r, ox, oy, oz) {
     gml_pragma("forceinline");
-    r[@0] = ox; r[@1] = oy; r[@2] = oz;
+    r[0] = ox; r[1] = oy; r[2] = oz;
 }
 
 /// @func ray_recast(r, t)
 /// @desc Shifts the origin along the direction by distance t.
 function ray_recast(r, t) {
     gml_pragma("forceinline");
-    r[@0] += r[3] * t;
-    r[@1] += r[4] * t;
-    r[@2] += r[5] * t;
+    r[0] += r[3] * t;
+    r[1] += r[4] * t;
+    r[2] += r[5] * t;
 }
 
 /// @func ray_look_at(r, tx, ty, tz)
@@ -64,9 +64,9 @@ function ray_look_at(r, tx, ty, tz) {
     var len = sqrt(dx*dx + dy*dy + dz*dz);
     if (len > 0) {
         var invLen = 1 / len;
-        r[@3] = dx * invLen;
-        r[@4] = dy * invLen;
-        r[@5] = dz * invLen;
+        r[3] = dx * invLen;
+        r[4] = dy * invLen;
+        r[5] = dz * invLen;
     }
 }
 
@@ -78,12 +78,12 @@ function ray_apply_matrix4(r, m) {
     var e = [r[0] + r[3], r[1] + r[4], r[2] + r[5]];
     vec3_apply_matrix4(o, m);
     vec3_apply_matrix4(e, m);
-    r[@0] = o[0]; r[@1] = o[1]; r[@2] = o[2];
-    r[@3] = e[0] - o[0];
-    r[@4] = e[1] - o[1];
-    r[@5] = e[2] - o[2];
+    r[0] = o[0]; r[1] = o[1]; r[2] = o[2];
+    r[3] = e[0] - o[0];
+    r[4] = e[1] - o[1];
+    r[5] = e[2] - o[2];
     var len = sqrt(r[3]*r[3] + r[4]*r[4] + r[5]*r[5]);
-    if (len > 0) { var inv = 1/len; r[@3]*=inv; r[@4]*=inv; r[@5]*=inv; }
+    if (len > 0) { var inv = 1/len; r[3]*=inv; r[4]*=inv; r[5]*=inv; }
 }
 
 /// @func ray_intersect_sphere(r, sphere)
@@ -277,8 +277,8 @@ function ray_distance_sq_to_segment(r, v0, v1, outRay = undefined, outSeg = unde
     if (sc < 0) sc = 0; // ray only forward
     var pcx = rx + sc*ux, pcy = ry + sc*uy, pcz = rz + sc*uz;
     var qcx = sx + tc*vx, qcy = sy + tc*vy, qcz = sz + tc*vz;
-    if (outRay != undefined) { outRay[@0]=pcx; outRay[@1]=pcy; outRay[@2]=pcz; }
-    if (outSeg != undefined) { outSeg[@0]=qcx; outSeg[@1]=qcy; outSeg[@2]=qcz; }
+    if (outRay != undefined) { outRay[0]=pcx; outRay[1]=pcy; outRay[2]=pcz; }
+    if (outSeg != undefined) { outSeg[0]=qcx; outSeg[1]=qcy; outSeg[2]=qcz; }
     var dxo = rx - qcx, dyo = ry - qcy, dzo = rz - qcz;
     return dxo*dxo + dyo*dyo + dzo*dzo;
 }

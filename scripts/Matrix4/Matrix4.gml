@@ -24,10 +24,10 @@ function mat4_create() {
 function mat4_set(m, n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44) {
   gml_pragma("forceinline");
   // Store in column-major order
-  m[@0] = n11; m[@1] = n21; m[@2] = n31; m[@3] = n41;
-  m[@4] = n12; m[@5] = n22; m[@6] = n32; m[@7] = n42;
-  m[@8] = n13; m[@9] = n23; m[@10] = n33; m[@11] = n43;
-  m[@12] = n14; m[@13] = n24; m[@14] = n34; m[@15] = n44;
+  m[0] = n11; m[1] = n21; m[2] = n31; m[3] = n41;
+  m[4] = n12; m[5] = n22; m[6] = n32; m[7] = n42;
+  m[8] = n13; m[9] = n23; m[10] = n33; m[11] = n43;
+  m[12] = n14; m[13] = n24; m[14] = n34; m[15] = n44;
 }
 
 /// @func mat4_identity(m)
@@ -35,10 +35,10 @@ function mat4_set(m, n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34,
 /// @param {Array<Real>} m The matrix to modify
 function mat4_identity(m) {
   gml_pragma("forceinline");
-  m[@0] = 1; m[@1] = 0; m[@2] = 0; m[@3] = 0;
-  m[@4] = 0; m[@5] = 1; m[@6] = 0; m[@7] = 0;
-  m[@8] = 0; m[@9] = 0; m[@10] = 1; m[@11] = 0;
-  m[@12] = 0; m[@13] = 0; m[@14] = 0; m[@15] = 1;  
+  m[0] = 1; m[1] = 0; m[2] = 0; m[3] = 0;
+  m[4] = 0; m[5] = 1; m[6] = 0; m[7] = 0;
+  m[8] = 0; m[9] = 0; m[10] = 1; m[11] = 0;
+  m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;  
 }
 
 // ============================================================================
@@ -61,10 +61,10 @@ function mat4_clone(m) {
 /// @param {Array<Real>} src The matrix to copy
 function mat4_copy(m, src) {
   gml_pragma("forceinline");
-  m[@0] = src[0]; m[@1] = src[1]; m[@2] = src[2]; m[@3] = src[3];
-  m[@4] = src[4]; m[@5] = src[5]; m[@6] = src[6]; m[@7] = src[7];
-  m[@8] = src[8]; m[@9] = src[9]; m[@10] = src[10]; m[@11] = src[11];
-  m[@12] = src[12]; m[@13] = src[13]; m[@14] = src[14]; m[@15] = src[15];
+  m[0] = src[0]; m[1] = src[1]; m[2] = src[2]; m[3] = src[3];
+  m[4] = src[4]; m[5] = src[5]; m[6] = src[6]; m[7] = src[7];
+  m[8] = src[8]; m[9] = src[9]; m[10] = src[10]; m[11] = src[11];
+  m[12] = src[12]; m[13] = src[13]; m[14] = src[14]; m[15] = src[15];
 }
 
 /// @func mat4_copy_position(m, src)
@@ -73,9 +73,9 @@ function mat4_copy(m, src) {
 /// @param {Array<Real>} src The matrix to copy translation from
 function mat4_copy_position(m, src) {
   gml_pragma("forceinline");
-  m[@12] = src[12];
-  m[@13] = src[13];
-  m[@14] = src[14];
+  m[12] = src[12];
+  m[13] = src[13];
+  m[14] = src[14];
 }
 
 // ============================================================================
@@ -127,12 +127,12 @@ function mat4_invert(m) {
 function mat4_transpose(m) {
   gml_pragma("forceinline");
   var tmp;
-  tmp = m[1]; m[@1] = m[4]; m[@4] = tmp;
-  tmp = m[2]; m[@2] = m[8]; m[@8] = tmp;
-  tmp = m[3]; m[@3] = m[12]; m[@12] = tmp;
-  tmp = m[6]; m[@6] = m[9]; m[@9] = tmp;
-  tmp = m[7]; m[@7] = m[13]; m[@13] = tmp;
-  tmp = m[11]; m[@11] = m[14]; m[@14] = tmp;
+  tmp = m[1]; m[1] = m[4]; m[4] = tmp;
+  tmp = m[2]; m[2] = m[8]; m[8] = tmp;
+  tmp = m[3]; m[3] = m[12]; m[12] = tmp;
+  tmp = m[6]; m[6] = m[9]; m[9] = tmp;
+  tmp = m[7]; m[7] = m[13]; m[13] = tmp;
+  tmp = m[11]; m[11] = m[14]; m[14] = tmp;
 }
 
 // ============================================================================
@@ -190,7 +190,7 @@ function mat4_multiply_matrices(m, a, b) {
 /// @param {Real} s The scalar
 function mat4_multiply_scalar(m, s) {
   gml_pragma("forceinline");
-  for (var i = 0; i < 16; i++) m[@i] *= s;
+  for (var i = 0; i < 16; i++) m[i] *= s;
 }
 
 // ============================================================================
@@ -258,10 +258,10 @@ function mat4_make_rotation_axis(m, axis, angle) {
   var t = 1 - c;
   var _x = axis[0], _y = axis[1], _z = axis[2];
 
-  m[@0] = t * _x * _x + c; m[@1] = t * _x * _y + s * _z; m[@2] = t * _x * _z - s * _y; m[@3] = 0;
-  m[@4] = t * _x * _y - s * _z; m[@5] = t * _y * _y + c; m[@6] = t * _y * _z + s * _x; m[@7] = 0;
-  m[@8] = t * _x * _z + s * _y; m[@9] = t * _y * _z - s * _x; m[@10] = t * _z * _z + c; m[@11] = 0;
-  m[@12] = 0; m[@13] = 0; m[@14] = 0; m[@15] = 1;
+  m[0] = t * _x * _x + c; m[1] = t * _x * _y + s * _z; m[2] = t * _x * _z - s * _y; m[3] = 0;
+  m[4] = t * _x * _y - s * _z; m[5] = t * _y * _y + c; m[6] = t * _y * _z + s * _x; m[7] = 0;
+  m[8] = t * _x * _z + s * _y; m[9] = t * _y * _z - s * _x; m[10] = t * _z * _z + c; m[11] = 0;
+  m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
 }
 
 /// @func mat4_make_rotation_from_euler(m, x, y, z, order)
@@ -288,10 +288,10 @@ function mat4_make_rotation_from_quaternion(m, q) {
   var yy = _y * y2, yz = _y * z2, zz = _z * z2;
   var wx = _w * x2, wy = _w * y2, wz = _w * z2;
 
-  m[@0] = 1 - (yy + zz); m[@1] = xy + wz; m[@2] = xz - wy; m[@3] = 0;
-  m[@4] = xy - wz; m[@5] = 1 - (xx + zz); m[@6] = yz + wx; m[@7] = 0;
-  m[@8] = xz + wy; m[@9] = yz - wx; m[@10] = 1 - (xx + yy); m[@11] = 0;
-  m[@12] = 0; m[@13] = 0; m[@14] = 0; m[@15] = 1;
+  m[0] = 1 - (yy + zz); m[1] = xy + wz; m[2] = xz - wy; m[3] = 0;
+  m[4] = xy - wz; m[5] = 1 - (xx + zz); m[6] = yz + wx; m[7] = 0;
+  m[8] = xz + wy; m[9] = yz - wx; m[10] = 1 - (xx + yy); m[11] = 0;
+  m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
 }
 
 /// @func mat4_make_shear(m, xy, xz, yx, yz, zx, zy)
@@ -299,10 +299,10 @@ function mat4_make_rotation_from_quaternion(m, q) {
 /// @param {Array<Real>} m The matrix to modify
 function mat4_make_shear(m, xy, xz, yx, yz, zx, zy) {
   gml_pragma("forceinline");
-  m[@0] = 1; m[@1] = yx; m[@2] = zx; m[@3] = 0;
-  m[@4] = xy; m[@5] = 1; m[@6] = zy; m[@7] = 0;
-  m[@8] = xz; m[@9] = yz; m[@10] = 1; m[@11] = 0;
-  m[@12] = 0; m[@13] = 0; m[@14] = 0; m[@15] = 1;
+  m[0] = 1; m[1] = yx; m[2] = zx; m[3] = 0;
+  m[4] = xy; m[5] = 1; m[6] = zy; m[7] = 0;
+  m[8] = xz; m[9] = yz; m[10] = 1; m[11] = 0;
+  m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
 }
 
 // ============================================================================
@@ -356,10 +356,10 @@ function mat4_look_at(m, eye, target, up) {
 /// @param {Array<Real>} zAxis The basis's z axis (vec3)
 function mat4_make_basis(m, xAxis, yAxis, zAxis) {
   gml_pragma("forceinline");
-  m[@0] = xAxis[0]; m[@1] = xAxis[1]; m[@2] = xAxis[2]; m[@3] = 0;
-  m[@4] = yAxis[0]; m[@5] = yAxis[1]; m[@6] = yAxis[2]; m[@7] = 0;
-  m[@8] = zAxis[0]; m[@9] = zAxis[1]; m[@10] = zAxis[2]; m[@11] = 0;
-  m[@12] = 0; m[@13] = 0; m[@14] = 0; m[@15] = 1;
+  m[0] = xAxis[0]; m[1] = xAxis[1]; m[2] = xAxis[2]; m[3] = 0;
+  m[4] = yAxis[0]; m[5] = yAxis[1]; m[6] = yAxis[2]; m[7] = 0;
+  m[8] = zAxis[0]; m[9] = zAxis[1]; m[10] = zAxis[2]; m[11] = 0;
+  m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
 }
 
 /// @func mat4_extract_basis(m, xAxis, yAxis, zAxis)
@@ -370,9 +370,9 @@ function mat4_make_basis(m, xAxis, yAxis, zAxis) {
 /// @param {Array<Real>} zAxis The basis's z axis (vec3)
 function mat4_extract_basis(m, xAxis, yAxis, zAxis) {
   gml_pragma("forceinline");
-  xAxis[@0] = m[0]; xAxis[@1] = m[1]; xAxis[@2] = m[2];
-  yAxis[@0] = m[4]; yAxis[@1] = m[5]; yAxis[@2] = m[6];
-  zAxis[@0] = m[8]; zAxis[@1] = m[9]; zAxis[@2] = m[10];
+  xAxis[0] = m[0]; xAxis[1] = m[1]; xAxis[2] = m[2];
+  yAxis[0] = m[4]; yAxis[1] = m[5]; yAxis[2] = m[6];
+  zAxis[0] = m[8]; zAxis[1] = m[9]; zAxis[2] = m[10];
 }
 
 /// @func mat4_extract_rotation(m, src)
@@ -389,10 +389,10 @@ function mat4_extract_rotation(m, src) {
   var invSy = sy > 0 ? 1 / sy : 0;
   var invSz = sz > 0 ? 1 / sz : 0;
 
-  m[@0] = src[0] * invSx; m[@1] = src[1] * invSx; m[@2] = src[2] * invSx; m[@3] = 0;
-  m[@4] = src[4] * invSy; m[@5] = src[5] * invSy; m[@6] = src[6] * invSy; m[@7] = 0;
-  m[@8] = src[8] * invSz; m[@9] = src[9] * invSz; m[@10] = src[10] * invSz; m[@11] = 0;
-  m[@12] = 0; m[@13] = 0; m[@14] = 0; m[@15] = 1;
+  m[0] = src[0] * invSx; m[1] = src[1] * invSx; m[2] = src[2] * invSx; m[3] = 0;
+  m[4] = src[4] * invSy; m[5] = src[5] * invSy; m[6] = src[6] * invSy; m[7] = 0;
+  m[8] = src[8] * invSz; m[9] = src[9] * invSz; m[10] = src[10] * invSz; m[11] = 0;
+  m[12] = 0; m[13] = 0; m[14] = 0; m[15] = 1;
 }
 
 // ============================================================================
@@ -415,25 +415,25 @@ function mat4_compose(m, position, quaternion, scale) {
 
   var _sx = scale[0], _sy = scale[1], _sz = scale[2];
 
-  m[@0] = (1 - (_yy + _zz)) * _sx;
-  m[@1] = (_xy + _wz) * _sx;
-  m[@2] = (_xz - _wy) * _sx;
-  m[@3] = 0;
+  m[0] = (1 - (_yy + _zz)) * _sx;
+  m[1] = (_xy + _wz) * _sx;
+  m[2] = (_xz - _wy) * _sx;
+  m[3] = 0;
 
-  m[@4] = (_xy - _wz) * _sy;
-  m[@5] = (1 - (_xx + _zz)) * _sy;
-  m[@6] = (_yz + _wx) * _sy;
-  m[@7] = 0;
+  m[4] = (_xy - _wz) * _sy;
+  m[5] = (1 - (_xx + _zz)) * _sy;
+  m[6] = (_yz + _wx) * _sy;
+  m[7] = 0;
 
-  m[@8] = (_xz + _wy) * _sz;
-  m[@9] = (_yz - _wx) * _sz;
-  m[@10] = (1 - (_xx + _yy)) * _sz;
-  m[@11] = 0;
+  m[8] = (_xz + _wy) * _sz;
+  m[9] = (_yz - _wx) * _sz;
+  m[10] = (1 - (_xx + _yy)) * _sz;
+  m[11] = 0;
 
-  m[@12] = position[0];
-  m[@13] = position[1];
-  m[@14] = position[2];
-  m[@15] = 1;
+  m[12] = position[0];
+  m[13] = position[1];
+  m[14] = position[2];
+  m[15] = 1;
 }
 
 /// @func mat4_decompose(m, position, quaternion, scale)
@@ -445,9 +445,9 @@ function mat4_compose(m, position, quaternion, scale) {
 function mat4_decompose(m, position, quaternion, scale) {
   gml_pragma("forceinline");
   // Extract position
-  position[@0] = m[12];
-  position[@1] = m[13];
-  position[@2] = m[14];
+  position[0] = m[12];
+  position[1] = m[13];
+  position[2] = m[14];
 
   // Extract scale
   var sx = sqrt(m[0] * m[0] + m[1] * m[1] + m[2] * m[2]);
@@ -457,9 +457,9 @@ function mat4_decompose(m, position, quaternion, scale) {
   // Detect negative scale
   if (mat4_determinant(m) < 0) sx = -sx;
 
-  scale[@0] = sx;
-  scale[@1] = sy;
-  scale[@2] = sz;
+  scale[0] = sx;
+  scale[1] = sy;
+  scale[2] = sz;
 
   // Extract rotation (normalized basis)
   var invSx = sx > 0 ? 1 / sx : 0;
@@ -475,28 +475,28 @@ function mat4_decompose(m, position, quaternion, scale) {
 
   if (trace > 0) {
     var s = 0.5 / sqrt(trace + 1);
-    quaternion[@3] = 0.25 / s;
-    quaternion[@0] = (m21 - m12) * s;
-    quaternion[@1] = (m02 - m20) * s;
-    quaternion[@2] = (m10 - m01) * s;
+    quaternion[3] = 0.25 / s;
+    quaternion[0] = (m21 - m12) * s;
+    quaternion[1] = (m02 - m20) * s;
+    quaternion[2] = (m10 - m01) * s;
   } else if (m00 > m11 && m00 > m22) {
     var s = 2 * sqrt(1 + m00 - m11 - m22);
-    quaternion[@3] = (m21 - m12) / s;
-    quaternion[@0] = 0.25 * s;
-    quaternion[@1] = (m01 + m10) / s;
-    quaternion[@2] = (m02 + m20) / s;
+    quaternion[3] = (m21 - m12) / s;
+    quaternion[0] = 0.25 * s;
+    quaternion[1] = (m01 + m10) / s;
+    quaternion[2] = (m02 + m20) / s;
   } else if (m11 > m22) {
     var s = 2 * sqrt(1 + m11 - m00 - m22);
-    quaternion[@3] = (m02 - m20) / s;
-    quaternion[@0] = (m01 + m10) / s;
-    quaternion[@1] = 0.25 * s;
-    quaternion[@2] = (m12 + m21) / s;
+    quaternion[3] = (m02 - m20) / s;
+    quaternion[0] = (m01 + m10) / s;
+    quaternion[1] = 0.25 * s;
+    quaternion[2] = (m12 + m21) / s;
   } else {
     var s = 2 * sqrt(1 + m22 - m00 - m11);
-    quaternion[@3] = (m10 - m01) / s;
-    quaternion[@0] = (m02 + m20) / s;
-    quaternion[@1] = (m12 + m21) / s;
-    quaternion[@2] = 0.25 * s;
+    quaternion[3] = (m10 - m01) / s;
+    quaternion[0] = (m02 + m20) / s;
+    quaternion[1] = (m12 + m21) / s;
+    quaternion[2] = 0.25 * s;
   }
 }
 
@@ -511,9 +511,9 @@ function mat4_decompose(m, position, quaternion, scale) {
 function mat4_scale(m, v) {
   gml_pragma("forceinline");
   var sx = v[0], sy = v[1], sz = v[2];
-  m[@0] *= sx; m[@1] *= sx; m[@2] *= sx; m[@3] *= sx;
-  m[@4] *= sy; m[@5] *= sy; m[@6] *= sy; m[@7] *= sy;
-  m[@8] *= sz; m[@9] *= sz; m[@10] *= sz; m[@11] *= sz;
+  m[0] *= sx; m[1] *= sx; m[2] *= sx; m[3] *= sx;
+  m[4] *= sy; m[5] *= sy; m[6] *= sy; m[7] *= sy;
+  m[8] *= sz; m[9] *= sz; m[10] *= sz; m[11] *= sz;
 }
 
 /// @func mat4_set_position(m, x, y, z)
@@ -524,9 +524,9 @@ function mat4_scale(m, v) {
 /// @param {Real} z Position Z
 function mat4_set_position(m, x, y, z) {
   gml_pragma("forceinline");
-  m[@12] = x;
-  m[@13] = y;
-  m[@14] = z;
+  m[12] = x;
+  m[13] = y;
+  m[14] = z;
 }
 
 /// @func mat4_get_max_scale_on_axis(m)
@@ -551,9 +551,9 @@ function mat4_get_max_scale_on_axis(m) {
 /// @param {Array<Real>} m3 The 3x3 matrix
 function mat4_set_from_matrix3(m, m3) {
   gml_pragma("forceinline");
-  m[@0] = m3[0]; m[@1] = m3[1]; m[@2] = m3[2];
-  m[@4] = m3[3]; m[@5] = m3[4]; m[@6] = m3[5];
-  m[@8] = m3[6]; m[@9] = m3[7]; m[@10] = m3[8];
+  m[0] = m3[0]; m[1] = m3[1]; m[2] = m3[2];
+  m[4] = m3[3]; m[5] = m3[4]; m[6] = m3[5];
+  m[8] = m3[6]; m[9] = m3[7]; m[10] = m3[8];
 }
 
 // ============================================================================
@@ -567,7 +567,7 @@ function mat4_set_from_matrix3(m, m3) {
 /// @param {Real} [offset=0] Index of the first element in the array
 function mat4_from_array(m, array, offset = 0) {
   gml_pragma("forceinline");
-  for (var i = 0; i < 16; i++) m[@i] = array[offset + i];
+  for (var i = 0; i < 16; i++) m[i] = array[offset + i];
 }
 
 /// @func mat4_to_array(m, array, offset)
@@ -579,6 +579,6 @@ function mat4_from_array(m, array, offset = 0) {
 function mat4_to_array(m, array = undefined, offset = 0) {
   gml_pragma("forceinline");
   array ??= array_create(16);
-  for (var i = 0; i < 16; i++) array[@offset + i] = m[i];
+  for (var i = 0; i < 16; i++) array[offset + i] = m[i];
   return array;
 }

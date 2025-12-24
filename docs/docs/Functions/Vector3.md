@@ -225,20 +225,6 @@ var zero = vec3_create();  // [0, 0, 0]
 | `vec3_set_from_color(vec, color)` | Sets from color array [r, g, b] (0-1) |
 | `vec3_set_from_color_gml(vec, color)` | Sets from GML color value |
 
-### Camera Projection
-
-| Function | Description |
-| -------- | ----------- |
-| `vec3_project(vec, camera)` | Projects to NDC space using camera's matrices |
-| `vec3_unproject(vec, camera)` | Unprojects from NDC to world space |
-
-The `camera` struct must have these properties:
-- `matrixWorld` - World matrix
-- `matrixWorldInverse` - Inverse of world matrix
-- `projectionMatrix` - Projection matrix
-- `projectionMatrixInverse` - Inverse of projection matrix
-
-
 ### Extra Utility
 
 | Function | Description |

@@ -7,18 +7,18 @@ function plane_create(nx = 0, ny = 1, nz = 0, constant = 0) {
 
 function plane_set(p, nx, ny, nz, constant) {
     gml_pragma("forceinline");
-    p[@0] = nx;
-    p[@1] = ny;
-    p[@2] = nz;
-    p[@3] = constant;
+    p[0] = nx;
+    p[1] = ny;
+    p[2] = nz;
+    p[3] = constant;
 }
 
 function plane_copy(p, src) {
     gml_pragma("forceinline");
-    p[@0] = src[0];
-    p[@1] = src[1];
-    p[@2] = src[2];
-    p[@3] = src[3];
+    p[0] = src[0];
+    p[1] = src[1];
+    p[2] = src[2];
+    p[3] = src[3];
 }
 
 function plane_clone(p) {
@@ -34,10 +34,10 @@ function plane_normalize(p) {
     var len = sqrt(nx*nx + ny*ny + nz*nz);
     if (len > 0) {
         var invLen = 1 / len;
-        p[@0] *= invLen;
-        p[@1] *= invLen;
-        p[@2] *= invLen;
-        p[@3] *= invLen;
+        p[0] *= invLen;
+        p[1] *= invLen;
+        p[2] *= invLen;
+        p[3] *= invLen;
     }
 }
 
@@ -52,10 +52,10 @@ function plane_distance_to_point(p, px, py, pz) {
 /// @desc Sets plane from normal and a point on the plane.
 function plane_set_from_normal_and_coplanar_point(p, nx, ny, nz, px, py, pz) {
     gml_pragma("forceinline");
-    p[@0] = nx;
-    p[@1] = ny;
-    p[@2] = nz;
-    p[@3] = -(nx * px + ny * py + nz * pz);
+    p[0] = nx;
+    p[1] = ny;
+    p[2] = nz;
+    p[3] = -(nx * px + ny * py + nz * pz);
 }
 
 function plane_equals(p, p2) {
@@ -65,24 +65,24 @@ function plane_equals(p, p2) {
 
 function plane_negate(p) {
     gml_pragma("forceinline");
-    p[@0] = -p[0];
-    p[@1] = -p[1];
-    p[@2] = -p[2];
-    p[@3] = -p[3];
+    p[0] = -p[0];
+    p[1] = -p[1];
+    p[2] = -p[2];
+    p[3] = -p[3];
 }
 
 function plane_translate(p, tx, ty, tz) {
     gml_pragma("forceinline");
-    p[@3] -= p[0]*tx + p[1]*ty + p[2]*tz;
+    p[3] -= p[0]*tx + p[1]*ty + p[2]*tz;
 }
 
 function plane_coplanar_point(p, out = undefined) {
     gml_pragma("forceinline");
     out ??= array_create(3);
     var t = -p[3];
-    out[@0] = p[0] * t;
-    out[@1] = p[1] * t;
-    out[@2] = p[2] * t;
+    out[0] = p[0] * t;
+    out[1] = p[1] * t;
+    out[2] = p[2] * t;
     return out;
 }
 
@@ -90,9 +90,9 @@ function plane_project_point(p, px, py, pz, out = undefined) {
     gml_pragma("forceinline");
     var t = -(p[0]*px + p[1]*py + p[2]*pz + p[3]);
     out ??= array_create(3);
-    out[@0] = px + p[0]*t;
-    out[@1] = py + p[1]*t;
-    out[@2] = pz + p[2]*t;
+    out[0] = px + p[0]*t;
+    out[1] = py + p[1]*t;
+    out[2] = pz + p[2]*t;
     return out;
 }
 
@@ -114,7 +114,7 @@ function plane_intersect_line(p, line, out = undefined) {
     var ed = p[0]*ex + p[1]*ey + p[2]*ez + p[3];
     if (abs(sd) < 0.00000001 && abs(ed) < 0.00000001) {
         out ??= array_create(3);
-        out[@0] = sx; out[@1] = sy; out[@2] = sz;
+        out[0] = sx; out[1] = sy; out[2] = sz;
         return out;
     }
     var denom = sd - ed;
@@ -122,9 +122,9 @@ function plane_intersect_line(p, line, out = undefined) {
     var t = sd / denom;
     if (t < 0 || t > 1) return undefined;
     out ??= array_create(3);
-    out[@0] = sx + (ex - sx) * t;
-    out[@1] = sy + (ey - sy) * t;
-    out[@2] = sz + (ez - sz) * t;
+    out[0] = sx + (ex - sx) * t;
+    out[1] = sy + (ey - sy) * t;
+    out[2] = sz + (ez - sz) * t;
     return out;
 }
 

@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"test__Transform",
+  "%Name":"test__Vector3",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"test__Transform",
+  "name":"test__Vector3",
   "parent":{
     "name":"Tests (Functions)",
     "path":"folders/Tests (Functions).yy",

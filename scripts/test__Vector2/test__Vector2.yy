@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"Transform",
+  "%Name":"test__Vector2",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"Transform",
+  "name":"test__Vector2",
   "parent":{
-    "name":"Unique Math (Functions)",
-    "path":"folders/Unique Math (Functions).yy",
+    "name":"Tests (Functions)",
+    "path":"folders/Tests (Functions).yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

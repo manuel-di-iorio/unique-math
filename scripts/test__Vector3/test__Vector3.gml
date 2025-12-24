@@ -744,41 +744,5 @@ suite(function() {
             expect(round(v[1] * 100) / 100).toBe(0.5);
             expect(v[2]).toBe(0);
         });
-
-        // ====================================================================
-        // CAMERA PROJECTION
-        // ====================================================================
-
-        test("vec3_project() applies view and projection matrices from camera", function() {
-            var v = vec3_create(1, 0, 0);
-            // Mock camera with identity matrices
-            var identity = [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
-            var camera = {
-                matrixWorld: identity,
-                matrixWorldInverse: identity,
-                projectionMatrix: identity,
-                projectionMatrixInverse: identity
-            };
-            vec3_project(v, camera);
-            expect(v[0]).toBe(1);
-            expect(v[1]).toBe(0);
-            expect(v[2]).toBe(0);
-        });
-
-        test("vec3_unproject() applies inverse matrices from camera", function() {
-            var v = vec3_create(1, 0, 0);
-            // Mock camera with identity matrices
-            var identity = [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1];
-            var camera = {
-                matrixWorld: identity,
-                matrixWorldInverse: identity,
-                projectionMatrix: identity,
-                projectionMatrixInverse: identity
-            };
-            vec3_unproject(v, camera);
-            expect(v[0]).toBe(1);
-            expect(v[1]).toBe(0);
-            expect(v[2]).toBe(0);
-        });
     });
 });

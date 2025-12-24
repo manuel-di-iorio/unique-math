@@ -26,8 +26,8 @@ function vec2_create(x = 0, y = 0) {
 /// @param {Real} y The value of the y component
 function vec2_set(vec, x, y) {
     gml_pragma("forceinline");
-    vec[@0] = x;
-    vec[@1] = y;
+    vec[0] = x;
+    vec[1] = y;
 }
 
 /// @func vec2_set_scalar(vec, scalar)
@@ -36,8 +36,8 @@ function vec2_set(vec, x, y) {
 /// @param {Real} scalar The value to set for all components
 function vec2_set_scalar(vec, scalar) {
     gml_pragma("forceinline");
-    vec[@0] = scalar;
-    vec[@1] = scalar;
+    vec[0] = scalar;
+    vec[1] = scalar;
 }
 
 /// @func vec2_set_x(vec, x)
@@ -46,7 +46,7 @@ function vec2_set_scalar(vec, scalar) {
 /// @param {Real} x The value to set
 function vec2_set_x(vec, x) {
     gml_pragma("forceinline");
-    vec[@0] = x;
+    vec[0] = x;
 }
 
 /// @func vec2_set_y(vec, y)
@@ -55,7 +55,7 @@ function vec2_set_x(vec, x) {
 /// @param {Real} y The value to set
 function vec2_set_y(vec, y) {
     gml_pragma("forceinline");
-    vec[@1] = y;
+    vec[1] = y;
 }
 
 /// @func vec2_set_component(vec, index, value)
@@ -65,7 +65,7 @@ function vec2_set_y(vec, y) {
 /// @param {Real} value The value to set
 function vec2_set_component(vec, index, value) {
     gml_pragma("forceinline");
-    vec[@index] = value;
+    vec[index] = value;
 }
 
 /// @func vec2_get_component(vec, index)
@@ -97,8 +97,8 @@ function vec2_clone(vec) {
 /// @param {Array<Real>} v The vector to copy
 function vec2_copy(vec, v) {
     gml_pragma("forceinline");
-    vec[@0] = v[0];
-    vec[@1] = v[1];
+    vec[0] = v[0];
+    vec[1] = v[1];
 }
 
 // ============================================================================
@@ -111,8 +111,8 @@ function vec2_copy(vec, v) {
 /// @param {Array<Real>} v The vector to add
 function vec2_add(vec, v) {
     gml_pragma("forceinline");
-    vec[@0] += v[0];
-    vec[@1] += v[1];
+    vec[0] += v[0];
+    vec[1] += v[1];
 }
 
 /// @func vec2_add_scalar(vec, s)
@@ -121,8 +121,8 @@ function vec2_add(vec, v) {
 /// @param {Real} s The scalar to add
 function vec2_add_scalar(vec, s) {
     gml_pragma("forceinline");
-    vec[@0] += s;
-    vec[@1] += s;
+    vec[0] += s;
+    vec[1] += s;
 }
 
 /// @func vec2_add_scaled_vector(vec, v, s)
@@ -132,8 +132,8 @@ function vec2_add_scalar(vec, s) {
 /// @param {Real} s The factor that scales v
 function vec2_add_scaled_vector(vec, v, s) {
     gml_pragma("forceinline");
-    vec[@0] += v[0] * s;
-    vec[@1] += v[1] * s;
+    vec[0] += v[0] * s;
+    vec[1] += v[1] * s;
 }
 
 /// @func vec2_add_vectors(vec, a, b)
@@ -143,8 +143,8 @@ function vec2_add_scaled_vector(vec, v, s) {
 /// @param {Array<Real>} b The second vector
 function vec2_add_vectors(vec, a, b) {
     gml_pragma("forceinline");
-    vec[@0] = a[0] + b[0];
-    vec[@1] = a[1] + b[1];
+    vec[0] = a[0] + b[0];
+    vec[1] = a[1] + b[1];
 }
 
 // ============================================================================
@@ -157,8 +157,8 @@ function vec2_add_vectors(vec, a, b) {
 /// @param {Array<Real>} v The vector to subtract
 function vec2_sub(vec, v) {
     gml_pragma("forceinline");
-    vec[@0] -= v[0];
-    vec[@1] -= v[1];
+    vec[0] -= v[0];
+    vec[1] -= v[1];
 }
 
 /// @func vec2_sub_scalar(vec, s)
@@ -167,8 +167,8 @@ function vec2_sub(vec, v) {
 /// @param {Real} s The scalar to subtract
 function vec2_sub_scalar(vec, s) {
     gml_pragma("forceinline");
-    vec[@0] -= s;
-    vec[@1] -= s;
+    vec[0] -= s;
+    vec[1] -= s;
 }
 
 /// @func vec2_sub_vectors(vec, a, b)
@@ -178,8 +178,8 @@ function vec2_sub_scalar(vec, s) {
 /// @param {Array<Real>} b The second vector
 function vec2_sub_vectors(vec, a, b) {
     gml_pragma("forceinline");
-    vec[@0] = a[0] - b[0];
-    vec[@1] = a[1] - b[1];
+    vec[0] = a[0] - b[0];
+    vec[1] = a[1] - b[1];
 }
 
 // ============================================================================
@@ -192,8 +192,8 @@ function vec2_sub_vectors(vec, a, b) {
 /// @param {Array<Real>} v The vector to multiply
 function vec2_multiply(vec, v) {
     gml_pragma("forceinline");
-    vec[@0] *= v[0];
-    vec[@1] *= v[1];
+    vec[0] *= v[0];
+    vec[1] *= v[1];
 }
 
 /// @func vec2_multiply_scalar(vec, scalar)
@@ -202,8 +202,8 @@ function vec2_multiply(vec, v) {
 /// @param {Real} scalar The scalar to multiply
 function vec2_multiply_scalar(vec, scalar) {
     gml_pragma("forceinline");
-    vec[@0] *= scalar;
-    vec[@1] *= scalar;
+    vec[0] *= scalar;
+    vec[1] *= scalar;
 }
 
 // ============================================================================
@@ -216,8 +216,8 @@ function vec2_multiply_scalar(vec, scalar) {
 /// @param {Array<Real>} v The vector to divide by
 function vec2_divide(vec, v) {
     gml_pragma("forceinline");
-    vec[@0] /= v[0];
-    vec[@1] /= v[1];
+    vec[0] /= v[0];
+    vec[1] /= v[1];
 }
 
 /// @func vec2_divide_scalar(vec, scalar)
@@ -227,8 +227,8 @@ function vec2_divide(vec, v) {
 function vec2_divide_scalar(vec, scalar) {
     gml_pragma("forceinline");
     var inv = 1 / scalar;
-    vec[@0] *= inv;
-    vec[@1] *= inv;
+    vec[0] *= inv;
+    vec[1] *= inv;
 }
 
 // ============================================================================
@@ -295,8 +295,8 @@ function vec2_set_length(vec, length) {
     var current_len = sqrt(vec[0] * vec[0] + vec[1] * vec[1]);
     if (current_len > 0) {
         var scale = length / current_len;
-        vec[@0] *= scale;
-        vec[@1] *= scale;
+        vec[0] *= scale;
+        vec[1] *= scale;
     }
 }
 
@@ -312,8 +312,8 @@ function vec2_normalize(vec) {
     var len = sqrt(vec[0] * vec[0] + vec[1] * vec[1]);
     if (len > 0) {
         var inv = 1 / len;
-        vec[@0] *= inv;
-        vec[@1] *= inv;
+        vec[0] *= inv;
+        vec[1] *= inv;
     }
 }
 
@@ -322,8 +322,8 @@ function vec2_normalize(vec) {
 /// @param {Array<Real>} vec The vector to negate
 function vec2_negate(vec) {
     gml_pragma("forceinline");
-    vec[@0] = -vec[0];
-    vec[@1] = -vec[1];
+    vec[0] = -vec[0];
+    vec[1] = -vec[1];
 }
 
 // ============================================================================
@@ -374,8 +374,8 @@ function vec2_manhattan_distance_to(vec, v) {
 /// @param {Array<Real>} v The vector
 function vec2_min(vec, v) {
     gml_pragma("forceinline");
-    vec[@0] = min(vec[0], v[0]);
-    vec[@1] = min(vec[1], v[1]);
+    vec[0] = min(vec[0], v[0]);
+    vec[1] = min(vec[1], v[1]);
 }
 
 /// @func vec2_max(vec, v)
@@ -384,8 +384,8 @@ function vec2_min(vec, v) {
 /// @param {Array<Real>} v The vector
 function vec2_max(vec, v) {
     gml_pragma("forceinline");
-    vec[@0] = max(vec[0], v[0]);
-    vec[@1] = max(vec[1], v[1]);
+    vec[0] = max(vec[0], v[0]);
+    vec[1] = max(vec[1], v[1]);
 }
 
 /// @func vec2_clamp(vec, min_vec, max_vec)
@@ -395,8 +395,8 @@ function vec2_max(vec, v) {
 /// @param {Array<Real>} max_vec The maximum x and y values in the desired range
 function vec2_clamp(vec, min_vec, max_vec) {
     gml_pragma("forceinline");
-    vec[@0] = clamp(vec[0], min_vec[0], max_vec[0]);
-    vec[@1] = clamp(vec[1], min_vec[1], max_vec[1]);
+    vec[0] = clamp(vec[0], min_vec[0], max_vec[0]);
+    vec[1] = clamp(vec[1], min_vec[1], max_vec[1]);
 }
 
 /// @func vec2_clamp_scalar(vec, min_val, max_val)
@@ -406,8 +406,8 @@ function vec2_clamp(vec, min_vec, max_vec) {
 /// @param {Real} max_val The maximum value the components will be clamped to
 function vec2_clamp_scalar(vec, min_val, max_val) {
     gml_pragma("forceinline");
-    vec[@0] = clamp(vec[0], min_val, max_val);
-    vec[@1] = clamp(vec[1], min_val, max_val);
+    vec[0] = clamp(vec[0], min_val, max_val);
+    vec[1] = clamp(vec[1], min_val, max_val);
 }
 
 /// @func vec2_clamp_length(vec, min_len, max_len)
@@ -423,8 +423,8 @@ function vec2_clamp_length(vec, min_len, max_len) {
         var new_len = clamp(len, min_len, max_len);
         if (new_len != len) {
             var scale = new_len / len;
-            vec[@0] *= scale;
-            vec[@1] *= scale;
+            vec[0] *= scale;
+            vec[1] *= scale;
         }
     }
 }
@@ -438,8 +438,8 @@ function vec2_clamp_length(vec, min_len, max_len) {
 /// @param {Array<Real>} vec The vector to modify
 function vec2_floor(vec) {
     gml_pragma("forceinline");
-    vec[@0] = floor(vec[0]);
-    vec[@1] = floor(vec[1]);
+    vec[0] = floor(vec[0]);
+    vec[1] = floor(vec[1]);
 }
 
 /// @func vec2_ceil(vec)
@@ -447,8 +447,8 @@ function vec2_floor(vec) {
 /// @param {Array<Real>} vec The vector to modify
 function vec2_ceil(vec) {
     gml_pragma("forceinline");
-    vec[@0] = ceil(vec[0]);
-    vec[@1] = ceil(vec[1]);
+    vec[0] = ceil(vec[0]);
+    vec[1] = ceil(vec[1]);
 }
 
 /// @func vec2_round(vec)
@@ -456,8 +456,8 @@ function vec2_ceil(vec) {
 /// @param {Array<Real>} vec The vector to modify
 function vec2_round(vec) {
     gml_pragma("forceinline");
-    vec[@0] = round(vec[0]);
-    vec[@1] = round(vec[1]);
+    vec[0] = round(vec[0]);
+    vec[1] = round(vec[1]);
 }
 
 /// @func vec2_round_to_zero(vec)
@@ -465,8 +465,8 @@ function vec2_round(vec) {
 /// @param {Array<Real>} vec The vector to modify
 function vec2_round_to_zero(vec) {
     gml_pragma("forceinline");
-    vec[@0] = (vec[0] < 0) ? ceil(vec[0]) : floor(vec[0]);
-    vec[@1] = (vec[1] < 0) ? ceil(vec[1]) : floor(vec[1]);
+    vec[0] = (vec[0] < 0) ? ceil(vec[0]) : floor(vec[0]);
+    vec[1] = (vec[1] < 0) ? ceil(vec[1]) : floor(vec[1]);
 }
 
 // ============================================================================
@@ -494,8 +494,8 @@ function vec2_equals(vec, v) {
 /// @param {Real} alpha The interpolation factor, typically in [0, 1]
 function vec2_lerp(vec, v, alpha) {
     gml_pragma("forceinline");
-    vec[@0] += (v[0] - vec[0]) * alpha;
-    vec[@1] += (v[1] - vec[1]) * alpha;
+    vec[0] += (v[0] - vec[0]) * alpha;
+    vec[1] += (v[1] - vec[1]) * alpha;
 }
 
 /// @func vec2_lerp_vectors(vec, v1, v2, alpha)
@@ -506,8 +506,8 @@ function vec2_lerp(vec, v, alpha) {
 /// @param {Real} alpha The interpolation factor, typically in [0, 1]
 function vec2_lerp_vectors(vec, v1, v2, alpha) {
     gml_pragma("forceinline");
-    vec[@0] = v1[0] + (v2[0] - v1[0]) * alpha;
-    vec[@1] = v1[1] + (v2[1] - v1[1]) * alpha;
+    vec[0] = v1[0] + (v2[0] - v1[0]) * alpha;
+    vec[1] = v1[1] + (v2[1] - v1[1]) * alpha;
 }
 
 // ============================================================================
@@ -556,8 +556,8 @@ function vec2_rotate_around(vec, center, angle) {
     var sinA = dsin(angle);
     var dx = vec[0] - center[0];
     var dy = vec[1] - center[1];
-    vec[@0] = center[0] + dx * cosA - dy * sinA;
-    vec[@1] = center[1] + dx * sinA + dy * cosA;
+    vec[0] = center[0] + dx * cosA - dy * sinA;
+    vec[1] = center[1] + dx * sinA + dy * cosA;
 }
 
 // ============================================================================
@@ -569,8 +569,8 @@ function vec2_rotate_around(vec, center, angle) {
 /// @param {Array<Real>} vec The vector to modify
 function vec2_random(vec) {
     gml_pragma("forceinline");
-    vec[@0] = random(1);
-    vec[@1] = random(1);
+    vec[0] = random(1);
+    vec[1] = random(1);
 }
 
 // ============================================================================
@@ -584,8 +584,8 @@ function vec2_random(vec) {
 /// @param {Real} [offset=0] The offset into the array
 function vec2_from_array(vec, array, offset = 0) {
     gml_pragma("forceinline");
-    vec[@0] = array[offset];
-    vec[@1] = array[offset + 1];
+    vec[0] = array[offset];
+    vec[1] = array[offset + 1];
 }
 
 /// @func vec2_to_array(vec, array, offset)
@@ -597,8 +597,8 @@ function vec2_from_array(vec, array, offset = 0) {
 function vec2_to_array(vec, array = undefined, offset = 0) {
     gml_pragma("forceinline");
     array ??= array_create(2);
-    array[@offset] = vec[0];
-    array[@offset + 1] = vec[1];
+    array[offset] = vec[0];
+    array[offset + 1] = vec[1];
     return array;
 }
 
@@ -610,8 +610,8 @@ function vec2_to_array(vec, array = undefined, offset = 0) {
 function vec2_from_buffer_attribute(vec, attribute, index) {
     gml_pragma("forceinline");
     var offset = index * 2;
-    vec[@0] = attribute[offset];
-    vec[@1] = attribute[offset + 1];
+    vec[0] = attribute[offset];
+    vec[1] = attribute[offset + 1];
 }
 
 // ============================================================================
@@ -626,8 +626,8 @@ function vec2_apply_matrix3(vec, m) {
     gml_pragma("forceinline");
     var _x = vec[0];
     var _y = vec[1];
-    vec[@0] = m[0] * _x + m[3] * _y + m[6];
-    vec[@1] = m[1] * _x + m[4] * _y + m[7];
+    vec[0] = m[0] * _x + m[3] * _y + m[6];
+    vec[1] = m[1] * _x + m[4] * _y + m[7];
 }
 
 // ============================================================================
@@ -639,8 +639,8 @@ function vec2_apply_matrix3(vec, m) {
 /// @param {Array<Real>} vec The vector to modify
 function vec2_abs(vec) {
     gml_pragma("forceinline");
-    vec[@0] = abs(vec[0]);
-    vec[@1] = abs(vec[1]);
+    vec[0] = abs(vec[0]);
+    vec[1] = abs(vec[1]);
 }
 
 /// @func vec2_reflect(vec, normal)
@@ -650,8 +650,8 @@ function vec2_abs(vec) {
 function vec2_reflect(vec, normal) {
     gml_pragma("forceinline");
     var dot2 = 2 * (vec[0] * normal[0] + vec[1] * normal[1]);
-    vec[@0] -= dot2 * normal[0];
-    vec[@1] -= dot2 * normal[1];
+    vec[0] -= dot2 * normal[0];
+    vec[1] -= dot2 * normal[1];
 }
 
 /// @func vec2_project(vec, onto)
@@ -663,13 +663,13 @@ function vec2_project(vec, onto) {
     var dot_ab = vec[0] * onto[0] + vec[1] * onto[1];
     var dot_bb = onto[0] * onto[0] + onto[1] * onto[1];
     if (dot_bb == 0) {
-        vec[@0] = 0;
-        vec[@1] = 0;
+        vec[0] = 0;
+        vec[1] = 0;
         return;
     }
     var scalar = dot_ab / dot_bb;
-    vec[@0] = onto[0] * scalar;
-    vec[@1] = onto[1] * scalar;
+    vec[0] = onto[0] * scalar;
+    vec[1] = onto[1] * scalar;
 }
 
 /// @func vec2_perp(vec)
@@ -678,6 +678,6 @@ function vec2_project(vec, onto) {
 function vec2_perp(vec) {
     gml_pragma("forceinline");
     var temp = vec[0];
-    vec[@0] = -vec[1];
-    vec[@1] = temp;
+    vec[0] = -vec[1];
+    vec[1] = temp;
 }

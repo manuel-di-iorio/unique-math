@@ -1,5 +1,5 @@
-// GMTL-style test suite for Euler
-// Angles in DEGREES
+//GMTL-style test suite for Euler
+//Angles in DEGREES
 
 suite(function() {
     describe("Euler", function() {
@@ -21,8 +21,8 @@ suite(function() {
 
         test("euler_set_from_quaternion() convert", function() {
             var e = euler_create();
-            // Quaternion for 90 deg around X
-            // 0.707, 0, 0, 0.707
+             //Quaternion for 90 deg around X
+             //0.707, 0, 0, 0.707
             var q = [0.70710678, 0, 0, 0.70710678];
             euler_set_from_quaternion(e, q);
             
@@ -73,12 +73,6 @@ suite(function() {
             expect(e[0]).toBe(5);
             expect(e[1]).toBe(6);
             expect(e[2]).toBe(7);
-        });
-
-        test("euler_set_from_vector3() with order", function() {
-            var e = euler_create();
-            var v = vec3_create(5, 6, 7);
-            euler_set_from_vector3(e, v);
         });
     });
 });

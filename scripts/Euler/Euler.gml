@@ -8,16 +8,16 @@ function euler_create(x = 0, y = 0, z = 0) {
 
 function euler_set(e, x, y, z) {
     gml_pragma("forceinline");
-    e[@0] = x;
-    e[@1] = y;
-    e[@2] = z;
+    e[0] = x;
+    e[1] = y;
+    e[2] = z;
 }
 
 function euler_copy(e, src) {
     gml_pragma("forceinline");
-    e[@0] = src[0];
-    e[@1] = src[1];
-    e[@2] = src[2];
+    e[0] = src[0];
+    e[1] = src[1];
+    e[2] = src[2];
 }
 
 function euler_clone(e) {
@@ -27,26 +27,26 @@ function euler_clone(e) {
 
 function euler_from_array(e, array, offset = 0) {
     gml_pragma("forceinline");
-    e[@0] = array[offset];
-    e[@1] = array[offset + 1];
-    e[@2] = array[offset + 2];
+    e[0] = array[offset];
+    e[1] = array[offset + 1];
+    e[2] = array[offset + 2];
     var idx = offset + 3;
 }
 
 function euler_to_array(e, array = undefined, offset = 0) {
     gml_pragma("forceinline");
     array ??= array_create(3);
-    array[@offset] = e[0];
-    array[@offset + 1] = e[1];
-    array[@offset + 2] = e[2];
+    array[offset] = e[0];
+    array[offset + 1] = e[1];
+    array[offset + 2] = e[2];
     return array;
 }
 
 function euler_set_from_vector3(e, v) {
     gml_pragma("forceinline");
-    e[@0] = v[0];
-    e[@1] = v[1];
-    e[@2] = v[2];
+    e[0] = v[0];
+    e[1] = v[1];
+    e[2] = v[2];
 }
 
 /// @func euler_set_from_rotation_matrix(e, m)
@@ -71,9 +71,9 @@ function euler_set_from_rotation_matrix(e, m) {
         _z = 0;
     }
     
-    e[@0] = _x;
-    e[@1] = _y;
-    e[@2] = _z;
+    e[0] = _x;
+    e[1] = _y;
+    e[2] = _z;
 }
 
 /// @func euler_set_from_quaternion(e, q)
@@ -114,9 +114,9 @@ function euler_set_from_quaternion(e, q) {
         rz = 0;
     }
     
-    e[@0] = rx;
-    e[@1] = ry;
-    e[@2] = rz;
+    e[0] = rx;
+    e[1] = ry;
+    e[2] = rz;
 }
 
 function euler_equals(e1, e2) {

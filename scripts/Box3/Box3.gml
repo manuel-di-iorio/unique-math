@@ -8,8 +8,8 @@ function box3_create(minX = infinity, minY = infinity, minZ = infinity, maxX = -
 
 function box3_set(b, minX, minY, minZ, maxX, maxY, maxZ) {
     gml_pragma("forceinline");
-    b[@0] = minX; b[@1] = minY; b[@2] = minZ;
-    b[@3] = maxX; b[@4] = maxY; b[@5] = maxZ;
+    b[0] = minX; b[1] = minY; b[2] = minZ;
+    b[3] = maxX; b[4] = maxY; b[5] = maxZ;
 }
 
 function box3_copy(b, src) {
@@ -25,12 +25,12 @@ function box3_clone(b) {
 /// @func box3_expand_by_point(b, x, y, z)
 function box3_expand_by_point(b, x, y, z) {
     gml_pragma("forceinline");
-    if (x < b[0]) b[@0] = x;
-    if (y < b[1]) b[@1] = y;
-    if (z < b[2]) b[@2] = z;
-    if (x > b[3]) b[@3] = x;
-    if (y > b[4]) b[@4] = y;
-    if (z > b[5]) b[@5] = z;
+    if (x < b[0]) b[0] = x;
+    if (y < b[1]) b[1] = y;
+    if (z < b[2]) b[2] = z;
+    if (x > b[3]) b[3] = x;
+    if (y > b[4]) b[4] = y;
+    if (z > b[5]) b[5] = z;
 }
 
 /// @func box3_contains_point(b, x, y, z)
@@ -55,9 +55,9 @@ function box3_intersects_box(b, b2) {
 function box3_get_center(b, out = undefined) {
     gml_pragma("forceinline");
     out ??= array_create(3);
-    out[@0] = (b[0] + b[3]) * 0.5;
-    out[@1] = (b[1] + b[4]) * 0.5;
-    out[@2] = (b[2] + b[5]) * 0.5;
+    out[0] = (b[0] + b[3]) * 0.5;
+    out[1] = (b[1] + b[4]) * 0.5;
+    out[2] = (b[2] + b[5]) * 0.5;
     return out;
 }
 
@@ -66,9 +66,9 @@ function box3_get_center(b, out = undefined) {
 function box3_get_size(b, out = undefined) {
     gml_pragma("forceinline");
     out ??= array_create(3);
-    out[@0] = b[3] - b[0];
-    out[@1] = b[4] - b[1];
-    out[@2] = b[5] - b[2];
+    out[0] = b[3] - b[0];
+    out[1] = b[4] - b[1];
+    out[2] = b[5] - b[2];
     return out;
 }
 
@@ -86,9 +86,9 @@ function box3_contains_box(b, b2) {
 function box3_clamp_point(b, x, y, z, out = undefined) {
     gml_pragma("forceinline");
     out ??= array_create(3);
-    out[@0] = clamp(x, b[0], b[3]);
-    out[@1] = clamp(y, b[1], b[4]);
-    out[@2] = clamp(z, b[2], b[5]);
+    out[0] = clamp(x, b[0], b[3]);
+    out[1] = clamp(y, b[1], b[4]);
+    out[2] = clamp(z, b[2], b[5]);
     return out;
 }
 
@@ -112,14 +112,14 @@ function box3_distance_to_point(b, x, y, z) {
 
 function box3_expand_by_scalar(b, s) {
     gml_pragma("forceinline");
-    b[@0] -= s; b[@1] -= s; b[@2] -= s;
-    b[@3] += s; b[@4] += s; b[@5] += s;
+    b[0] -= s; b[1] -= s; b[2] -= s;
+    b[3] += s; b[4] += s; b[5] += s;
 }
 
 function box3_expand_by_vector(b, v) {
     gml_pragma("forceinline");
-    b[@0] -= v[0]; b[@1] -= v[1]; b[@2] -= v[2];
-    b[@3] += v[0]; b[@4] += v[1]; b[@5] += v[2];
+    b[0] -= v[0]; b[1] -= v[1]; b[2] -= v[2];
+    b[3] += v[0]; b[4] += v[1]; b[5] += v[2];
 }
 
 function box3_is_empty(b) {
@@ -129,36 +129,36 @@ function box3_is_empty(b) {
 
 function box3_make_empty(b) {
     gml_pragma("forceinline");
-    b[@0] = infinity; b[@1] = infinity; b[@2] = infinity;
-    b[@3] = -infinity; b[@4] = -infinity; b[@5] = -infinity;
+    b[0] = infinity; b[1] = infinity; b[2] = infinity;
+    b[3] = -infinity; b[4] = -infinity; b[5] = -infinity;
 }
 
 function box3_union(b, b2) {
     gml_pragma("forceinline");
-    b[@0] = min(b[0], b2[0]); b[@1] = min(b[1], b2[1]); b[@2] = min(b[2], b2[2]);
-    b[@3] = max(b[3], b2[3]); b[@4] = max(b[4], b2[4]); b[@5] = max(b[5], b2[5]);
+    b[0] = min(b[0], b2[0]); b[1] = min(b[1], b2[1]); b[2] = min(b[2], b2[2]);
+    b[3] = max(b[3], b2[3]); b[4] = max(b[4], b2[4]); b[5] = max(b[5], b2[5]);
     return b;
 }
 
 function box3_intersect(b, b2) {
     gml_pragma("forceinline");
-    b[@0] = max(b[0], b2[0]); b[@1] = max(b[1], b2[1]); b[@2] = max(b[2], b2[2]);
-    b[@3] = min(b[3], b2[3]); b[@4] = min(b[4], b2[4]); b[@5] = min(b[5], b2[5]);
+    b[0] = max(b[0], b2[0]); b[1] = max(b[1], b2[1]); b[2] = max(b[2], b2[2]);
+    b[3] = min(b[3], b2[3]); b[4] = min(b[4], b2[4]); b[5] = min(b[5], b2[5]);
     if (box3_is_empty(b)) box3_make_empty(b);
     return b;
 }
 
 function box3_translate(b, ox, oy, oz) {
     gml_pragma("forceinline");
-    b[@0] += ox; b[@1] += oy; b[@2] += oz;
-    b[@3] += ox; b[@4] += oy; b[@5] += oz;
+    b[0] += ox; b[1] += oy; b[2] += oz;
+    b[3] += ox; b[4] += oy; b[5] += oz;
 }
 
 function box3_set_from_center_and_size(b, center, size) {
     gml_pragma("forceinline");
     var hx = size[0] * 0.5, hy = size[1] * 0.5, hz = size[2] * 0.5;
-    b[@0] = center[0] - hx; b[@1] = center[1] - hy; b[@2] = center[2] - hz;
-    b[@3] = center[0] + hx; b[@4] = center[1] + hy; b[@5] = center[2] + hz;
+    b[0] = center[0] - hx; b[1] = center[1] - hy; b[2] = center[2] - hz;
+    b[3] = center[0] + hx; b[4] = center[1] + hy; b[5] = center[2] + hz;
     return b;
 }
 
@@ -220,9 +220,9 @@ function box3_get_parameter(b, p, out = undefined) {
     gml_pragma("forceinline");
     out ??= array_create(3);
     var sx = b[3] - b[0], sy = b[4] - b[1], sz = b[5] - b[2];
-    out[@0] = (sx != 0) ? ((p[0] - b[0]) / sx) : 0;
-    out[@1] = (sy != 0) ? ((p[1] - b[1]) / sy) : 0;
-    out[@2] = (sz != 0) ? ((p[2] - b[2]) / sz) : 0;
+    out[0] = (sx != 0) ? ((p[0] - b[0]) / sx) : 0;
+    out[1] = (sy != 0) ? ((p[1] - b[1]) / sy) : 0;
+    out[2] = (sz != 0) ? ((p[2] - b[2]) / sz) : 0;
     return out;
 }
 
@@ -247,45 +247,5 @@ function box3_intersects_triangle(b, a, c, d) {
     var maxZ = max(a[2], max(c[2], d[2]));
     var triBox = [minX, minY, minZ, maxX, maxY, maxZ];
     return box3_intersects_box(b, triBox);
-}
-
-function box3_set_from_object(b, object) {
-    gml_pragma("forceinline");
-    box3_make_empty(b);
-
-    // Se l'oggetto ha geometria
-    var geom = object[$ "geometry"];
-    if (geom != undefined) {
-        // Assicurati che la geometria abbia il bounding box
-        if (geom[$ "boundingBox"] == undefined) {
-            geom[$ "boundingBox"] = box3_create();
-            box3_set_from_array(geom[$ "boundingBox"], geom[$ "vertices"]);
-        }
-        var localBox = box3_clone(geom[$ "boundingBox"]);
-
-        // Trasforma nel world space
-        var m = object[$ "matrixWorld"];
-        if (m != undefined) box3_apply_matrix4(localBox, m);
-
-        box3_union(b, localBox);
-    }
-
-    // Espandi con eventuale sphere
-    var s = object[$ "__intersectionSphere"];
-    if (s != undefined) {
-        var sb = sphere_get_bounding_box(s);
-        box3_union(b, sb);
-    }
-
-    // Richiama la stessa funzione sui figli
-    var children = object[$ "children"];
-    var n = array_length(children);
-    for (var i = 0; i < n; i++) {
-      var childBox = box3_create();
-      box3_set_from_object(childBox, children[i]);
-      box3_union(b, childBox);
-    }
-
-    return b;
 }
 

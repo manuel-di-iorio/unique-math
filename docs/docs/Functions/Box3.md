@@ -48,8 +48,6 @@ Functions modify the first argument in-place unless noted.
 | `box3_intersects_plane(b, plane)` | `boolean` | True if plane intersects box. |
 | `box3_intersects_sphere(b, sphere)` | `boolean` | True if sphere intersects box. |
 | `box3_intersects_triangle(b, a, c, d)` | `boolean` | Approximates intersection via triangle AABB overlap. |
-| `box3_expand_by_object(b, object, precise?)` | `Box3` | Unions `b` with `object.__boundingBox` (transformed) or its bounding sphere; recurses into `children`. |
-
 ---
 
 ## Usage Examples
