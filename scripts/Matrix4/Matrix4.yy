@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"Matrix4",
   "parent":{
-    "name":"Unique Math (Functions)",
-    "path":"folders/Unique Math (Functions).yy",
+    "name":"Unique Math",
+    "path":"folders/Unique Math.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

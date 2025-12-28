@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"__UniqueMathGlobals",
   "parent":{
-    "name":"Unique Math (Struct)",
-    "path":"folders/Unique Math (Struct).yy",
+    "name":"Unique Math",
+    "path":"folders/Unique Math.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

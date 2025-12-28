@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"test__Matrix4",
   "parent":{
-    "name":"Tests (Functions)",
-    "path":"folders/Tests (Functions).yy",
+    "name":"Tests",
+    "path":"folders/Tests.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

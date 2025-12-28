@@ -703,7 +703,7 @@ suite(function() {
         });
 
         // ====================================================================
-        // SPHERICAL / CYLINDRICAL (from struct)
+        // SPHERICAL / CYLINDRICAL
         // ====================================================================
 
         test("vec3_set_from_spherical() sets from spherical array", function() {
@@ -743,6 +743,20 @@ suite(function() {
             expect(v[0]).toBe(1);
             expect(round(v[1] * 100) / 100).toBe(0.5);
             expect(v[2]).toBe(0);
+        });
+
+        // ====================================================================
+        // METHOD CHAINING
+        // ====================================================================
+
+        test("vec3 functions support nesting (chaining)", function() {
+            var v = vec3_create();
+            var result = vec3_multiply_scalar(vec3_add_scalar(vec3_set(v, 1, 2, 3), 10), 2);
+            
+            expect(result).toBe(v);
+            expect(v[0]).toBe(22); // (1 + 10) * 2
+            expect(v[1]).toBe(24); // (2 + 10) * 2
+            expect(v[2]).toBe(26); // (3 + 10) * 2
         });
     });
 });

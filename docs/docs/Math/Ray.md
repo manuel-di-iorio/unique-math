@@ -15,8 +15,8 @@ Functions modify the first argument in-place unless noted.
 
 | Function | Returns | Description |
 | -------- | ------- | ----------- |
-| `ray_create(ox?, oy?, oz?, dx?, dy?, dz?)` | `Array` | Creates a new ray. |
-| `ray_set(r, ox, oy, oz, dx, dy, dz)` | - | Sets origin and direction. |
+| `ray_create(origin = [0,0,0], direction = [0,0,-1])` | `Array` | Creates a new ray. |
+| `ray_set(r, origin, direction)` | - | Sets origin and direction. |
 | `ray_copy(r, src)` | - | Copies values from `src`. |
 | `ray_clone(r)` | `Array` | Returns a copy of the ray. |
 
@@ -25,8 +25,8 @@ Functions modify the first argument in-place unless noted.
 | Function | Returns | Description |
 | -------- | ------- | ----------- |
 | `ray_at(r, t, [out])` | `Array` | Point along ray at distance `t`. |
-| `ray_recenter(r, ox, oy, oz)` | - | Moves origin to given point. |
-| `ray_look_at(r, tx, ty, tz)` | - | Points ray direction towards target. |
+| `ray_recenter(r, origin)` | - | Moves origin to given point. |
+| `ray_look_at(r, target)` | - | Points ray direction towards target. |
 | `ray_intersect_sphere(r, sphere)` | `number` | Distance to intersection or `-1`. |
 | `ray_intersect_box(r, box)` | `number` | Distance to intersection or `-1`. |
 | `ray_apply_matrix4(r, m)` | - | Transforms origin and direction by 4x4 matrix. |
@@ -37,9 +37,9 @@ Functions modify the first argument in-place unless noted.
 | `ray_intersects_box(r, box)` | `boolean` | Returns true if ray intersects box. |
 | `ray_intersects_plane(r, plane)` | `boolean` | Returns true if ray intersects plane. |
 | `ray_intersects_sphere(r, sphere)` | `boolean` | Returns true if ray intersects sphere. |
-| `ray_distance_to_point(r, px, py, pz)` | `number` | Distance from ray to point. |
-| `ray_distance_sq_to_point(r, px, py, pz)` | `number` | Squared distance from ray to point. |
-| `ray_closest_point_to_point(r, px, py, pz, [out])` | `Array` | Closest point on ray to given point. |
+| `ray_distance_to_point(r, point)` | `number` | Distance from ray to point. |
+| `ray_distance_sq_to_point(r, point)` | `number` | Squared distance from ray to point. |
+| `ray_closest_point_to_point(r, point, [out])` | `Array` | Closest point on ray to given point. |
 | `ray_distance_sq_to_segment(r, v0, v1, [outRay], [outSeg])` | `number` | Squared distance between ray and segment; optional closest points. |
 | `ray_intersect_sphere_point(r, sphere, [out])` | `Array \| undefined` | Intersection point with sphere or `undefined`. |
 | `ray_intersect_triangle(r, a, b, c, backfaceCulling?, [out])` | `Array \| undefined` | Intersection point with triangle or `undefined`. |

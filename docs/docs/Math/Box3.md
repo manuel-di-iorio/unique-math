@@ -15,8 +15,8 @@ Functions modify the first argument in-place unless noted.
 
 | Function | Returns | Description |
 | -------- | ------- | ----------- |
-| `box3_create(minX?, minY?, minZ?, maxX?, maxY?, maxZ?)` | `Array` | Creates a new Box3. Defaults to empty inverted bounds. |
-| `box3_set(b, minX, minY, minZ, maxX, maxY, maxZ)` | - | Sets bounds directly. |
+| `box3_create(minVec, maxVec)` | `Array` | Creates a new Box3. Defaults to empty inverted bounds. |
+| `box3_set(b, minVec, maxVec)` | - | Sets bounds directly. |
 | `box3_clone(b)` | `Array` | Returns a new copy of the box. |
 | `box3_copy(b, src)` | - | Copies bounds from `src` to `b`. |
 
@@ -24,15 +24,15 @@ Functions modify the first argument in-place unless noted.
 
 | Function | Returns | Description |
 | -------- | ------- | ----------- |
-| `box3_expand_by_point(b, x, y, z)` | - | Expands the box to include the point. |
-| `box3_contains_point(b, x, y, z)` | `boolean` | True if point is inside. |
-| `box3_intersects_box(b, other)` | `boolean` | True if boxes intersect. |
+| `box3_expand_by_point(b, p)` | - | Expands the box to include the point. |
+| `box3_contains_point(b, p)` | `boolean` | True if point is inside. |
+| `box3_intersects_box(b, b2)` | `boolean` | True if boxes intersect. |
 | `box3_get_center(b, [out])` | `Array` | Writes/returns center vector. |
 | `box3_get_size(b, [out])` | `Array` | Writes/returns size vector. |
-| `box3_equals(b, other)` | `boolean` | True if all bounds equal. |
-| `box3_contains_box(b, other)` | `boolean` | True if `b` fully contains `other`. |
-| `box3_clamp_point(b, x, y, z, out?)` | `Vector3` | Clamps point to box boundaries. |
-| `box3_distance_to_point(b, x, y, z)` | `number` | Euclidean distance to the box (0 if inside). |
+| `box3_equals(b, b2)` | `boolean` | True if all bounds equal. |
+| `box3_contains_box(b, b2)` | `boolean` | True if `b` fully contains `b2`. |
+| `box3_clamp_point(b, p, out?)` | `Vector3` | Clamps point to box boundaries. |
+| `box3_distance_to_point(b, p)` | `number` | Euclidean distance to the box (0 if inside). |
 | `box3_expand_by_scalar(b, s)` | - | Expands bounds by scalar in all directions. |
 | `box3_expand_by_vector(b, v)` | - | Expands bounds by vector `[x,y,z]` in both directions. |
 | `box3_is_empty(b)` | `boolean` | True if any `min > max`. |

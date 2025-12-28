@@ -13,11 +13,11 @@ const FeatureList = [
     ),
   },
   {
-    title: 'Intuitive Struct-Based Syntax',
+    title: 'Maximum Performance',
     src: require('@site/static/img/headline_puzzle.png').default,
     description: (
       <>
-        Enjoy a user-friendly API that leverages structs for clear, chainable method calls—making your code more readable and expressive, even if it sacrifices a bit of raw performance.
+        Optimized for GameMaker, Unique Math uses arrays and functional programming to minimize garbage collection and maximize execution speed.
       </>
     ),
   },

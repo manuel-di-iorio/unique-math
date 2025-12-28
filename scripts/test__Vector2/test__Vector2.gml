@@ -580,5 +580,14 @@ suite(function() {
             expect(r[0]).toBe(0);
             expect(r[1]).toBe(1);
         });
+
+        test("vec2 functions support nesting (chaining)", function() {
+            var v = vec2_create();
+            var result = vec2_multiply_scalar(vec2_add_scalar(vec2_set(v, 1, 2), 10), 2);
+            
+            expect(result).toBe(v);
+            expect(v[0]).toBe(22); // (1 + 10) * 2
+            expect(v[1]).toBe(24); // (2 + 10) * 2
+        });
     });
 });
