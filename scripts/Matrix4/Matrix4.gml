@@ -6,6 +6,8 @@
 // Global temp matrix for temporary operations
 global.UE_MAT4_IDENTITY = matrix_build_identity();
 global.UE_MAT4_TEMP0 = matrix_build_identity();
+global.UE_MAT4_TEMP1 = matrix_build_identity();
+global.UE_MAT4_TEMP2 = matrix_build_identity();
 
 /// @func mat4_create()
 /// @desc Creates a new identity 4x4 matrix.
@@ -375,16 +377,16 @@ function mat4_make_orthographic(m, left, right, top, bottom, near, far) {
 // LOOK AT
 // ============================================================================
 
-/// @func mat4_look_at(m, eye, target, up)
-/// @desc Sets the rotation component looking from eye towards target.
-/// @param {Array<Real>} m The matrix to modify
-/// @param {Array<Real>} eye The eye position (vec3)
-/// @param {Array<Real>} target The target position (vec3)
+/// @func mat4_look_at(m, from, to, up)
+/// @desc Builds a look-at view matrix.
+/// @param {Array<Real>} m The matrix to store result
+/// @param {Array<Real>} from The eye position (vec3)
+/// @param {Array<Real>} to The target position (vec3)
 /// @param {Array<Real>} up The up vector (vec3)
 /// @returns {Array<Real>} The modified matrix
-function mat4_look_at(m, eye, target, up) {
+function mat4_look_at(m, from, to, up) {
   gml_pragma("forceinline");
-  matrix_build_lookat(eye[0], eye[1], eye[2], target[0], target[1], target[2], up[0], up[1], up[2], m);
+  matrix_build_lookat(from[0], from[1], from[2], to[0], to[1], to[2], up[0], up[1], up[2], m);
   return m;
 }
 

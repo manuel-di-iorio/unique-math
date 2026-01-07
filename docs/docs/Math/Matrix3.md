@@ -23,7 +23,7 @@ mat3_make_rotation(rot, 45);  // 45 degrees
 
 ## Matrix Layout
 
-Matrices are stored in **column-major** order (like OpenGL/Three.js):
+Matrices are stored in **column-major** order:
 
 ```
 | m[0] m[3] m[6] |
