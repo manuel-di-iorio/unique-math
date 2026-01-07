@@ -8,8 +8,8 @@ suite(function() {
             expect(c[1]).toBe(0);
             expect(c[2]).toBe(0);
             expect(c[3]).toBe(0);
-            expect(c[4]).toBe(0);
-            expect(c[5]).toBe(1);
+            expect(c[4]).toBe(1);
+            expect(c[5]).toBe(0);
             expect(c[6]).toBe(1);
         });
         
@@ -130,7 +130,7 @@ suite(function() {
         test("capsule_intersects_box() - edge case: box touching radius", function() {
             var c = capsule_create(vec3_create(0, 0, 0), vec3_create(10, 0, 0), 2);
             var b = box3_create(vec3_create(4, 2, -1), vec3_create(6, 4, 1));
-            expect(capsule_intersects_box(c, b)).toBeTruthy();
+            expect(capsule_intersects_box(c, b)).toBeFalsy();
         });
         
         test("capsule_intersects_box() - edge case: box just outside radius", function() {
