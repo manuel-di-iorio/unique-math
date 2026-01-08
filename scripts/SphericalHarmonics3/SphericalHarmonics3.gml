@@ -226,11 +226,11 @@ function sh3_get_irradiance_at(sh, normal, target) {
     return target;
 }
 
-/// @func sh3_static_get_basis_at(normal, shBasis)
+/// @func sh3_get_basis_at(normal, shBasis)
 /// @desc Computes the SH basis for the given normal vector.
 /// @param {Array<Real>} normal The normal vector
 /// @param {Array<Real>} shBasis The target array (at least 9 elements)
-function sh3_static_get_basis_at(normal, shBasis) {
+function sh3_get_basis_at(normal, shBasis) {
     gml_pragma("forceinline");
     var _x = normal[0], _y = normal[1], _z = normal[2];
     shBasis[0] = 0.282095;

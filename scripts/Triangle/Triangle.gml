@@ -116,18 +116,7 @@ function tri_get_midpoint(tri, target) {
 /// @returns {Array<Real>} The target vector
 function tri_get_normal(tri, target) {
     gml_pragma("forceinline");
-    return tri_static_get_normal(tri[0], tri[1], tri[2], target);
-}
-
-/// @func tri_static_get_normal(a, b, c, target)
-/// @desc Calculates the normal of the triangle defined by a, b, c.
-/// @param {Array<Real>} a Vertex A
-/// @param {Array<Real>} b Vertex B
-/// @param {Array<Real>} c Vertex C
-/// @param {Array<Real>} target The target vector
-/// @returns {Array<Real>} The target vector
-function tri_static_get_normal(a, b, c, target) {
-    gml_pragma("forceinline");
+    var a = tri[0], b = tri[1], c = tri[2];
     vec3_sub_vectors(target, c, b);
     vec3_sub_vectors(global.UE_TRI_VBA, a, b);
     vec3_cross(target, global.UE_TRI_VBA);
@@ -157,13 +146,7 @@ function tri_get_plane(tri, target) {
 /// @returns {Array<Real>|undefined} Barycentric coordinates or undefined if degenerate
 function tri_get_barycoord(tri, point, target) {
     gml_pragma("forceinline");
-    return tri_static_get_barycoord(point, tri[0], tri[1], tri[2], target);
-}
-
-/// @func tri_static_get_barycoord(point, a, b, c, target)
-/// @desc Static version of tri_get_barycoord.
-function tri_static_get_barycoord(point, a, b, c, target) {
-    gml_pragma("forceinline");
+    var a = tri[0], b = tri[1], c = tri[2];
     vec3_sub_vectors(global.UE_TRI_VBA, c, a);
     vec3_sub_vectors(global.UE_TRI_VCA, b, a);
     vec3_sub_vectors(global.UE_TRI_VPA, point, a);
@@ -199,28 +182,23 @@ function tri_static_get_barycoord(point, a, b, c, target) {
 /// @returns {Bool}
 function tri_contains_point(tri, point) {
     gml_pragma("forceinline");
-    return tri_static_contains_point(point, tri[0], tri[1], tri[2]);
-}
-
-/// @func tri_static_contains_point(point, a, b, c)
-/// @desc Static version of tri_contains_point.
-function tri_static_contains_point(point, a, b, c) {
-    gml_pragma("forceinline");
-    if (tri_static_get_barycoord(point, a, b, c, global.UE_TRI_BARY) == undefined) return false;
+    if (tri_get_barycoord(tri, point, global.UE_TRI_BARY) == undefined) return false;
     var bary = global.UE_TRI_BARY;
     return (bary[0] >= 0) && (bary[1] >= 0) && (bary[0] + bary[1] <= 1);
 }
 
 /// @func tri_get_interpolation(tri, point, v1, v2, v3, target)
+/// @desc Interpolates values v1, v2, v3 based on the point's position in the triangle.
+/// @param {Array<Array<Real>>} tri The triangle
+/// @param {Array<Real>} point The point
+/// @param {Array<Real>} v1 Value at corner 1
+/// @param {Array<Real>} v2 Value at corner 2
+/// @param {Array<Real>} v3 Value at corner 3
+/// @param {Array<Real>} target The target vector
+/// @returns {Array<Real>|undefined} The target vector or undefined if outside
 function tri_get_interpolation(tri, point, v1, v2, v3, target) {
     gml_pragma("forceinline");
-    return tri_static_get_interpolation(point, tri[0], tri[1], tri[2], v1, v2, v3, target);
-}
-
-/// @func tri_static_get_interpolation(point, p1, p2, p3, v1, v2, v3, target)
-function tri_static_get_interpolation(point, p1, p2, p3, v1, v2, v3, target) {
-    gml_pragma("forceinline");
-    if (tri_static_get_barycoord(point, p1, p2, p3, global.UE_TRI_BARY) == undefined) return undefined;
+    if (tri_get_barycoord(tri, point, global.UE_TRI_BARY) == undefined) return undefined;
     var bary = global.UE_TRI_BARY;
     target[0] = v1[0] * bary[0] + v2[0] * bary[1] + v3[0] * bary[2];
     target[1] = v1[1] * bary[0] + v2[1] * bary[1] + v3[1] * bary[2];
@@ -229,15 +207,13 @@ function tri_static_get_interpolation(point, p1, p2, p3, v1, v2, v3, target) {
 }
 
 /// @func tri_is_front_facing(tri, direction)
+/// @desc Checks if the triangle is front-facing to the given direction.
+/// @param {Array<Array<Real>>} tri The triangle
+/// @param {Array<Real>} direction The direction vector
+/// @returns {Bool}
 function tri_is_front_facing(tri, direction) {
     gml_pragma("forceinline");
-    return tri_static_is_front_facing(tri[0], tri[1], tri[2], direction);
-}
-
-/// @func tri_static_is_front_facing(a, b, c, direction)
-function tri_static_is_front_facing(a, b, c, direction) {
-    gml_pragma("forceinline");
-    tri_static_get_normal(a, b, c, global.UE_TRI_VBA);
+    tri_get_normal(tri, global.UE_TRI_VBA);
     return vec3_dot(global.UE_TRI_VBA, direction) < 0;
 }
 

@@ -92,10 +92,10 @@ suite(function() {
             expect(sh3_equals(sh1, sh2)).toBeFalsy();
         });
         
-        test("sh3_static_get_basis_at() computes basis coefficients", function() {
+        test("sh3_get_basis_at() computes basis coefficients", function() {
             var normal = vec3_create(0, 1, 0);
             var basis = array_create(9);
-            sh3_static_get_basis_at(normal, basis);
+            sh3_get_basis_at(normal, basis);
             expect(abs(basis[0] - 0.282095) < 0.0001).toBeTruthy();
             expect(abs(basis[1] - 0.488603) < 0.0001).toBeTruthy(); // y = 1
             expect(basis[2]).toBe(0); // z = 0
