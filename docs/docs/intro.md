@@ -64,16 +64,25 @@ vec2_rotate_around(pos, center, 45);   // Rotate 45 degrees
 | ------ | ----------- |
 | [`Vec2`](./Math/Vector2) | 2D vector functions |
 | [`Vec3`](./Math/Vector3) | 3D vector functions |
+| [`Vec4`](./Math/Vector4) | 4D vector functions |
 | [`Euler`](./Math/Euler) | Euler angles functions |
+| [`Spherical`](./Math/Spherical) | Spherical coordinate functions |
+| [`Cylindrical`](./Math/Cylindrical) | Cylindrical coordinate functions |
 | [`Quaternion`](./Math/Quaternion) | Quaternion functions |
+| [`Matrix2`](./Math/Matrix2) | 2x2 matrix functions |
 | [`Matrix3`](./Math/Matrix3) | 3x3 matrix functions |
 | [`Matrix4`](./Math/Matrix4) | 4x4 matrix functions |
 | [`Box2`](./Math/Box2) | 2D bounding box functions |
 | [`Box3`](./Math/Box3) | 3D bounding box functions |
+| [`OBB`](./Math/OBB) | Oriented Bounding Box functions |
 | [`Sphere`](./Math/Sphere) | Bounding sphere functions |
 | [`Plane`](./Math/Plane) | 3D plane functions |
 | [`Ray`](./Math/Ray) | Raycasting functions |
+| [`Line3`](./Math/Line3) | 3D line functions |
+| [`Triangle`](./Math/Triangle) | 3D triangle functions |
 | [`Frustum`](./Math/Frustum) | View frustum functions |
+| [`SphericalHarmonics3`](./Math/SphericalHarmonics3) | 3rd-order Spherical Harmonics functions |
+| [`Octree`](./Math/Octree) | Spatial partitioning tree functions |
 
 ---
 

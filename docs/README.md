@@ -59,17 +59,26 @@ vec2_rotate_around(pos, center, 45);   // Rotate 45 degrees
 
 | Module | Description |
 | ------ | ----------- |
-| `Vec2` | 2D vector functions |
-| `Vec3` | 3D vector functions |
+| `Vector2` | 2D vector functions |
+| `Vector3` | 3D vector functions |
+| `Vector4` | 4D vector functions |
 | `Euler` | Euler angles functions |
+| `Spherical` | Spherical coordinate functions |
+| `Cylindrical` | Cylindrical coordinate functions |
 | `Quaternion` | Quaternion functions |
+| `Matrix2` | 2x2 matrix functions |
 | `Matrix3` | 3x3 matrix functions |
 | `Matrix4` | 4x4 matrix functions |
 | `Box2` | 2D bounding box functions |
 | `Box3` | 3D bounding box functions |
+| `OBB` | Oriented Bounding Box functions |
 | `Sphere` | Bounding sphere functions |
 | `Plane` | 3D plane functions |
 | `Ray` | Raycasting functions |
+| `Line3` | 3D line functions |
+| `Triangle` | 3D triangle functions |
 | `Frustum` | View frustum functions |
+| `SphericalHarmonics3` | 3rd-order Spherical Harmonics functions |
+| `Octree` | Spatial partitioning tree functions |
 
 ---
