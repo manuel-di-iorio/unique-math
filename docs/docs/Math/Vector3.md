@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Vec3
+# Vector3
 
 3D vector functions using arrays `[x, y, z]`. All angles are in **degrees**. Functions modify the first vector in-place for zero allocations.
 
