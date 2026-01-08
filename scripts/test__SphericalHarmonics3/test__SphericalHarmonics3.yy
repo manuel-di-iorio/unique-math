@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"test__SphericalHarmonics3",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"test__SphericalHarmonics3",
+  "parent":{
+    "name":"Tests",
+    "path":"folders/Tests.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

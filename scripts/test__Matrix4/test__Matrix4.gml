@@ -167,8 +167,8 @@ suite(function() {
             var m = mat4_create();
             mat4_make_rotation_x(m, 90);
             expect(abs(m[5]) < 0.001).toBeTruthy();
-            expect(abs(m[6] + 1) < 0.001).toBeTruthy();
-            expect(abs(m[9] - 1) < 0.001).toBeTruthy();
+            expect(abs(m[6] + 1) < 0.001).toBeTruthy(); // CW
+            expect(abs(m[9] - 1) < 0.001).toBeTruthy(); // CW
             expect(abs(m[10]) < 0.001).toBeTruthy();
         });
 
@@ -176,8 +176,8 @@ suite(function() {
             var m = mat4_create();
             mat4_make_rotation_y(m, 90);
             expect(abs(m[0]) < 0.001).toBeTruthy();
-            expect(abs(m[2] - 1) < 0.001).toBeTruthy();
-            expect(abs(m[8] + 1) < 0.001).toBeTruthy();
+            expect(abs(m[2] - 1) < 0.001).toBeTruthy(); // CW
+            expect(abs(m[8] + 1) < 0.001).toBeTruthy(); // CW
             expect(abs(m[10]) < 0.001).toBeTruthy();
         });
 
@@ -185,8 +185,8 @@ suite(function() {
             var m = mat4_create();
             mat4_make_rotation_z(m, 90);
             expect(abs(m[0]) < 0.001).toBeTruthy();
-            expect(abs(m[1] + 1) < 0.001).toBeTruthy();
-            expect(abs(m[4] - 1) < 0.001).toBeTruthy();
+            expect(abs(m[1] + 1) < 0.001).toBeTruthy(); // CW
+            expect(abs(m[4] - 1) < 0.001).toBeTruthy(); // CW
             expect(abs(m[5]) < 0.001).toBeTruthy();
         });
 
@@ -195,7 +195,7 @@ suite(function() {
             var axis = vec3_create(0, 0, 1);
             mat4_make_rotation_axis(m, axis, 90);
             expect(abs(m[0]) < 0.001).toBeTruthy();
-            expect(abs(m[1] - 1) < 0.001).toBeTruthy();
+            expect(abs(m[1] + 1) < 0.001).toBeTruthy(); // CW
         });
 
         test("mat4_make_rotation_from_quaternion() from quaternion", function() {

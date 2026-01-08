@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"test__OBB",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"test__OBB",
+  "parent":{
+    "name":"Tests",
+    "path":"folders/Tests.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

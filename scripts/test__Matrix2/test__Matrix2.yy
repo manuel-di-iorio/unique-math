@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"test__Matrix2",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"test__Matrix2",
+  "parent":{
+    "name":"Tests",
+    "path":"folders/Tests.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

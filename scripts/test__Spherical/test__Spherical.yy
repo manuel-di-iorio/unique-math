@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"test__Spherical",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"test__Spherical",
+  "parent":{
+    "name":"Tests",
+    "path":"folders/Tests.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

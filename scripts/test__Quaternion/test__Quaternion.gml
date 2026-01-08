@@ -83,7 +83,7 @@ suite(function() {
             var q = quat_create();
             quat_set_from_euler(q, 90, 0, 0, "YXZ");
     
-            expect(abs(q[0] - 0.707) < 0.001).toBeTruthy();  // x
+            expect(abs(q[0] + 0.707) < 0.001).toBeTruthy();  // x (CW)
             expect(abs(q[1] - 0) < 0.001).toBeTruthy();      // y
             expect(abs(q[2] - 0) < 0.001).toBeTruthy();      // z
             expect(abs(q[3] - 0.707) < 0.001).toBeTruthy();  // w

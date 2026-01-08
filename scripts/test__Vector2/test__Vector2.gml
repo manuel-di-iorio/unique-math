@@ -1,5 +1,5 @@
 // GMTL-style test suite for Vec2 (array-based high-performance vectors)
-// API follows Three.js Vector2. All angles are in DEGREES.
+// All angles are in DEGREES.
 suite(function () {
     describe("Vec2", function () {
 
