@@ -90,16 +90,16 @@ function quat_copy(q, src) {
 
 /// @func quat_set_from_euler(q, x, y, z)
 /// @desc Sets quaternion from Euler angles (YXZ order, CW).
-function quat_set_from_euler(q, x, y, z) {
+function quat_set_from_euler(q, _x, _y, _z) {
     gml_pragma("forceinline");
     
-    var c1 = dcos(x * 0.5);
-    var c2 = dcos(y * 0.5);
-    var c3 = dcos(z * 0.5);
+    var c1 = dcos(_x * 0.5);
+    var c2 = dcos(_y * 0.5);
+    var c3 = dcos(_z * 0.5);
     
-    var s1 = dsin(x * 0.5);
-    var s2 = dsin(y * 0.5);
-    var s3 = dsin(z * 0.5);
+    var s1 = dsin(_x * 0.5);
+    var s2 = dsin(_y * 0.5);
+    var s3 = dsin(_z * 0.5);
     
     // YXZ CW: replace s with -s in standard CCW YXZ
     q[0] = -s1 * c2 * c3 + c1 * s2 * s3;
@@ -149,19 +149,22 @@ function quat_set_from_rotation_matrix(q, m) {
         q[1] = (m31 - m13) * s;
         q[2] = (m12 - m21) * s;
     } else if (m11 > m22 && m11 > m33) {
-        var s = 2.0 * sqrt(1.0 + m11 - m22 - m33);
+        var val = 1.0 + m11 - m22 - m33;
+        var s = 2.0 * sqrt(max(0, val));
         q[3] = (m23 - m32) / s;
         q[0] = 0.25 * s;
         q[1] = (m12 + m21) / s;
         q[2] = (m13 + m31) / s;
     } else if (m22 > m33) {
-        var s = 2.0 * sqrt(1.0 + m22 - m11 - m33);
+        var val = 1.0 + m22 - m11 - m33;
+        var s = 2.0 * sqrt(max(0, val));
         q[3] = (m31 - m13) / s;
         q[0] = (m12 + m21) / s;
         q[1] = 0.25 * s;
         q[2] = (m23 + m32) / s;
     } else {
-        var s = 2.0 * sqrt(1.0 + m33 - m11 - m22);
+        var val = 1.0 + m33 - m11 - m22;
+        var s = 2.0 * sqrt(max(0, val));
         q[3] = (m12 - m21) / s;
         q[0] = (m13 + m31) / s;
         q[1] = (m23 + m32) / s;
