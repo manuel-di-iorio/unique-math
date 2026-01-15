@@ -80,12 +80,12 @@ function octree_split(octree, level) {
     var hy = (maxY - minY) * 0.5;
     var hz = (maxZ - minZ) * 0.5;
     
-    for (var x = 0; x < 2; x++) {
-        for (var y = 0; y < 2; y++) {
-            for (var z = 0; z < 2; z++) {
+    for (var _x = 0; _x < 2; _x++) {
+        for (var _y = 0; _y < 2; _y++) {
+            for (var _z = 0; _z < 2; _z++) {
                 var subBox = [
-                    minX + x * hx, minY + y * hy, minZ + z * hz,
-                    minX + (x + 1) * hx, minY + (y + 1) * hy, minZ + (z + 1) * hz
+                    minX + _x * hx, minY + _y * hy, minZ + _z * hz,
+                    minX + (_x + 1) * hx, minY + (_y + 1) * hy, minZ + (_z + 1) * hz
                 ];
                 var subNode = octree_create(subBox);
                 subNode[OCTREE.maxLevel] = octree[OCTREE.maxLevel];
@@ -281,59 +281,87 @@ function octree_triangle_sphere_intersect(octree, sphere, triangle) {
 /// @func octree_triangle_capsule_intersect(octree, capsule, triangle)
 function octree_triangle_capsule_intersect(octree, capsule, triangle) {
     gml_pragma("forceinline");
-    var plane = global.__UE_OCT_PLANE;
-    tri_get_plane(triangle, plane);
-    
     var start = [capsule[0], capsule[1], capsule[2]];
     var _end = [capsule[3], capsule[4], capsule[5]];
     var radius = capsule[6];
-    
-    var d1 = plane_distance_to_point(plane, start) - radius;
-    var d2 = plane_distance_to_point(plane, _end) - radius;
-    
-    if ((d1 > 0 && d2 > 0) || (d1 < -radius && d2 < -radius)) return false;
-    
-    var delta = abs(d1 / (abs(d1) + abs(d2)));
-    var intersectPoint = global.__UE_OCT_V1;
-    vec3_copy(intersectPoint, start);
-    vec3_lerp(intersectPoint, _end, delta);
-    
-    if (tri_contains_point(triangle, intersectPoint)) {
-        var normal = vec3_create(plane[0], plane[1], plane[2]);
-        return {
-            normal: normal,
-            point: vec3_clone(intersectPoint),
-            depth: abs(min(d1, d2))
-        };
-    }
-    
     var r2 = radius * radius;
-    var line1 = global.__UE_OCT_LINE1;
-    line3_set(line1, start, _end);
     
-    var p0 = triangle[0], p1 = triangle[1], p2 = triangle[2];
-    var lines = [
-        [p0, p1], [p1, p2], [p2, p0]
-    ];
-    
-    for (var i = 0; i < 3; i++) {
-        var line2 = global.__UE_OCT_LINE2;
-        line3_set(line2, lines[i][0], lines[i][1]);
-        
-        var pt1 = global.__UE_OCT_P1;
-        var pt2 = global.__UE_OCT_P2;
-        var distSq = line3_distance_sq_to_line3(line1, line2, pt1, pt2);
-        
-        if (distSq < r2) {
-            var normal = vec3_create();
-            vec3_sub_vectors(normal, pt1, pt2);
-            vec3_normalize(normal);
-            return {
-                normal: normal,
-                point: vec3_clone(pt2),
-                depth: radius - sqrt(distSq)
-            };
+    var bestDistSq = infinity;
+    var bestPoint = undefined;
+    var bestNormal = undefined;
+
+    // 1. Check if segment intersects triangle interior
+    var plane = global.__UE_OCT_PLANE;
+    tri_get_plane(triangle, plane);
+    var lineArr = [start[0], start[1], start[2], _end[0], _end[1], _end[2]];
+    var intersectPoint = global.__UE_OCT_V1;
+    if (plane_intersect_line(plane, lineArr, intersectPoint) != undefined) {
+        if (tri_contains_point(triangle, intersectPoint)) {
+            bestDistSq = 0;
+            bestPoint = vec3_clone(intersectPoint);
+            bestNormal = vec3_create(plane[0], plane[1], plane[2]);
+            // Point normal towards capsule start point
+            if (vec3_dot(bestNormal, start) + plane[3] < 0) {
+                vec3_negate(bestNormal);
+            }
         }
+    }
+
+    // 2. Check endpoints against triangle
+    if (bestDistSq > 0) {
+        var p = global.__UE_OCT_P1;
+        
+        // Start point
+        tri_closest_point_to_point(triangle, start, p);
+        var d2 = vec3_distance_to_squared(start, p);
+        if (d2 < bestDistSq) {
+            bestDistSq = d2;
+            bestPoint = vec3_clone(p);
+            bestNormal = vec3_create();
+            vec3_sub_vectors(bestNormal, start, p);
+            vec3_normalize(bestNormal);
+        }
+        
+        // End point
+        tri_closest_point_to_point(triangle, _end, p);
+        d2 = vec3_distance_to_squared(_end, p);
+        if (d2 < bestDistSq) {
+            bestDistSq = d2;
+            bestPoint = vec3_clone(p);
+            bestNormal = vec3_create();
+            vec3_sub_vectors(bestNormal, _end, p);
+            vec3_normalize(bestNormal);
+        }
+    }
+
+    // 3. Check segment against triangle edges
+    if (bestDistSq > 0) {
+        var line1 = global.__UE_OCT_LINE1;
+        line3_set(line1, start, _end);
+        var p0 = triangle[0], p1 = triangle[1], p2 = triangle[2];
+        var edges = [[p0, p1], [p1, p2], [p2, p0]];
+        for (var i = 0; i < 3; i++) {
+            var line2 = global.__UE_OCT_LINE2;
+            line3_set(line2, edges[i][0], edges[i][1]);
+            var cp1 = global.__UE_OCT_P1;
+            var cp2 = global.__UE_OCT_P2;
+            var d2 = line3_distance_sq_to_line3(line1, line2, cp1, cp2);
+            if (d2 < bestDistSq) {
+                bestDistSq = d2;
+                bestPoint = vec3_clone(cp2);
+                bestNormal = vec3_create();
+                vec3_sub_vectors(bestNormal, cp1, cp2);
+                vec3_normalize(bestNormal);
+            }
+        }
+    }
+
+    if (bestDistSq < r2) {
+        return {
+            normal: bestNormal,
+            point: bestPoint,
+            depth: radius - sqrt(bestDistSq)
+        };
     }
     
     return false;
