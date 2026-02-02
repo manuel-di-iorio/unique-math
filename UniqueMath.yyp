@@ -21,7 +21,7 @@
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.14.2.213",
+    "IDEVersion":"2024.14.3.217",
   },
   "name":"UniqueMath",
   "resources":[
@@ -34,6 +34,7 @@
     {"id":{"name":"Cylindrical","path":"scripts/Cylindrical/Cylindrical.yy",},},
     {"id":{"name":"DualQuaternion","path":"scripts/DualQuaternion/DualQuaternion.yy",},},
     {"id":{"name":"DynamicAABBTree","path":"scripts/DynamicAABBTree/DynamicAABBTree.yy",},},
+    {"id":{"name":"DynamicAABBTree2D","path":"scripts/DynamicAABBTree2D/DynamicAABBTree2D.yy",},},
     {"id":{"name":"Euler","path":"scripts/Euler/Euler.yy",},},
     {"id":{"name":"Frustum","path":"scripts/Frustum/Frustum.yy",},},
     {"id":{"name":"GMTL_core_MouseState","path":"scripts/GMTL_core_MouseState/GMTL_core_MouseState.yy",},},
@@ -67,6 +68,7 @@
     {"id":{"name":"test__Cylindrical","path":"scripts/test__Cylindrical/test__Cylindrical.yy",},},
     {"id":{"name":"test__DualQuaternion","path":"scripts/test__DualQuaternion/test__DualQuaternion.yy",},},
     {"id":{"name":"test__DynamicAABBTree","path":"scripts/test__DynamicAABBTree/test__DynamicAABBTree.yy",},},
+    {"id":{"name":"test__DynamicAABBTree2D","path":"scripts/test__DynamicAABBTree2D/test__DynamicAABBTree2D.yy",},},
     {"id":{"name":"test__Euler","path":"scripts/test__Euler/test__Euler.yy",},},
     {"id":{"name":"test__Frustum","path":"scripts/test__Frustum/test__Frustum.yy",},},
     {"id":{"name":"test__Line3","path":"scripts/test__Line3/test__Line3.yy",},},
