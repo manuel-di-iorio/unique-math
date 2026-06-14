@@ -62,27 +62,32 @@ vec2_rotate_around(pos, center, 45);   // Rotate 45 degrees
 
 | Module | Description |
 | ------ | ----------- |
-| [`Vec2`](./Math/Vector2) | 2D vector functions |
-| [`Vec3`](./Math/Vector3) | 3D vector functions |
-| [`Vec4`](./Math/Vector4) | 4D vector functions |
-| [`Euler`](./Math/Euler) | Euler angles functions |
-| [`Spherical`](./Math/Spherical) | Spherical coordinate functions |
-| [`Cylindrical`](./Math/Cylindrical) | Cylindrical coordinate functions |
-| [`Quaternion`](./Math/Quaternion) | Quaternion functions |
-| [`Matrix2`](./Math/Matrix2) | 2x2 matrix functions |
-| [`Matrix3`](./Math/Matrix3) | 3x3 matrix functions |
-| [`Matrix4`](./Math/Matrix4) | 4x4 matrix functions |
-| [`Box2`](./Math/Box2) | 2D bounding box functions |
-| [`Box3`](./Math/Box3) | 3D bounding box functions |
-| [`OBB`](./Math/OBB) | Oriented Bounding Box functions |
-| [`Sphere`](./Math/Sphere) | Bounding sphere functions |
-| [`Plane`](./Math/Plane) | 3D plane functions |
-| [`Ray`](./Math/Ray) | Raycasting functions |
-| [`Line3`](./Math/Line3) | 3D line functions |
-| [`Triangle`](./Math/Triangle) | 3D triangle functions |
-| [`Frustum`](./Math/Frustum) | View frustum functions |
-| [`SphericalHarmonics3`](./Math/SphericalHarmonics3) | 3rd-order Spherical Harmonics functions |
-| [`Octree`](./Math/Octree) | Spatial partitioning tree functions |
+| `Box2` | 2D bounding box functions |
+| `Box3` | 3D bounding box functions |
+| `BVH` | Bounding Volume Hierarchy (BVH) structures and traversal |
+| `Capsule` | Capsule shape functions |
+| `Cylindrical` | Cylindrical coordinate functions |
+| `DynamicAABBTree` | Dynamic AABB tree (3D) for spatial queries |
+| `DynamicAABBTree2D` | Dynamic AABB tree (2D) for spatial queries |
+| `DualQuaternion` | Dual quaternion functions for rigid transforms |
+| `Euler` | Euler angles functions |
+| `Frustum` | View frustum functions |
+| `Line3` | 3D line functions |
+| `Matrix2` | 2x2 matrix functions |
+| `Matrix3` | 3x3 matrix functions |
+| `Matrix4` | 4x4 matrix functions |
+| `OBB` | Oriented Bounding Box functions |
+| `Octree` | Spatial partitioning tree functions |
+| `Plane` | 3D plane functions |
+| `Quaternion` | Quaternion functions |
+| `Ray` | Raycasting functions |
+| `Sphere` | Bounding sphere functions |
+| `Spherical` | Spherical coordinate functions |
+| `SphericalHarmonics3` | 3rd-order Spherical Harmonics functions |
+| `Triangle` | 3D triangle functions |
+| `Vector2` | 2D vector functions |
+| `Vector3` | 3D vector functions |
+| `Vector4` | 4D vector functions |
 
 ---
 
