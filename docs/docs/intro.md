@@ -8,7 +8,7 @@ Welcome to **UniqueMath**, a robust and evolving math library for GameMaker, ins
 
 ---
 
-## 🎯 Functional API
+## Functional API
 
 UniqueMath uses **arrays** and **functions** for maximum speed and fewer memory allocations:
 
@@ -24,13 +24,13 @@ var dot = vec2_dot(a, b);
 
 ---
 
-## 🔧 Requirements
+## Requirements
 
 - GameMaker Studio 2 (latest LTS or IDE version recommended)
 
 ---
 
-## 📦 Installation
+## Installation
 
 1. Download or copy the UniqueMath files.
 
@@ -40,7 +40,7 @@ var dot = vec2_dot(a, b);
 
 ---
 
-## 🚀 Quick Examples
+## Quick Examples
 
 ```js
 // 2D Vector operations
@@ -58,7 +58,7 @@ vec2_rotate_around(pos, center, 45);   // Rotate 45 degrees
 
 ---
 
-## 📖 What's Available
+## What's Available
 
 | Module | Description |
 | ------ | ----------- |
