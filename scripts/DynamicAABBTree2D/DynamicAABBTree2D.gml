@@ -1,5 +1,6 @@
 /// @description Dynamic AABB Tree 2D for high-performance spatial partitioning
 /// Based on Box2D's b2DynamicTree
+/// This script is part of UniqueMath library - https://github.com/manuel-di-iorio/unique-math
 
 function DynamicAABBTree2D(capacity = 1024) constructor {
     self.capacity = capacity;
@@ -502,7 +503,17 @@ function DynamicAABBTree2D(capacity = 1024) constructor {
         // If new AABB is still contained in the old fat AABB, no need to reinsert
         if (fatMinX >= self.minX[proxyId] && fatMinY >= self.minY[proxyId] &&
             fatMaxX <= self.maxX[proxyId] && fatMaxY <= self.maxY[proxyId]) {
-            return true; // Movement is small enough, tree structure is still valid
+            // But ensure the actual element AABB hasn't drifted significantly from
+            // the tree's stored AABB. Fat AABBs can accumulate over time when an element
+            // moves within its previous fat AABB, causing the tree to never update.
+            var _driftX = abs(minX - self.minX[proxyId]);
+            var _driftY = abs(minY - self.minY[proxyId]);
+            var _driftMaxX = abs(maxX - self.maxX[proxyId]);
+            var _driftMaxY = abs(maxY - self.maxY[proxyId]);
+            if (_driftX <= 4 && _driftY <= 4 && _driftMaxX <= 4 && _driftMaxY <= 4) {
+                return true; // Movement is small enough, tree structure is still valid
+            }
+            // else: fall through to force update below
         }
         
         // Save userData and drawIndex before removal

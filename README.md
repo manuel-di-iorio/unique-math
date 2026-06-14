@@ -4,7 +4,7 @@ Welcome to **UniqueMath**, a robust and evolving math library for GameMaker, ins
 
 ---
 
-## 🎯 Functional API
+## Functional API
 
 UniqueMath uses **arrays** and **functions** for maximum speed and zero memory allocations:
 
@@ -23,7 +23,7 @@ var dot = vec2_dot(a, b);
 
 ---
 
-## 🚀 Quick Examples
+## Quick Examples
 
 ```js
 // 2D Vector operations
@@ -39,13 +39,13 @@ var center = vec2_create(0, 0);
 vec2_rotate_around(pos, center, 45);   // Rotate 45 degrees
 ```
 
-## 🔧 Requirements
+## Requirements
 
 - GameMaker Studio 2 (latest LTS or IDE version recommended)
 
 ---
 
-## 📦 Installation
+## Installation
 
 1. Download or copy the UniqueMath files.
 
@@ -55,30 +55,35 @@ vec2_rotate_around(pos, center, 45);   // Rotate 45 degrees
 
 ---
 
-## 📖 What's Available
+## What's Available
 
 | Module | Description |
 | ------ | ----------- |
-| `Vector2` | 2D vector functions |
-| `Vector3` | 3D vector functions |
-| `Vector4` | 4D vector functions |
-| `Euler` | Euler angles functions |
-| `Spherical` | Spherical coordinate functions |
+| `Box2` | 2D bounding box functions |
+| `Box3` | 3D bounding box functions |
+| `BVH` | Bounding Volume Hierarchy (BVH) structures and traversal |
+| `Capsule` | Capsule shape functions |
 | `Cylindrical` | Cylindrical coordinate functions |
-| `Quaternion` | Quaternion functions |
+| `DynamicAABBTree` | Dynamic AABB tree (3D) for spatial queries |
+| `DynamicAABBTree2D` | Dynamic AABB tree (2D) for spatial queries |
+| `DualQuaternion` | Dual quaternion functions for rigid transforms |
+| `Euler` | Euler angles functions |
+| `Frustum` | View frustum functions |
+| `Line3` | 3D line functions |
 | `Matrix2` | 2x2 matrix functions |
 | `Matrix3` | 3x3 matrix functions |
 | `Matrix4` | 4x4 matrix functions |
-| `Box2` | 2D bounding box functions |
-| `Box3` | 3D bounding box functions |
 | `OBB` | Oriented Bounding Box functions |
-| `Sphere` | Bounding sphere functions |
-| `Plane` | 3D plane functions |
-| `Ray` | Raycasting functions |
-| `Line3` | 3D line functions |
-| `Triangle` | 3D triangle functions |
-| `Frustum` | View frustum functions |
-| `SphericalHarmonics3` | 3rd-order Spherical Harmonics functions |
 | `Octree` | Spatial partitioning tree functions |
+| `Plane` | 3D plane functions |
+| `Quaternion` | Quaternion functions |
+| `Ray` | Raycasting functions |
+| `Sphere` | Bounding sphere functions |
+| `Spherical` | Spherical coordinate functions |
+| `SphericalHarmonics3` | 3rd-order Spherical Harmonics functions |
+| `Triangle` | 3D triangle functions |
+| `Vector2` | 2D vector functions |
+| `Vector3` | 3D vector functions |
+| `Vector4` | 4D vector functions |
 
 ---
